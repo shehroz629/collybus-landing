@@ -1,0 +1,61 @@
+name: 4-landing-deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: "Commit"
+        required: true
+        type: string
+      environment:
+        description: "Environment"
+        required: true
+        type: choice
+        options:
+          - production
+
+env:
+  S3BucketName: collybus-web
+  CloudFrontDistro: "E2ZWUVZV17DVR9"
+
+jobs:
+  deployment:
+    environment: ${{ github.event.inputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.commit }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_COLLYBUS_PRD_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_COLLYBUS_PRD_ACCESS_SECRET }}
+          aws-region: ap-southeast-2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: landing
+
+      - name: Disable Next telemetry
+        run: npm exec next telemetry disable
+        working-directory: landing
+
+      - name: Build Landing Page
+        run: npm run build
+        working-directory: landing
+
+      - name: Deploy to S3 Bucket
+        working-directory: landing
+        run: aws s3 sync ./out s3://${{ env.S3BucketName }}
+
+      - name: Invalidate Cloudfront
+        run: aws cloudfront create-invalidation --distribution-id ${{ env.CloudFrontDistro }} --paths "/*"
