@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Metadata, type Viewport } from "next";
+import Script from 'next/script'
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import React from "react";
@@ -45,7 +46,16 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${kumbhSans.variable} font-main scroll-smooth`}
     >
-      <head>
+      <head>        
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-L2HTKJLCSM"></script>
+        <script>
+          {
+            `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-L2HTKJLCSM');`
+          }
+        </script>
         <link rel="icon" href="/favicon.png" type="image/png" />
       </head>
       <body>
