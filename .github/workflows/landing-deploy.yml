@@ -39,22 +39,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm install
-        working-directory: landing
 
       - name: Disable Next telemetry
         run: npm exec next telemetry disable
-        working-directory: landing
 
       - name: Build Landing Page
         run: npm run build
-        working-directory: landing
 
       - name: Deploy to S3 Bucket
-        working-directory: landing
         run: aws s3 sync ./out s3://${{ env.S3BucketName }}
 
       - name: Invalidate Cloudfront
