@@ -22,3 +22,19 @@
 .tradingview-widget-copyright {
   display: none !important;
 }
+
+a.ku-coin img {
+    width: 50%;
+}
+a.binance img {
+    height: auto !important;
+    width: 50% !IMPORTANT;
+}
+
+img[alt="Deribit"] {
+    width: 45%;
+}
+
+img[alt="Kraken"] {
+    width: 60%;
+}

@@ -292,7 +292,6 @@ const ContactForm = () => {
                 <option value="" style={{ backgroundColor: '#18181b', color: '#fff' }}>Please select...</option>
                 <option value="demo" style={{ backgroundColor: '#18181b', color: '#fff' }}>Book a Demo</option>
                 <option value="general" style={{ backgroundColor: '#18181b', color: '#fff' }}>General Enquiry</option>
-                <option value="support" style={{ backgroundColor: '#18181b', color: '#fff' }}>Support</option>
               </select>
             </div>
           </div>
