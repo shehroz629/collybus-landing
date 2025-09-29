@@ -1,4 +1,5 @@
 import "./globals.css";
+import "@/styles/scrollbar.css";
 import { Metadata, type Viewport } from "next";
 import Script from 'next/script'
 import Header from "@/components/header";
@@ -6,6 +7,7 @@ import Footer from "@/components/footer";
 import React from "react";
 import { Kumbh_Sans, Montserrat } from "next/font/google";
 import MixpanelInitializer from "@/components/mixpanel-initializer";
+import FloatingCTA from "@/components/floating-cta-new";
 
 // Initialize Montserrat font
 const montserrat = Montserrat({
@@ -64,6 +66,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
+          <FloatingCTA />
         </div>
       </body>
     </html>

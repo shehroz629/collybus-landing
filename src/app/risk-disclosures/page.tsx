@@ -14,7 +14,7 @@ const RiskDisclosuresPage = () => {
       <div className="container mx-auto px-6">
         {/* Gold Banner for Page Title */}
         <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12">
-          <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal">
+          <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Risk Disclosures
           </h1>
         </div>

@@ -1,75 +1,46 @@
-import Link from "next/link";
-import Image from "next/image";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-gray-700 py-10">
-      <div className="container mx-auto px-6">
-        <hr className="border-gray-300 mb-8" />
-
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
-          <div className="text-xs">
-            <div className="mb-2">
-              <p className="font-semibold">COLLYBUS PTE LTD</p>
-              <p>UEN 202420599E</p>
-            </div>
-            <div>
-              <p className="font-semibold">COLLYBUS PTY LTD</p>
-              <p>ABN 25658764017</p>
-            </div>
+    <footer className="border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-5 gap-8 text-sm text-white/70">
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <img src="https://collybus.co/images/collybus-logo.svg" alt="Collybus" className="h-6 w-auto opacity-90 transform scale-[1.3] origin-left"/>
           </div>
-
-          <div className="text-xs md:text-right">
-            <Link
-              href="/privacy-policy"
-              className="block mb-1 hover:text-black"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-conditions"
-              className="block mb-1 hover:text-black"
-            >
-              Terms & Conditions
-            </Link>
-            <Link href="/risk-disclosures" className="block hover:text-black">
-              Risk Disclosures
-            </Link>
-          </div>
+          <p className="max-w-xs">Institutional execution for Digital Assets, Derivatives, and Forex—built with FX discipline.</p>
         </div>
-
-        <div className="border-t border-gray-300 pt-8 mt-8 text-center">
-          <p className="text-xs text-gray-600 mb-4 max-w-xl mx-auto">
-            Collybus has partnered with{" "}
-            <a
-              href="https://www.tradingview.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:text-black"
-            >
-              https://www.tradingview.com/
-            </a>
-            . The platform incorporates Advanced Charts from TradingView to
-            provide fully customizable charts, drawing tools and indicators for
-            in-depth technical analysis.
-          </p>
-          <div className="flex justify-center">
-            <Image
-              src="/images/trading-view-300x157.png"
-              alt="TradingView Logo"
-              width={100}
-              height={25}
-              unoptimized
-            />
-          </div>
+        <div>
+          <div className="text-white/90 font-medium mb-2">Product</div>
+          <ul className="space-y-1">
+            <li><a className="hover:text-white/90" href="#">CONNEX</a></li>
+            <li><a className="hover:text-white/90" href="#">Integrations</a></li>
+          </ul>
         </div>
-
-        <div className="text-center text-xs text-gray-500 pt-8 mt-8 border-t border-gray-300">
-          <p>
-            &copy; {new Date().getFullYear()} Collybus. All rights reserved.
-          </p>
+        <div>
+          <div className="text-white/90 font-medium mb-2">Company</div>
+          <ul className="space-y-1">
+            <li><a className="hover:text-white/90" href="/about">About</a></li>
+            <li><a className="hover:text-white/90" href="/team">Team</a></li>
+            <li><a className="hover:text-white/90" href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-white/90 font-medium mb-2">Disclaimers</div>
+          <ul className="space-y-1">
+            <li><a className="hover:text-white/90" href="/privacy-policy">Privacy Policy</a></li>
+            <li><a className="hover:text-white/90" href="/terms-conditions">Terms & Conditions</a></li>
+            <li><a className="hover:text-white/90" href="/risk-disclosures">Risk Disclosures</a></li>
+          </ul>
+        </div>
+        <div>
+          <div className="text-white/90 font-medium mb-2">Get in touch</div>
+          <ul className="space-y-1">
+            <li><a className="hover:text-white/90" href="#">Book a demo</a></li>
+            <li><a className="hover:text-white/90" href="mailto:contact@collybus.co">contact@collybus.co</a></li>
+          </ul>
         </div>
       </div>
+      <div className="text-center text-xs text-white/40 py-6 border-t border-white/10">© {new Date().getFullYear()} Collybus. All rights reserved.</div>
     </footer>
   );
 };
