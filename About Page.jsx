@@ -45,7 +45,7 @@ function HeroBackground() {
           <TradingViewWidget />
         </div>
         <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-          <TradingViewWidget />
+          <TradingViewCryptoTicker />
         </div>
       </div>
     </div>
@@ -106,6 +106,7 @@ function PlaceholderShot({ label = "Timeline / milestones" }) {
 /* ===== About page (focused) ===== */
 
 import TradingViewWidget from "./src/components/TradingViewWidget";
+import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
 
 export default function AboutFocused() {
   return (

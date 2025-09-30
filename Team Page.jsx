@@ -46,7 +46,7 @@ function HeroBackground() {
           <TradingViewWidget />
         </div>
         <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-          <TradingViewWidget />
+          <TradingViewCryptoTicker />
         </div>
       </div>
     </div>
@@ -76,9 +76,9 @@ function Hero({ title, subtitle }) {
 }
 
 /* ===== Section block ===== */
-function Section({ eyebrow, title, children }) {
+function Section({ eyebrow, title, children, id }) {
   return (
-    <section className="border-t border-white/10" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+    <section id={id} className="border-t border-white/10" style={{ fontFamily: 'Montserrat, sans-serif' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-8">
           {eyebrow && <div className="text-[11px] uppercase tracking-[0.22em] text-white/50" style={{ fontFamily: 'Montserrat, sans-serif' }}>{eyebrow}</div>}
@@ -93,6 +93,7 @@ function Section({ eyebrow, title, children }) {
 /* ===== Team page (focused) ===== */
 
 import TradingViewWidget from "./src/components/TradingViewWidget";
+import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
 
 export default function TeamFocused() {
   const founders = [
@@ -211,7 +212,7 @@ export default function TeamFocused() {
           </div>
         </Section>
 
-        <Section eyebrow="Careers" title="Got what it takes to revolutionize Digital Asset trading?">
+        <Section eyebrow="Careers" title="Got what it takes to revolutionize Digital Asset trading?" id="careers">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

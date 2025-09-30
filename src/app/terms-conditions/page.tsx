@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 const TermsConditionsPage = () => {
   return (
-    <div className="bg-black text-gray-200 py-8 md:py-12">
+    <div className="bg-black text-gray-200 pt-20 md:pt-24 pb-8 md:pb-12">
       <div className="container mx-auto px-6">
         {/* Gold Banner for Page Title */}
         <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12">

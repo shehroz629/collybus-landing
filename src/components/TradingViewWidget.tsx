@@ -12,43 +12,34 @@ function TradingViewWidget() {
       script.type = "text/javascript";
       script.async = true;
       script.innerHTML = `
-        {
-          "symbols": [
-            {
-              "proName": "BINANCE:BTCUSDT",
-              "title": "BTC"
-            },
-            {
-              "proName": "BINANCE:ETHUSDT",
-              "title": "ETH"
-            },
-            {
-              "proName": "BINANCE:SOLUSDT",
-              "title": "SOL"
-            },
-            {
-              "proName": "FX_IDC:EURUSD",
-              "title": "EUR/USD"
-            },
-            {
-              "proName": "FX_IDC:USDJPY",
-              "title": "USD/JPY"
-            },
-            {
-              "proName": "FX_IDC:GBPUSD",
-              "title": "GBP/USD"
-            }
-          ],
-          "colorTheme": "dark",
-          "isTransparent": true,
-          "displayMode": "regular",
-          "locale": "en",
-          "largeChartUrl": "",
-          "showSymbolLogo": false,
-          "width": "100%",
-          "height": 44
+      {
+        "symbols": [
+          { "proName": "FX_IDC:EURUSD", "title": "EUR/USD" },
+          { "proName": "FX_IDC:GBPUSD", "title": "GBP/USD" },
+          { "proName": "FX_IDC:USDJPY", "title": "USD/JPY" },
+          { "proName": "FX_IDC:AUDUSD", "title": "AUD/USD" },
+          { "proName": "FX_IDC:NZDUSD", "title": "NZD/USD" },
+          { "proName": "FX_IDC:USDCAD", "title": "USD/CAD" },
+          { "proName": "FX_IDC:USDCHF", "title": "USD/CHF" },
+          { "proName": "FX_IDC:EURJPY", "title": "EUR/JPY" },
+          { "proName": "FX_IDC:GBPJPY", "title": "GBP/JPY" },
+          { "proName": "FX_IDC:AUDJPY", "title": "AUD/JPY" },
+          { "proName": "FX_IDC:CADJPY", "title": "CAD/JPY" },
+          { "proName": "FX_IDC:USDSGD", "title": "USD/SGD" },
+          { "proName": "FX_IDC:SGDJPY", "title": "SGD/JPY" }
+        ],
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "displayMode": "regular",
+        "locale": "en",
+        "largeChartUrl": "",
+        "showSymbolLogo": true,
+        "width": "100%",
+        "height": 44,
+          "scrollDirection": "rtl"
         }`;
       if (container.current) {
+        container.current.innerHTML = ""; // reset before appending
         container.current.appendChild(script);
       }
     },
@@ -59,8 +50,8 @@ function TradingViewWidget() {
     <div className="tradingview-widget-container" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
       <div className="tradingview-widget-copyright">
-        <a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank">
-          <span className="blue-text">Ticker tape</span>
+        <a href="https://www.tradingview.com/markets/currencies/" rel="noopener nofollow" target="_blank">
+          <span className="blue-text">Forex ticker tape</span>
         </a>
         <span className="trademark"> by TradingView</span>
       </div>

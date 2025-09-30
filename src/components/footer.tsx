@@ -12,8 +12,8 @@ const Footer = () => {
         <div>
           <div className="text-white/90 font-medium mb-2">Product</div>
           <ul className="space-y-1">
-            <li><a className="hover:text-white/90" href="#">CONNEX</a></li>
-            <li><a className="hover:text-white/90" href="#">Integrations</a></li>
+            <li><a className="hover:text-white/90" href="/?section=connex#connex">CONNEX</a></li>
+            <li><a className="hover:text-white/90" href="/?section=integrations#integrations">Integrations</a></li>
           </ul>
         </div>
         <div>
@@ -21,7 +21,8 @@ const Footer = () => {
           <ul className="space-y-1">
             <li><a className="hover:text-white/90" href="/about">About</a></li>
             <li><a className="hover:text-white/90" href="/team">Team</a></li>
-            <li><a className="hover:text-white/90" href="#">Careers</a></li>
+            <li><a className="hover:text-white/90" href="/product">Product</a></li>
+            <li><a className="hover:text-white/90" href="/team?section=careers#careers">Careers</a></li>
           </ul>
         </div>
         <div>

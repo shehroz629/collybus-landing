@@ -32,7 +32,7 @@ const Header = () => {
       <div className={`border-b transition-colors ${atTop ? "bg-transparent border-transparent" : "bg-black/70 backdrop-blur border-white/10"}`}> 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between"> 
           <Link href="/" className="flex items-center gap-3" aria-label="Collybus home"> 
-            <img src="https://collybus.co/images/collybus-logo.svg" alt="Collybus" className="h-6 w-auto md:h-7 md:w-auto transform scale-100 origin-left"/> 
+            <img src="https://collybus.co/images/collybus-logo.svg" alt="Collybus" className="h-6 w-auto md:h-12 md:w-auto transform scale-100 origin-left"/> 
           </Link>
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-7">

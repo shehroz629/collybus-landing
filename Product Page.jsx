@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, BarChart3, Shield, LineChart, Layers, Activity, Cpu, Mail } from "lucide-react";
 
 import TradingViewWidget from "./src/components/TradingViewWidget";
+import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
 
 const BRAND = "#F2C016";
 const hexToRgba = (hex, a) => {
@@ -45,7 +46,7 @@ function HeroBackground() {
           <TradingViewWidget />
         </div>
         <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-          <TradingViewWidget />
+          <TradingViewCryptoTicker />
         </div>
       </div>
       {/* upper & lower tickers */}

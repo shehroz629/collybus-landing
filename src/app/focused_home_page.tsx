@@ -3,6 +3,7 @@ import FoundersSection from "../components/founders-section";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
 import TradingViewWidget from "../components/TradingViewWidget";
+import TradingViewCryptoTicker from "../components/TradingViewCryptoTicker";
 import { ArrowRight, BarChart3, Shield, Zap, LineChart, Users, BookOpen, Layers, Cpu, Activity, Handshake, Target, Compass, Mail } from "lucide-react";
 import FloatingCTA from "@/components/floating-cta-new";
 
@@ -66,7 +67,7 @@ function HeroBackground() {
         </div>
         {/* TradingView ticker at bottom */}
         <div className="absolute left-0 right-0 w-full" style={{ bottom: "0rem" }}>
-          <TradingViewWidget />
+          <TradingViewCryptoTicker />
         </div>
       </div>
     </div>
@@ -154,10 +155,11 @@ interface SectionProps {
   title?: string;
   children: React.ReactNode;
   subdued?: boolean;
+  id?: string;
 }
-function Section({ eyebrow, title, children, subdued = false }: SectionProps) {
+function Section({ eyebrow, title, children, subdued = false, id }: SectionProps) {
   return (
-    <section className={`${subdued ? "bg-white/[0.02]" : ""} border-t border-white/10`}>
+    <section id={id} className={`${subdued ? "bg-white/[0.02]" : ""} border-t border-white/10`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-8">
           {eyebrow && <div className="text-[11px] uppercase tracking-[0.22em] text-white/50">{eyebrow}</div>}
@@ -276,7 +278,7 @@ function HomeFocused() {
 
       <Section eyebrow="How it works" title="Connect → Configure → Execute">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6 text-white/80 text-lg md:text-xl md:text-2xl leading-7 md:leading-8 lg:leading-9">
+          <div className="space-y-6 text-white/80 text-lg md:text-2xl leading-7 md:leading-8 lg:leading-9">
             <div className="flex gap-3"><span style={{ color: BRAND }}>01</span> Connect venues, custody, and data feeds securely.</div>
             <div className="flex gap-3"><span style={{ color: BRAND }}>02</span> Set contract sizing, risk limits, and alerts (funding, margin, exposure).</div>
             <div className="flex gap-3"><span style={{ color: BRAND }}>03</span> Execute with TWAP/VWAP/IOC/FOK; monitor P&L/margin in real time.</div>
@@ -285,7 +287,7 @@ function HomeFocused() {
         </div>
       </Section>
 
-      <Section eyebrow="CONNEX" title="The institutional trading workspace">
+      <Section eyebrow="CONNEX" title="The institutional trading workspace" id="connex">
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="justify-self-start">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 md:p-4 max-w-[520px] md:max-w-[560px]">
@@ -335,7 +337,7 @@ function HomeFocused() {
         </div>
       </Section>
 
-      <Section eyebrow="Integrations" title="Venues • Data • Custody • OMS/PMS">
+      <Section eyebrow="Integrations" title="Venues • Data • Custody • OMS/PMS" id="integrations">
   <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 opacity-80">
           {/* Existing logos */}
           <a href="https://www.kc.com/" target="_blank" rel="noopener noreferrer" className="ku-coin rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
@@ -382,6 +384,18 @@ function HomeFocused() {
 }
 
 function FocusedHomePage() {
+  React.useEffect(() => {
+    // Check if there's a section parameter in the URL
+    const params = new URLSearchParams(window.location.search);
+    const section = params.get('section');
+    if (section) {
+      const element = document.getElementById(section);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-black pt-16 md:pt-20">
       <FloatingCTA />

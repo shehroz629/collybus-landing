@@ -1,0 +1,63 @@
+"use client";
+import React, { useEffect, useRef, memo } from "react";
+import "../styles/tradingview.css";
+
+function TradingViewCryptoTicker() {
+  const container = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    script.type = "text/javascript";
+    script.async = true;
+    script.innerHTML = `
+      {
+        "symbols": [
+          { "proName": "BINANCE:BTCUSDT", "title": "BTC/USDT" },
+          { "proName": "BINANCE:ETHUSDT", "title": "ETH/USDT" },
+          { "proName": "BINANCE:SOLUSDT", "title": "SOL/USDT" },
+          { "proName": "BINANCE:DOGEUSDT", "title": "DOGE/USDT" },
+          { "proName": "BINANCE:HYPERUSDT", "title": "HYPER/USDT" },
+          { "proName": "BINANCE:ASTRUSDT", "title": "ASTR/USDT" },
+          { "proName": "BINANCE:RPLUSDT", "title": "RPL/USDT" },
+          { "proName": "BINANCE:SUIUSDT", "title": "SUI/USDT" },
+          { "proName": "BINANCE:LTCUSDT", "title": "LTC/USDT" },
+          { "proName": "BINANCE:WLFIUSDT", "title": "WLFI/USDT" },
+          { "proName": "BINANCE:WLDUSDT", "title": "WLD/USDT" },
+          { "proName": "BINANCE:SHIBUSDT", "title": "SHIB/USDT" }
+        ],
+        "colorTheme": "dark",
+        "isTransparent": true,
+        "displayMode": "regular",
+        "locale": "en",
+        "largeChartUrl": "",
+        "showSymbolLogo": true,
+        "width": "100%",
+        "height": 44,
+        "scrollDirection": "ltr"
+      }`;
+    if (container.current) {
+      container.current.innerHTML = ""; // clear old script before adding
+      container.current.appendChild(script);
+    }
+  }, []);
+
+  return (
+    <div className="tradingview-widget-container" ref={container}>
+      <div className="tradingview-widget-container__widget"></div>
+      <div className="tradingview-widget-copyright">
+        <a
+          href="https://www.tradingview.com/markets/cryptocurrencies/"
+          rel="noopener nofollow"
+          target="_blank"
+        >
+          <span className="blue-text">Crypto ticker tape</span>
+        </a>
+        <span className="trademark"> by TradingView</span>
+      </div>
+    </div>
+  );
+}
+
+export default memo(TradingViewCryptoTicker);
