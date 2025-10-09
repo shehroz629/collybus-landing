@@ -4,13 +4,14 @@
   position: relative;
   background: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);
-
   overflow: hidden;
   z-index: 1;
+  direction: rtl; /* Flip ticker direction to left-to-right */
 }
 
 .tradingview-widget-container__widget {
   height: 100%;
+  direction: ltr; /* Flip content back to normal */
 }
 
 .tradingview-widget-container iframe {
@@ -37,4 +38,44 @@ img[alt="Deribit"] {
 
 img[alt="Kraken"] {
     width: 60%;
+}
+
+/* Custom left-to-right ticker styles */
+.custom-ticker-container {
+  width: 100%;
+  height: 44px;
+  background: rgba(0,0,0,0.2);
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+}
+.custom-ticker-marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-left-right 40s linear infinite;
+}
+.custom-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+}
+.custom-ticker-title {
+  font-weight: 600;
+  color: #F2C016;
+}
+.custom-ticker-price {
+  margin-left: 0.5rem;
+}
+.custom-ticker-change.up {
+  color: #00ff99;
+}
+.custom-ticker-change.down {
+  color: #ff3b3b;
+}
+@keyframes ticker-left-right {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
 }

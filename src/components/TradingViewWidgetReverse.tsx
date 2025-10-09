@@ -57,7 +57,7 @@ function TradingViewWidgetReverse() {
   );
 
   return (
-    <div className="tradingview-widget-container" ref={container}>
+    <div className="tradingview-widget-container hhh" ref={container}>
       <div className="tradingview-widget-container__widget"></div>
       <div className="tradingview-widget-copyright">
         <a href="https://www.tradingview.com/markets/" rel="noopener nofollow" target="_blank">
