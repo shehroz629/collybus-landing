@@ -118,12 +118,34 @@ interface PillProps {
 }
 function Pill({ icon: Icon, title, text }: PillProps) {
   return (
-    <motion.div initial="rest" whileHover="hover" className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.08] transition-colors">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
-        <div className="text-white font-medium">{title}</div>
+    <motion.div 
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      transition={{ 
+        type: "spring",
+        stiffness: 300,
+        damping: 10
+      }}
+      variants={{
+        rest: { scale: 1 },
+        hover: { scale: 1.02 }
+      }}
+      className="relative rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.08] transition-all duration-300 group"
+    >
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"/>
+      <div className="relative z-10">
+        <div className="flex items-center gap-3 mb-3">
+          <div 
+            className="w-9 h-9 rounded-lg flex items-center justify-center" 
+            style={{ background: hexToRgba(BRAND, 0.15) }}
+          >
+            {Icon ? <Icon size={24} color={BRAND} /> : null}
+          </div>
+          <div className="text-white font-medium">{title}</div>
+        </div>
+        <div className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{text}</div>
       </div>
-      <div className="text-sm text-white/70 leading-relaxed">{text}</div>
     </motion.div>
   );
 }
@@ -266,7 +288,7 @@ const outcomesItem: Variants = {
 function HomeFocused() {
   return (
     <main className="bg-black text-white">
-      <Hero title={<><span>Trade Digital Assets and Derivatives with</span><span className="block" style={{ color: BRAND }}>FX-grade precision</span></>} subtitle="Multi-venue visibility, execution algos & order types (TWAP/VWAP/IOC/FOK), normalised contract sizing, funding & ADL alerts, and real-time P&L/margin/exposure—built for institutional desks." />
+      <Hero title={<><span style={{ color: BRAND }} className="block text-4xl sm:text-5xl lg:text-6xl">FX-grade Precision</span><span className="block text-2xl sm:text-3xl lg:text-4xl">Trade Digital Assets and Derivatives, Foreign Exchange and Precious Metals</span></>} subtitle="Multi-venue visibility, execution algos & order types (TWAP/VWAP/IOC/FOK), normalised contract sizing, funding & ADL alerts, and real-time P&L/margin/exposure—built for institutional desks." />
 
       <Section eyebrow="Why Collybus" title="Execution that matches your process">
         <div className="grid md:grid-cols-3 gap-5">
@@ -276,14 +298,24 @@ function HomeFocused() {
         </div>
       </Section>
 
-      <Section eyebrow="How it works" title="Connect → Configure → Execute">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
-          <div className="space-y-6 text-white/80 text-lg md:text-2xl leading-7 md:leading-8 lg:leading-9">
-            <div className="flex gap-3"><span style={{ color: BRAND }}>01</span> Connect venues, custody, and data feeds securely.</div>
-            <div className="flex gap-3"><span style={{ color: BRAND }}>02</span> Set contract sizing, risk limits, and alerts (funding, margin, exposure).</div>
-            <div className="flex gap-3"><span style={{ color: BRAND }}>03</span> Execute with TWAP/VWAP/IOC/FOK; monitor P&L/margin in real time.</div>
+      <Section>
+        <div className="grid lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <div className="mb-8">
+              <div className="text-[11px] uppercase tracking-[0.22em] text-white/50">How it works</div>
+              <h2 className="text-2xl sm:text-3xl font-semibold text-white mt-2 pt-6 pb-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                Connect → Configure → Execute
+              </h2>
+            </div>
+            <div className="space-y-6 text-white/80 text-lg md:text-2xl leading-7 md:leading-8 lg:leading-9">
+              <div className="flex gap-3 text-sm md:text-base"><span style={{ color: BRAND }}>01</span> Connect venues, custody, and data feeds securely.</div>
+              <div className="flex gap-3 text-sm md:text-base"><span style={{ color: BRAND }}>02</span> Set contract sizing, risk limits, and alerts (funding, margin, exposure).</div>
+              <div className="flex gap-3 text-sm md:text-base"><span style={{ color: BRAND }}>03</span> Execute with TWAP/VWAP/IOC/FOK; monitor P&L/margin in real time.</div>
+            </div>
           </div>
-          <HowItWorksVideo />
+          <div className="flex items-center justify-center h-full">
+            <HowItWorksVideo />
+          </div>
         </div>
       </Section>
 
@@ -291,7 +323,7 @@ function HomeFocused() {
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           <div className="justify-self-start">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 md:p-4 max-w-[520px] md:max-w-[560px]">
-              <img src="https://collybus.co/images/platform_screenshot.png" alt="CONNEX platform screenshot" className="w-full h-auto object-contain" />
+              <img src="/images/Trading Screen.png" alt="CONNEX platform screenshot" className="w-full h-auto object-contain" />
             </div>
           </div>
           <div className="space-y-5 text-white/80">
@@ -347,7 +379,7 @@ function HomeFocused() {
             <img src="data:image/png;base64,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" alt="Binance" className="max-h-full w-auto object-contain" style={{height:'3.5rem'}} />
           </a>
           <a href="https://www.bitmex.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
-            <img src="https://images.ctfassets.net/kp25gfur5p5i/FuAan9gM0wymE18AVTxGy/8716bc1cfa8746199d624504b505785a/bitmex-logo-white.svg?w=256&q=75" alt="BitMEX" className="max-h-full w-auto object-contain" />
+            <img src="/images/bitmex-fav.png" alt="BitMEX" className="max-h-full w-auto object-contain" style={{height:'2.5rem'}} />
           </a>
           <a href="https://www.deribit.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
             <img src="https://cdn.brandfetch.io/idCB3UIXIk/theme/light/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1755240691674" alt="Deribit" className="max-h-full w-auto object-contain" />
@@ -358,9 +390,9 @@ function HomeFocused() {
           <a href="https://www.kraken.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
             <img src="https://cdn.worldvectorlogo.com/logos/kraken-4.svg" alt="Kraken" className="max-h-full w-auto object-contain" />
           </a>
-          {/* BitGo SVG logo */}
+          {/* BitGo logo */}
           <a href="https://www.bitgo.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
-            <svg viewBox="0 0 542 184" fill="none" xmlns="http://www.w3.org/2000/svg" className="max-h-full w-auto object-contain" style={{height:'2.5rem'}}><path d="M541.89 95.7796C541.89 119.162 526.93 134.941 505.843 134.941C484.756 134.941 469.796 119.162 469.796 95.7796C469.796 72.3975 484.756 56.6181 505.843 56.6181C526.93 56.6181 541.89 72.3975 541.89 95.7796ZM487.036 95.7796C487.036 111.129 494.302 120.453 505.843 120.453C517.384 120.453 524.65 111.129 524.65 95.7796C524.65 80.4306 517.384 71.1064 505.843 71.1064C494.302 71.1064 487.036 80.4306 487.036 95.7796Z" fill="currentColor"></path><path d="M445.563 133.363V122.748C441.431 129.634 431.458 134.941 418.065 134.941C391.564 134.941 371.902 113.424 371.902 82.2956C371.902 51.0238 391.706 28.7892 419.205 28.7892C440.149 28.7892 454.254 40.1217 460.523 58.3397L443.141 64.221C440.149 52.0279 431.6 44.9989 419.347 44.9989C402.107 44.9989 390.139 59.7741 390.139 82.0087C390.139 104.243 402.107 119.162 419.632 119.162C434.45 119.162 444.138 108.547 444.708 93.9149H417.78V77.8487H462.233V133.363H445.563Z" fill="currentColor"></path><path d="M334.16 114.427V72.6839H323.76V58.0521H334.16V35.961H350.973V58.0521H366.646V72.6839H350.973V111.702C350.973 118.444 354.82 119.161 360.946 119.161C363.796 119.161 365.363 119.018 367.928 118.731V133.219C364.793 133.793 360.519 134.223 356.102 134.223C341.854 134.223 334.16 129.776 334.16 114.427Z" fill="currentColor"></path><path d="M300.517 48.0141V30.37H318.184V48.0141H300.517ZM317.899 58.0556V133.366H300.802V58.0556H317.899Z" fill="currentColor"></path><path d="M216 133.366V30.37H256.606C278.548 30.37 290.231 39.981 290.231 57.4818C290.231 70.2487 282.823 76.8473 275.699 79.7163C286.385 83.1591 293.508 92.0529 293.508 104.676C293.508 122.751 280.258 133.366 259.171 133.366H216ZM233.525 72.9742H254.897C266.58 72.9742 272.992 68.3839 272.992 59.3466C272.992 50.3093 266.58 45.8624 254.897 45.8624H233.525V72.9742ZM233.525 88.4667V117.874H258.174C269.715 117.874 275.984 111.849 275.984 103.098C275.984 94.4915 269.715 88.4667 258.174 88.4667H233.525Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M156.282 104.257C156.282 146.692 78.3938 183.634 78.3938 183.634C78.3938 183.634 0.50478 146.692 0.50478 104.257C0.50478 93.2381 0.509268 83.5104 0.513558 74.2098C0.522088 55.7192 0.52984 38.9167 0.5 17.0094C49.9579 -5.62206 106.836 -5.59857 156.282 17.0588V104.257ZM72.3134 30.3623H62.2633V40.3298H52.2132V123.406H62.2633V133.376H72.3134V123.406H82.3636V133.376H92.4137V122.448C105.183 119.755 112.514 111.51 112.514 99.2681C112.514 90.7144 106.987 82.981 97.5309 80.5203C105.882 78.0597 110.672 70.9121 110.672 62.9443C110.672 51.6072 103.818 43.6576 92.4137 41.1626V30.3623H82.3636V40.3298H72.3134V30.3623ZM81.1969 53.3361C89.6709 53.3361 94.5834 57.2028 94.5834 63.7645C94.5834 70.3262 89.9165 74.193 82.0565 74.193H67.9332V53.3361H81.1969ZM82.1794 86.8477C91.6359 86.8477 96.4256 90.7144 96.4256 98.4479C96.4256 105.478 90.6534 109.814 81.3197 109.814H67.9332V86.8477H82.1794Z" fill="currentColor"></path></svg>
+            <img src="/images/bitgo-fav.svg" alt="BitGo" className="max-h-full w-auto object-contain" style={{height:'2.5rem'}} />
           </a>
         </div>
       </Section>

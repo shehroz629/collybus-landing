@@ -7,7 +7,7 @@ const Footer = () => {
           <div className="flex items-center gap-2 mb-3">
             <img src="https://collybus.co/images/collybus-logo.svg" alt="Collybus" className="h-6 w-auto opacity-90 transform scale-[1.3] origin-left"/>
           </div>
-          <p className="max-w-xs">Institutional execution for Digital Assets, Derivatives, and Forex—built with FX discipline.</p>
+          <p className="max-w-xs">Institutional execution for Digital Assets, Derivatives, and Forex.</p>
         </div>
         <div>
           <div className="text-white/90 font-medium mb-2">Product</div>
@@ -19,9 +19,11 @@ const Footer = () => {
         <div>
           <div className="text-white/90 font-medium mb-2">Company</div>
           <ul className="space-y-1">
-            <li><a className="hover:text-white/90" href="/about">About</a></li>
-            <li><a className="hover:text-white/90" href="/team">Team</a></li>
+           
             <li><a className="hover:text-white/90" href="/product">Product</a></li>
+            <li><a className="hover:text-white/90" href="/about">About</a></li>
+             <li><a className="hover:text-white/90" href="/team">Team</a></li>
+            
             <li><a className="hover:text-white/90" href="/team?section=careers#careers">Careers</a></li>
           </ul>
         </div>

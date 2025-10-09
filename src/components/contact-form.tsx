@@ -3,12 +3,19 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "country-list";
 import Link from "next/link";
+import emailjs from '@emailjs/browser';
+import { Mail } from "lucide-react";
+
 interface CountryOption {
   value: string;
   label: string;
 }
 
 const ContactForm = () => {
+  useEffect(() => {
+    emailjs.init('GBIGoDPQoZ5qUjDD0');
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -70,28 +77,78 @@ const ContactForm = () => {
       return;
     }
 
-    // Simulate successful submission
-    setSubmitStatus("success");
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phoneNumber: "",
-      company: "",
-      country: "",
-      enquiryType: "",
-      termsAccepted: false,
-      privacyAccepted: false,
-    });
+    try {
+      const templateParams = {
+        user_name: `${formData.firstName} ${formData.lastName}`,
+        user_email: formData.email,
+        user_first_name: formData.firstName,
+        user_last_name: formData.lastName,
+        user_phone: formData.phoneNumber,
+        user_company: formData.company,
+        user_country: formData.country,
+        user_enquiry: formData.enquiryType,
+        message: `
+Full Name: ${formData.firstName} ${formData.lastName}
+Email: ${formData.email}
+Phone: ${formData.phoneNumber}
+Company: ${formData.company}
+Country: ${formData.country}
+Enquiry Type: ${formData.enquiryType}
+        `,
+        to_name: 'Collybus Team'
+      };
+
+      console.log('Template params:', templateParams);
+      
+      const response = await emailjs.send(
+        'default_service',
+        'template_niawlc4',
+        templateParams,
+        'GBIGoDPQoZ5qUjDD0'
+      );
+
+      if (response.status === 200) {
+        setSubmitStatus("success");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          company: "",
+          country: "",
+          enquiryType: "",
+          termsAccepted: false,
+          privacyAccepted: false,
+        });
+      } else {
+        throw new Error(`Email send failed with status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Detailed error:', {
+        message: error.message,
+        status: error.status,
+        text: error.text,
+        error
+      });
+      setErrorMessage(
+        error.text || error.message || "Failed to send message. Please try again later."
+      );
+      setSubmitStatus("error");
+    }
+    
     setIsSubmitting(false);
   };
 
   return (
     <section id="contact" className="py-8 md:py-12 bg-transparent text-white">
       <div className="container mx-auto px-6 flex flex-col items-center animate-fadeIn [&::-webkit-scrollbar]:hidden">
+        <div className="flex flex-col items-center gap-3 mb-6">
+          <Mail size={28} className="text-[#f2c016]" />
+          <h2 className="text-2xl font-semibold">Get In Touch</h2>
+        </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-2xl space-y-6 bg-black/30 p-6 rounded-lg"
+          className="w-full max-w-2xl space-y-6 p-6 rounded-lg"
         >
           <div className="flex space-x-4">
             <div className="flex-1">
@@ -213,16 +270,17 @@ const ContactForm = () => {
               <select
                 id="country"
                 name="country"
-                className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm appearance-none
+                className="w-full p-3 bg-black/80 text-white border border-gray-700 rounded-sm appearance-none
                   focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
-                  backdrop-blur-sm hover:border-gray-500"
+                  backdrop-blur-sm hover:border-gray-500 [&>option]:bg-black/90"
                 value={formData.country}
                 onChange={handleChange}
                 required
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
               >
-                <option value="">Please select...</option>
+                <option value="" className="bg-black/90 text-white">Please select...</option>
                 {countryOptions.map((country) => (
-                  <option key={country.value} value={country.label}>
+                  <option key={country.value} value={country.label} className="bg-black/90 text-white">
                     {country.label}
                   </option>
                 ))}
@@ -238,21 +296,22 @@ const ContactForm = () => {
               <select
                 id="enquiryType"
                 name="enquiryType"
-                className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm appearance-none
+                className="w-full p-3 bg-black/80 text-white border border-gray-700 rounded-sm appearance-none
                   focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
-                  backdrop-blur-sm hover:border-gray-500"
+                  backdrop-blur-sm hover:border-gray-500 [&>option]:bg-black/90"
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
                 value={formData.enquiryType}
                 onChange={handleChange}
                 required
               >
-                <option value="">Please select...</option>
-                <option value="demo">Book a Demo</option>
-                <option value="general">General Enquiry</option>
+                <option value="" className="bg-black/90 text-white">Please select...</option>
+                <option value="demo" className="bg-black/90 text-white">Book a Demo</option>
+                <option value="general" className="bg-black/90 text-white">General Enquiry</option>
               </select>
             </div>
           </div>
 
-          {/* Terms */}
+          {/* Terms and Privacy Policy */}
           <div className="space-y-3">
             <div className="flex items-center">
               <input
@@ -261,7 +320,10 @@ const ContactForm = () => {
                 type="checkbox"
                 className="h-4 w-4 text-[#f2c016] border-gray-500 rounded focus:ring-[#f2c016] bg-black/20 backdrop-blur-sm"
                 checked={formData.termsAccepted}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setFormData(prev => ({...prev, privacyAccepted: e.target.checked}));
+                }}
                 required
               />
               <label

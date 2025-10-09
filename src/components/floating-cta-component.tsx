@@ -15,6 +15,12 @@ const FloatingCTAComponent = () => {
     document.body.style.overflow = 'unset';
   };
 
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
   return (
     <>
       <button
@@ -54,7 +60,10 @@ const FloatingCTAComponent = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-md">
+        <div 
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-md"
+          onClick={handleModalClick}
+        >
           <div 
             className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl 
               shadow-2xl max-w-2xl w-full max-h-[90vh] relative animate-fadeInUp 

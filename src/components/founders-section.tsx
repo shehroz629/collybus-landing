@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 const founders = [
   { name: "Peter Jacobson", role: "Co-Founder & CEO", photo: "/images/Peter Jacobson.jpg" },
-  { name: "Greg O'Sullivan", role: "Co-Founder & COO", photo: "/images/Greg O'Sullivan.jpg" }, // fixed role & unified image
+  { name: "Greg O'Sullivan", role: "Co-Founder & CRO", photo: "/images/Greg O'Sullivan.jpg" }, // fixed role & unified image
   { name: "Jonathan Wharton", role: "Co-Founder & CCO", photo: "/images/Jonathan Wharton.jpg" },
   { name: "James Dalton", role: "Co-Founder & CTO", photo: "/images/James Dalton.jpg" },
 ];
@@ -270,7 +270,7 @@ const FoundersSection = () => {
               </div>
               <div className="w-full px-8 py-8">
                 <div className="text-2xl font-semibold text-white mb-1 text-left">Greg O'Sullivan</div>
-                <div className="text-base text-gray-400 mb-4 text-left">Co-Founder & COO</div>
+                <div className="text-base text-gray-400 mb-4 text-left">Co-Founder & CRO</div>
                 <div className="text-gray-200 text-sm mb-6 text-left leading-relaxed">
                   Greg is a seasoned financial markets executive with over 20 years of experience in institutional sales,
                   business development, and strategic leadership across Asia-Pacific. Before co-founding COLLYBUS, he led 360T's

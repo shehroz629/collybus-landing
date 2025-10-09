@@ -157,18 +157,59 @@ export default function ProductFocused() {
           </div>
         </Section> */}
         <Section eyebrow="Our Solutions" title="Choose the engagement that fits">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <div className="text-white font-semibold mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>Core GUI</div>
-              <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Institutional desktop. Execution, risk, and funding on one screen.</div>
+          <div className="flex flex-col space-y-24">
+            {/* Core GUI Solution */}
+            <div className="flex flex-col md:flex-row gap-16 items-center group">
+              <div className="w-full md:w-1/2 space-y-6">
+                <div className="space-y-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  <div className="text-2xl md:text-3xl font-semibold" style={{ color: BRAND }}>Core GUI</div>
+                  <div className="text-white text-lg leading-relaxed">
+                    Institutional desktop. Execution, risk, and funding on one screen.
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 transition-transform duration-500 group-hover:scale-105">
+                <img src="/images/core-gui.png" alt="Core GUI Interface" className="rounded-xl w-full h-auto shadow-2xl"/>
+              </div>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <div className="text-white font-semibold mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>API</div>
-              <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Programmatic access. REST/WebSocket with reporting built in.</div>
+
+            {/* API Solution */}
+            <div className="flex flex-col md:flex-row-reverse gap-16 items-center group">
+              <div className="w-full md:w-1/2 space-y-6">
+                <div className="space-y-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  <div className="text-2xl md:text-3xl font-semibold" style={{ color: BRAND }}>API</div>
+                  <div className="text-white text-lg leading-relaxed">
+                    Programmatic access. REST/WebSocket with reporting built in.
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 transition-transform duration-500 group-hover:scale-105">
+                <img src="/images/api.png" alt="API Documentation" className="rounded-xl w-full h-auto shadow-2xl"/>
+              </div>
             </div>
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <div className="text-white font-semibold mb-1" style={{ fontFamily: 'Montserrat, sans-serif' }}>White-label</div>
-              <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>Branded front-end. Themes, SSO, and SLAs under your brand.</div>
+
+            {/* White-label Solution */}
+            <div className="flex flex-col md:flex-row gap-16 items-center group">
+              <div className="w-full md:w-1/2 space-y-6">
+                <div className="space-y-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                  <div className="text-2xl md:text-3xl font-semibold" style={{ color: BRAND }}>White-label</div>
+                  <div className="text-white text-lg leading-relaxed">
+                    Branded front-end. Themes, SSO, and SLAs under your brand.
+                  </div>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 transition-transform duration-500 group-hover:scale-105">
+                <video 
+                  src="/images/White-label animation.mp4"
+                  className="rounded-xl w-full h-auto shadow-2xl"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
             </div>
           </div>
         </Section>
