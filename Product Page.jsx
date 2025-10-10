@@ -184,7 +184,7 @@ export default function ProductFocused() {
                 </div>
               </div>
               <div className="w-full md:w-1/2 transition-transform duration-500 group-hover:scale-105">
-                <img src="/images/api.png" alt="API Documentation" className="rounded-xl w-full h-auto shadow-2xl"/>
+                <img src="/images/api-new-image.png" alt="API Documentation" className="rounded-xl w-full h-auto shadow-2xl"/>
               </div>
             </div>
 
