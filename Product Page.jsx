@@ -169,7 +169,7 @@ export default function ProductFocused() {
                 </div>
               </div>
               <div className="w-full md:w-1/2 transition-transform duration-500 group-hover:scale-105">
-                <img src="./images/core-gui.png" alt="Core GUI Interface" className="rounded-xl w-full h-auto shadow-2xl"/>
+                <img src="./images/core-gui-new.png" alt="Core GUI Interface" className="rounded-xl w-full h-auto shadow-2xl"/>
               </div>
             </div>
 
