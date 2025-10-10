@@ -43,10 +43,10 @@ function HeroBackground() {
       {/* TradingViewWidget tickers overlayed like homepage */}
       <div className="pointer-events-none">
         <div className="absolute left-0 right-0 w-full" style={{ top: "4%" }}>
-          <TradingViewWidget />
+          <TradingViewCryptoTicker />
         </div>
         <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-          <TradingViewCryptoTicker />
+           <TradingViewWidget />
         </div>
       </div>
     </div>
