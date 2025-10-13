@@ -1,4 +1,3 @@
-
 const Footer = () => {
   return (
     <footer className="border-t border-white/10">
@@ -43,7 +42,11 @@ const Footer = () => {
           </ul>
         </div>
       </div>
-      <div className="text-center text-xs text-white/40 py-6 border-t border-white/10">© {new Date().getFullYear()} Collybus. All rights reserved.</div>
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs text-white/40 py-6 border-t border-white/10 gap-2">
+        <span className="md:text-left w-full md:w-auto">Collybus Pte Ltd UEN 202420599E</span>
+        <span className="md:text-center w-full md:w-auto">© {new Date().getFullYear()} Collybus. All rights reserved.</span>
+        <span className="md:text-right w-full md:w-auto">Collybus Pty Ltd ABN 25 658 764 017</span>
+      </div>
     </footer>
   );
 };

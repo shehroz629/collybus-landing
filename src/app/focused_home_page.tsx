@@ -326,7 +326,7 @@ function HomeFocused() {
       </Section>
 
       <Section eyebrow="CONNEX" title="The institutional trading workspace" id="connex">
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 items-top">
           <div className="justify-self-start">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3 md:p-4 max-w-[520px] md:max-w-[560px]">
               <img src="/images/Trading Screen.PNG" alt="CONNEX platform screenshot" className="w-full h-auto object-contain" />
