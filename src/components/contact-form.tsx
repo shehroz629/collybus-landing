@@ -199,7 +199,7 @@ Enquiry Type: ${formData.enquiryType}
               htmlFor="email"
               className="block text-sm font-normal text-gray-300 mb-1"
             >
-              Email *
+              Email
             </label>
             <input
               type="email"
@@ -242,7 +242,7 @@ Enquiry Type: ${formData.enquiryType}
               htmlFor="company"
               className="block text-sm font-normal text-gray-300 mb-1"
             >
-              Company *
+              Company
             </label>
             <input
               type="text"
@@ -265,7 +265,7 @@ Enquiry Type: ${formData.enquiryType}
                 htmlFor="country"
                 className="block text-sm font-normal text-gray-300 mb-1"
               >
-                Country *
+                Country
               </label>
               <select
                 id="country"
