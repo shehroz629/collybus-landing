@@ -253,6 +253,12 @@ const ContactForm = () => {
               placeholder="Enter your phone number"
               value={formData.phoneNumber}
               onChange={handleChange}
+              onKeyPress={(e) => {
+                if (!/[0-9+\-\(\)\s]/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+              pattern="[0-9+\-\(\)\s]+"
               required
             />
           </div>
