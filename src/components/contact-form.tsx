@@ -191,7 +191,11 @@ const ContactForm = () => {
                 type="text"
                 id="firstName"
                 name="firstName"
-                onkeydown="return /[a-z]/i.test(event.key)" 
+                onKeyDown={(e) => {
+                  if (!/[a-z]/i.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                    e.preventDefault();
+                  }
+                }}
                 autoComplete="new-password"
                 data-form-type="other"
                 className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
@@ -212,7 +216,11 @@ const ContactForm = () => {
                 id="lastName"
                 name="lastName"
                 autoComplete="new-password"
-                onkeydown="return /[a-z]/i.test(event.key)" 
+                onKeyDown={(e) => {
+                  if (!/[a-z]/i.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'Tab' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+                    e.preventDefault();
+                  }
+                }}
                 data-form-type="other"
                 className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                   focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
