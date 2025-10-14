@@ -73,7 +73,27 @@ const ContactForm = () => {
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const validatePhone = (phone: string) => /^[0-9+\-\(\)\s]{7,20}$/.test(phone);
+  const validatePhone = (phone: string) => {
+    // Remove all non-numeric characters except + at the start
+    const cleaned = phone.replace(/[^\d+]/g, '');
+    
+    // Check if it starts with + (international format)
+    const hasPlus = cleaned.startsWith('+');
+    const digitsOnly = cleaned.replace(/\+/g, '');
+    
+    // Must have between 7 and 15 digits (international standard)
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      return false;
+    }
+    
+    // Valid phone number patterns:
+    // - International: +[country code][number] (e.g., +1234567890)
+    // - National: starts with digit, 7-15 digits
+    // - Can contain spaces, hyphens, parentheses for formatting
+    const phonePattern = /^[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}$/;
+    
+    return phonePattern.test(phone.trim());
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,7 +118,7 @@ const ContactForm = () => {
 
     if (!validatePhone(formData.phoneNumber)) {
       setErrorMessage(
-        "Please enter a valid phone number (7-20 characters)."
+        "Please enter a valid phone number (7-15 digits, international format supported)."
       );
       setSubmitStatus("error");
       setIsSubmitting(false);
@@ -268,15 +288,16 @@ const ContactForm = () => {
               className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                 focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                 backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"
-              placeholder="Enter your phone number"
+              placeholder="e.g., +1 (555) 123-4567 or 1234567890"
               value={formData.phoneNumber}
               onChange={handleChange}
               onKeyPress={(e) => {
-                if (!/[0-9+\-\(\)\s]/.test(e.key)) {
+                // Allow only numbers, +, -, (, ), spaces, and .
+                if (!/[0-9+\-\(\)\s\.]/.test(e.key)) {
                   e.preventDefault();
                 }
               }}
-              pattern="[0-9+\-\(\)\s]+"
+              title="Enter a valid phone number with 7-15 digits. International format (+country code) is supported."
               required
             />
           </div>
