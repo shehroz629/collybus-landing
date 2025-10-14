@@ -25,8 +25,9 @@ const FloatingCTAComponent = () => {
     <>
       <button
         onClick={openModal}
+        aria-label="Open contact form"
         className={`
-          fixed bottom-8 right-8 
+          fixed bottom-20 md:bottom-8 right-4 md:right-8 
           bg-[#f2c016] hover:bg-[#d9ad14] 
           text-black font-semibold 
           px-6 py-3 
@@ -61,7 +62,7 @@ const FloatingCTAComponent = () => {
       {/* Modal */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-md"
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 backdrop-blur-md p-2 sm:p-4"
           onClick={handleModalClick}
         >
           <div 
@@ -81,7 +82,7 @@ const FloatingCTAComponent = () => {
             >
               &times;
             </button>
-            <div className="px-6 py-8">
+            <div className="px-3 sm:px-6 py-6 sm:py-8">
               <ContactForm />
             </div>
           </div>

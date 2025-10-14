@@ -73,7 +73,7 @@ const ContactForm = () => {
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const validatePhone = (phone: string) => /^\d{7,15}$/.test(phone);
+  const validatePhone = (phone: string) => /^[0-9+\-\(\)\s]{7,20}$/.test(phone);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,7 +98,7 @@ const ContactForm = () => {
 
     if (!validatePhone(formData.phoneNumber)) {
       setErrorMessage(
-        "Please enter a valid phone number (digits only, 7-15 characters)."
+        "Please enter a valid phone number (7-20 characters)."
       );
       setSubmitStatus("error");
       setIsSubmitting(false);
@@ -180,7 +180,7 @@ const ContactForm = () => {
           <h2 className="text-2xl font-semibold">Get In Touch</h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl space-y-6 p-6 rounded-lg">
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl space-y-6 p-6 rounded-lg" autoComplete="off">
           {/* Name fields */}
           <div className="flex space-x-4">
             <div className="flex-1">
@@ -191,6 +191,9 @@ const ContactForm = () => {
                 type="text"
                 id="firstName"
                 name="firstName"
+                onkeydown="return /[a-z]/i.test(event.key)" 
+                autoComplete="new-password"
+                data-form-type="other"
                 className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                   focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                   backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"
@@ -208,6 +211,9 @@ const ContactForm = () => {
                 type="text"
                 id="lastName"
                 name="lastName"
+                autoComplete="new-password"
+                onkeydown="return /[a-z]/i.test(event.key)" 
+                data-form-type="other"
                 className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                   focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                   backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"
@@ -228,6 +234,8 @@ const ContactForm = () => {
               type="email"
               id="email"
               name="email"
+              autoComplete="new-password"
+              data-form-type="other"
               className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                 focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                 backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"
@@ -247,6 +255,8 @@ const ContactForm = () => {
               type="tel"
               id="phoneNumber"
               name="phoneNumber"
+              autoComplete="new-password"
+              data-form-type="other"
               className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                 focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                 backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"
@@ -272,6 +282,8 @@ const ContactForm = () => {
               type="text"
               id="company"
               name="company"
+              autoComplete="new-password"
+              data-form-type="other"
               className="w-full p-3 bg-black/20 text-white border border-gray-700 rounded-sm 
                 focus:ring-[#f2c016] focus:border-[#f2c016] transition-all duration-300 ease-in-out
                 backdrop-blur-sm placeholder-gray-500 hover:border-gray-500"

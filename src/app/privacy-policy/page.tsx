@@ -13,16 +13,16 @@ const PrivacyPolicyPage = () => {
     // The main wrapper for this page's content, distinct from the global layout
     <div className="bg-black text-gray-200 pt-20 md:pt-24 pb-8 md:pb-12">
       {/* Added more top padding to account for fixed header */}
-      <div className="container mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Gold Banner for Page Title */}
-        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12">
+        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12 rounded-2xl">
           <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Privacy Policy
           </h1>
         </div>
 
         {/* Prose content for the policy details */}
-        <div className="prose prose-invert max-w-none text-gray-200 font-thin prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-strong:font-semibold">
+        <div className="prose prose-invert max-w-none text-gray-200 font-thin prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-headings:text-xl prose-headings:text-white prose-strong:font-semibold prose-strong:text-white">
           <p>
             <strong>INTRODUCTION</strong>
           </p>

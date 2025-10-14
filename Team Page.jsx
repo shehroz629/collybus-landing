@@ -96,6 +96,17 @@ import TradingViewWidget from "./src/components/TradingViewWidget";
 import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
 
 export default function TeamFocused() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const founders = [
     { name: "Peter Jacobson", role: "Co-Founder & CEO", body: "Peter Jacobson is a seasoned professional in the foreign exchange (FX) industry, bringing over 30 years of trading expertise across global financial hubs including London, Tokyo, Singapore, and Sydney. With a sharp eye for market structure and a passion for innovation in electronic execution, Peter continues to be a thought leader in the space." },
     { name: "Greg O'Sullivan", role: "Co-Founder & CRO", body: "Greg is a seasoned financial markets executive with over 20 years of experience in institutional sales, business development, and strategic leadership across Asia-Pacific. He is known for his strategic vision, strong client relationships, and deep expertise in institutional finance and electronic trading technologies. At COLLYBUS, he brings this experience to bear in shaping the future of digital asset trading." },
@@ -147,15 +158,15 @@ export default function TeamFocused() {
                 <motion.div
                   key={f.name}
                   className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch w-full mx-auto"
-                  variants={cardContainer}
-                  initial="hidden"
-                  whileInView="show"
+                  variants={!isMobile ? cardContainer : { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }}
+                  initial={!isMobile ? "hidden" : "show"}
+                  whileInView={!isMobile ? "show" : "show"}
                   viewport={{ once: true, amount: 0.01 }}
                 >
                   {/* Image half */}
                   <motion.div
                     className={`rounded-2xl border border-white/10 bg-white/5 overflow-hidden ${reversed ? 'md:order-2' : ''} w-full max-w-xs sm:max-w-sm md:max-w-none mx-auto`}
-                    variants={reversed ? panelRight : panelLeft}
+                    variants={!isMobile ? (reversed ? panelRight : panelLeft) : { hidden: { opacity: 1, x: 0 }, show: { opacity: 1, x: 0 } }}
                   >
                     <div className="h-64 md:h-[420px] w-full bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center">
                       <img
@@ -180,7 +191,7 @@ export default function TeamFocused() {
                   {/* Text half */}
                   <motion.div
                     className={`${reversed ? 'md:order-1' : ''} flex`}
-                    variants={reversed ? panelLeft : panelRight}
+                    variants={!isMobile ? (reversed ? panelLeft : panelRight) : { hidden: { opacity: 1, x: 0 }, show: { opacity: 1, x: 0 } }}
                   >
                     <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 flex flex-col justify-center" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                       {/* Responsive adjustments for text container */}

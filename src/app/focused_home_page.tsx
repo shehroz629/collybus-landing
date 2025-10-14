@@ -378,7 +378,7 @@ function HomeFocused() {
       <Section eyebrow="Integrations" title="Venues • Data • Custody • OMS/PMS" id="integrations">
   <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4 opacity-80">
           {/* Existing logos */}
-          <a href="https://www.kc.com/" target="_blank" rel="noopener noreferrer" className="ku-coin rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
+          <a href="https://www.kucoin.com/" target="_blank" rel="noopener noreferrer" className="ku-coin rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
             <img src="https://assets.staticimg.com/web-domain-relation/1.9.13/kc/logo.svg" alt="KC" style={{height:'2.1rem'}} className="max-h-full w-auto object-contain" />
           </a>
           <a href="https://www.binance.com/" target="_blank" rel="noopener noreferrer" className="binance rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
@@ -390,7 +390,7 @@ function HomeFocused() {
           <a href="https://www.deribit.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
             <img src="https://cdn.brandfetch.io/idCB3UIXIk/theme/light/logo.svg?c=1bxid64Mup7aczewSAYMX&t=1755240691674" style={{height:'2.4rem'}} alt="Deribit" className="max-h-full w-auto object-contain" />
           </a>
-          <a href="https://www.logo.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
+          <a href="https://www.okx.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAABICAQAAADSOpYzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAAFiUAABYlAUlSJPAAAAAHdElNRQfmBwMNKhI4Vg/yAAABMklEQVR42u3aQW6DMBBAUZyT5eSFE/RInS5psOKx8Scq0n9ZNXjA+VE3VpZFkiRJkiShYo0rrYPPWyf3+3VYXZL138nTuudLxLVfVCmHrcXY+uqjteejPF7/XH5G1teXe+ebt1E/Q0IMCTEkxJAQQ0IMCTEkxJAQQ0IMCTEkxJCQ+4XcBq+Orj87n54oPlv3iWc2Xk3A55tzZs8rd+l55OT54PB5ZLrhMjd/2M3keeXufv/a/5QhIYaEGBJiSIghIYaEGBJiSIghIYaEGBJiSEgaMjtG+/B+tw/f8eVqlPq1X7xYlX5wfTXfPj/095Hv1tdfRPLJ/X3kvRkSYkiIISGGhBgSYkiIISGGhBgSYkiIISGGhDwuOOH7a+t4p//qmflticYrf946OS9JkiRJkk75BUgSur6QrNyYAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA3LTAzVDEzOjQyOjE4KzAwOjAwKpbwNQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNy0wM1QxMzo0MjoxOCswMDowMFvLSIkAAAAASUVORK5CYII=" alt="Logo" className="max-h-full w-auto object-contain" />
           </a>
           <a href="https://www.kraken.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-white/5 border border-white/10 flex items-center justify-center h-15 md:h-20 p-3">

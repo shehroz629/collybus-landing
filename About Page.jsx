@@ -90,13 +90,30 @@ function Section({ eyebrow, title, children, subdued=false }) {
 }
 function Pill({ icon: Icon, title, text }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
-        <div className="text-white font-medium">{title}</div>
+    <motion.div 
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      transition={{ 
+        type: "spring",
+        stiffness: 300,
+        damping: 10
+      }}
+      variants={{
+        rest: { scale: 1 },
+        hover: { scale: 1.02 }
+      }}
+      className="relative rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.08] transition-all duration-300 group"
+    >
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"/>
+      <div className="relative z-10">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
+          <div className="text-white font-medium">{title}</div>
+        </div>
+        <div className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{text}</div>
       </div>
-      <div className="text-sm text-white/70 leading-relaxed">{text}</div>
-    </div>
+    </motion.div>
   );
 }
 function PlaceholderShot({ label = "Timeline / milestones" }) {
@@ -154,24 +171,11 @@ export default function AboutFocused() {
 
   {/* Footer removed, use main site footer */}
       </main>
-      <FloatingCTA />
     </div>
   );
 }
 
 /* ===== CTA + Footer ===== */
-function FloatingCTA() {
-  return (
-    <a
-      href="mailto:hello@collybus.co"
-      className="group fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 focus:outline-none"
-      style={{ background: BRAND, color: "black", boxShadow: `0 0 0 1px ${hexToRgba(BRAND, 0.2)}, 0 4px 12px ${hexToRgba(BRAND, 0.18)}, 0 0 24px ${hexToRgba(BRAND, 0.12)}` }}
-      aria-label="Get in touch"
-    >
-      <Mail size={16} /> Get in Touch
-    </a>
-  );
-}
 
 function Footer() {
   return (

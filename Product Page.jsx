@@ -214,24 +214,11 @@ export default function ProductFocused() {
         </Section>
         {/* <Footer /> */}
       </main>
-      <FloatingCTA />
     </div>
   );
 }
 
 /* ===== CTA + Footer ===== */
-function FloatingCTA() {
-  return (
-    <a
-      href="mailto:hello@collybus.co"
-      className="group fixed bottom-5 right-5 md:bottom-8 md:right-8 z-50 inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 focus:outline-none"
-      style={{ background: BRAND, color: "black", boxShadow: `0 0 0 1px ${hexToRgba(BRAND, 0.2)}, 0 4px 12px ${hexToRgba(BRAND, 0.18)}, 0 0 24px ${hexToRgba(BRAND, 0.12)}` }}
-      aria-label="Get in touch"
-    >
-      <Mail size={16} /> Get in Touch
-    </a>
-  );
-}
 
 function Footer() {
   return (
