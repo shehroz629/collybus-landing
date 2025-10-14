@@ -1,9 +1,9 @@
 import emailjs from '@emailjs/browser';
 
 // EmailJS configuration - replace these with your actual EmailJS IDs
-const EMAILJS_PUBLIC_KEY = 'GBIGoDPQoZ5qUjDD0';
-const EMAILJS_SERVICE_ID = 'service_o3x6gt3';
-const EMAILJS_TEMPLATE_ID = 'template_niawlc4';
+const EMAILJS_PUBLIC_KEY = 'RgVnlXZxiSWHyxK9V';
+const EMAILJS_SERVICE_ID = 'service_xacc01r';
+const EMAILJS_TEMPLATE_ID = 'template_cymjgsx';
 
 interface ContactFormData {
   firstName: string;
@@ -30,7 +30,7 @@ export const sendContactFormEmail = async (formData: ContactFormData) => {
     country: formData.country,
     enquiry_type: formData.enquiryType,
     message: `New contact form submission from Collybus landing page.`,
-    to_email: 'khanshehroz629@gmail.com',
+    to_email: 'contact@collybus.co',
   };
 
   return emailjs.send(
