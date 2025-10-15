@@ -11,6 +11,7 @@ import { getData } from "country-list";
 import Link from "next/link";
 import emailjs from "@emailjs/browser";
 import { Mail, X } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface CountryOption {
   value: string;
@@ -25,17 +26,6 @@ interface ContactFormPopupProps {
 const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     emailjs.init("RgVnlXZxiSWHyxK9V");
-
-    // Load reCAPTCHA script
-    const scriptId = "recaptcha-v3-script";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src =
-        "https://www.google.com/recaptcha/api.js?render=6LeC0-krAAAAAIxQykHhCTH7ekL4P2ZziSpxDmYR";
-      script.async = true;
-      document.body.appendChild(script);
-    }
   }, []);
 
   const [formData, setFormData] = useState({
@@ -49,6 +39,9 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) 
     termsAccepted: false,
     privacyAccepted: false,
   });
+
+  // Add state for reCAPTCHA token
+  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -133,18 +126,15 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) 
       return;
     }
 
-    try {
-      // Execute reCAPTCHA v3
-      let recaptchaToken = "";
-      if (window.grecaptcha) {
-        recaptchaToken = await window.grecaptcha.execute(
-          "6LeC0-krAAAAAIxQykHhCTH7ekL4P2ZziSpxDmYR",
-          { action: "submit" }
-        );
-      } else {
-        throw new Error("reCAPTCHA not loaded");
-      }
+    // Check reCAPTCHA token
+    if (!recaptchaToken) {
+      setErrorMessage("Please complete the reCAPTCHA.");
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      return;
+    }
 
+    try {
       const templateParams = {
         user_name: `${formData.firstName} ${formData.lastName}`,
         user_email: formData.email,
@@ -186,7 +176,7 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) 
           termsAccepted: false,
           privacyAccepted: false,
         });
-        
+        setRecaptchaToken("");
         // Close popup after 2 seconds on success
         setTimeout(() => {
           onClose();
@@ -204,6 +194,17 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) 
     }
 
     setIsSubmitting(false);
+  };
+
+  const handleRecaptcha = (token: string | null) => {
+    if (!token) {
+      setErrorMessage("reCAPTCHA verification failed, please try again.");
+      setSubmitStatus("error");
+      setIsSubmitting(false);
+      setRecaptchaToken("");
+      return;
+    }
+    setRecaptchaToken(token);
   };
 
   if (!isOpen) return null;
@@ -414,6 +415,13 @@ const ContactFormPopup: React.FC<ContactFormPopupProps> = ({ isOpen, onClose }) 
                 </label>
               </div>
             </div>
+
+            {/* reCAPTCHA */}
+            <ReCAPTCHA
+              sitekey="6LdtCOsrAAAAAFp2TgRZubl4c1mmXgNUWrtsNAHj"
+              onChange={handleRecaptcha}
+              theme="light"
+            />
 
             {/* Submit */}
             <button

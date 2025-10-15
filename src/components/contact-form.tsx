@@ -399,6 +399,29 @@ const ContactForm = () => {
             </div>
           </div>
 
+          {/* reCAPTCHA Notice */}
+          <div className="text-xs text-gray-400 text-center py-2">
+            This site is protected by reCAPTCHA and the Google{" "}
+            <a 
+              href="https://policies.google.com/privacy" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#f2c016] hover:underline"
+            >
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a 
+              href="https://policies.google.com/terms" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#f2c016] hover:underline"
+            >
+              Terms of Service
+            </a>{" "}
+            apply.
+          </div>
+
           {/* Submit */}
           <button
             type="submit"
