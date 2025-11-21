@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import mixpanel from "mixpanel-browser";
 
 // Production token
 const MIXPANEL_TOKEN = "9a450838f22921c823ae625793e996fa";
@@ -13,12 +12,19 @@ const MixpanelInitializer = () => {
       process.env.NODE_ENV === "production" &&
       typeof window !== "undefined"
     ) {
-      mixpanel.init(MIXPANEL_TOKEN, {
-        autocapture: true,
-        track_pageview: true,
-      });
+      import("mixpanel-browser")
+        .then((mod) => {
+          const mp = mod.default ?? mod;
+          mp.init(MIXPANEL_TOKEN, {
+            autocapture: true,
+            track_pageview: true,
+          });
+        })
+        .catch(() => {
+          // no-op
+        });
     }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
   return null; // This component doesn't render anything visible
 };

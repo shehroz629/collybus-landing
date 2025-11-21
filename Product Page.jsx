@@ -19,7 +19,7 @@ function HeroBackground() {
   const glow1 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.2)}, ${hexToRgba(BRAND,0)} 60%)`;
   const glow2 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.12)}, ${hexToRgba(BRAND,0)} 60%)`;
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden ">
       {/* aurora glows */}
       <motion.div className="absolute -top-1/3 -left-1/4 w-[60vw] h-[60vw] rounded-full blur-3xl" style={{ background: glow1 }} animate={{ rotate: 360 }} transition={{ duration: 80, repeat: Infinity, ease: "linear" }}/>
       <motion.div className="absolute -bottom-1/3 -right-1/4 w-[50vw] h-[50vw] rounded-full blur-3xl" style={{ background: glow2 }} animate={{ rotate: -360 }} transition={{ duration: 90, repeat: Infinity, ease: "linear" }}/>
@@ -154,7 +154,7 @@ export default function ProductFocused() {
             <PlaceholderShot label="Funding trends + alerts" />
           </div>
         </Section> */}
-        <Section eyebrow="Our Solutions" title="Choose the engagement that fits">
+        <Section eyebrow="" title="Choose the engagement that fits">
           <div className="grid md:grid-cols-3 gap-6">
             {/* Core GUI Solution */}
             <motion.div
@@ -170,7 +170,7 @@ export default function ProductFocused() {
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>Core GUI</div>
                 <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  Institutional desktop. Execution, risk, and funding on one screen.
+                  Institutional desktop. Execution, risk, and funding on one screen. Institutional desktop. Execution, risk, and funding on one screen. Institutional desktop. Execution, risk, and funding on one screen.
                 </div>
               </div>
             </motion.div>
@@ -188,7 +188,7 @@ export default function ProductFocused() {
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>API</div>
                 <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  Programmatic access. REST/WebSocket with reporting built in.
+                  Programmatic access. REST/WebSocket with reporting built in. Programmatic access. REST/WebSocket with reporting built in. Programmatic access. REST/WebSocket with reporting built in.
                 </div>
               </div>
             </motion.div>
@@ -206,7 +206,7 @@ export default function ProductFocused() {
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>White-label</div>
                 <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  Branded front-end. Themes, SSO, and SLAs under your brand.
+                  Branded front-end. Themes, SSO, and SLAs under your brand.  Branded front-end. Themes, SSO, and SLAs under your brand.  Branded front-end. Themes, SSO, and SLAs under your brand.
                 </div>
               </div>
             </motion.div>

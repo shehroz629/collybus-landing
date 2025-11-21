@@ -1,3 +1,4 @@
-"use client";
-import ProductFocused from '../../../Product Page.jsx';
-export default ProductFocused;
+import ProductPageClient from './ProductPageClient';
+export default function Page() {
+  return <ProductPageClient/>;
+}
