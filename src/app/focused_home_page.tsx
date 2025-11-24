@@ -23,13 +23,22 @@ const hexToRgba = (hex: string, a: number) => {
 };
 // moved founders section to a client component to avoid hydration mismatch
       const founders = [
-        { name: "PJ", role: "Co-Founder & CEO", photo: "/images/Peter Jacobson.jpg" },
-        { name: "GO'S", role: "Co-Founder & CRO", photo: "/images/Greg O'Sullivan.jpg" },
+        { name: "PJ", role: "Co-Founder & Co-CEO", photo: "/images/Peter Jacobson.jpg" },
+        { name: "GO'S", role: "Co-Founder & Co-CEO", photo: "/images/Greg O'Sullivan.jpg" },
         { name: "Johnny", role: "Co-Founder & CCO", photo: "/images/Jonathan Wharton.jpg" },
         { name: "JD", role: "Co-Founder & CTO", photo: "/images/James Dalton.jpg" },
       ];
 /* ===== Hero Background (tickers + glow) ===== */
 function HeroBackground() {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   const glow1 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.2)}, ${hexToRgba(BRAND,0)} 60%)`;
   const glow2 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.12)}, ${hexToRgba(BRAND,0)} 60%)`;
   return (
@@ -41,7 +50,17 @@ function HeroBackground() {
       <div className="absolute top-0 left-0 w-[800px] h-[800px] pointer-events-none" style={{ backgroundImage: 'url(/uploaded_image_1.png)', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'top left', opacity: 0.6 }} />
 
       {/* World Map Background - Animated */}
-      <div className="absolute top-0 bottom-0 left-0 w-[40%] pointer-events-none overflow-hidden" style={{ maskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 100%)' }}>
+      <div 
+        className="absolute top-0 bottom-0 left-0 w-full md:w-[40%] pointer-events-none overflow-hidden"
+        style={{
+          maskImage: isMobile 
+            ? 'linear-gradient(to right, black 0%, black 100%, transparent 100%)'
+            : 'linear-gradient(to right, black 0%, black 40%, transparent 100%)',
+          WebkitMaskImage: isMobile
+            ? 'linear-gradient(to right, black 0%, black 100%, transparent 100%)'
+            : 'linear-gradient(to right, black 0%, black 40%, transparent 100%)'
+        }}
+      >
         <motion.div 
           className="flex h-full w-[300%]"
           initial={{ x: "0%" }} 
@@ -78,24 +97,24 @@ function Hero({ title, subtitle, text }: HeroProps) {
   return (
     <section className="relative overflow-hidden min-h-[90vh] flex items-center justify-center z-0">
       <HeroBackground />
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 relative z-10 w-full flex flex-col items-center text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-20 md:pb-24 relative z-10 w-full flex flex-col items-center text-center">
         
           <motion.h1 
             initial={{ opacity: 0, y: 16 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ duration: 0.5 }} 
-            className="font-semibold tracking-tight text-white mb-6" 
-            style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '96px', lineHeight: '1.1' }}
+            className="font-semibold tracking-tight text-white mb-6 text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem]" 
+            style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }}
           >
-            <span style={{ color: BRAND }}>COLLYBUS:</span> The Institutional<br />Trading Workspace
+            <span style={{ color: BRAND }}>COLLYBUS:</span> The Institutional<br className="hidden sm:block" /> Trading Workspace
           </motion.h1>
           
           <motion.h2 
             initial={{ opacity: 0, y: 16 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.1, duration: 0.5 }} 
-            className="font-medium mb-8"
-            style={{ fontSize: '56px', lineHeight: '1.2', color: '#FFFFFF99' }}
+            className="font-medium mb-8 text-xl sm:text-2xl md:text-3xl lg:text-4xl"
+            style={{ lineHeight: '1.2', color: '#FFFFFF99' }}
           >
             {subtitle}
           </motion.h2>
@@ -104,8 +123,8 @@ function Hero({ title, subtitle, text }: HeroProps) {
             initial={{ opacity: 0, y: 10 }} 
             animate={{ opacity: 1, y: 0 }} 
             transition={{ delay: 0.2, duration: 0.5 }} 
-            className="text-white/80 max-w-4xl mx-auto"
-            style={{ fontSize: '18px', lineHeight: '1.6' }}
+            className="text-white/80 max-w-4xl mx-auto text-base sm:text-lg md:text-xl"
+            style={{ lineHeight: '1.6' }}
           >
             {text}
           </motion.p>
@@ -162,7 +181,7 @@ interface FlipValueCardProps {
 function FlipValueCard({ icon: Icon, title, desc }: FlipValueCardProps) {
   return (
     <div className="relative [perspective:1000px]">
-      <motion.div initial="front" whileHover="back" className="relative h-36 z-10" style={{ transformStyle: "preserve-3d" }}>
+      <motion.div initial="front" whileHover="back" className="relative h-24 sm:h-32 md:h-36 z-10" style={{ transformStyle: "preserve-3d" }}>
         <motion.div variants={{ front: { rotateY: 0 }, back: { rotateY: 180 } }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col items-center justify-center gap-3 text-center" style={{ backfaceVisibility: "hidden" }}>
           <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
           <div className="text-white font-medium leading-tight">{title}</div>
@@ -183,7 +202,7 @@ interface ValueFlipCardProps {
 }
 function ValueFlipCard({ imageSrc, title, desc }: ValueFlipCardProps) {
   return (
-    <div className="relative [perspective:1000px] h-64 w-full">
+    <div className="relative [perspective:1000px] h-48 sm:h-56 md:h-64 w-full">
       <motion.div initial="front" whileHover="back" className="relative h-full w-full z-10" style={{ transformStyle: "preserve-3d" }}>
         {/* Front Side */}
         <motion.div 
@@ -195,7 +214,7 @@ function ValueFlipCard({ imageSrc, title, desc }: ValueFlipCardProps) {
           <div className="w-16 h-16 flex items-center justify-center">
             <img src={imageSrc} alt={title} className="w-12 h-12 object-contain" />
           </div>
-          <div className="text-white font-medium leading-tight" style={{ fontSize: '28px', color: '#F2C016' }}>{title}</div>
+          <div className="text-white font-medium leading-tight text-base sm:text-lg md:text-xl" style={{ color: '#F2C016' }}>{title}</div>
         </motion.div>
         
         {/* Back Side */}
@@ -205,7 +224,7 @@ function ValueFlipCard({ imageSrc, title, desc }: ValueFlipCardProps) {
           className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-8 flex items-center justify-center text-center" 
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
         >
-          <p className="text-lg text-white/80 leading-relaxed">{desc}</p>
+          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed">{desc}</p>
         </motion.div>
       </motion.div>
     </div>
@@ -219,29 +238,29 @@ interface ExecutionFlipCardProps {
 }
 function ExecutionFlipCard({ iconSrc, title, desc }: ExecutionFlipCardProps) {
   return (
-    <div className="relative [perspective:1000px] h-80 w-full">
+    <div className="relative [perspective:1000px] h-48 sm:h-64 md:h-80 w-full">
       <motion.div initial="front" whileHover="back" className="relative h-full w-full z-10" style={{ transformStyle: "preserve-3d" }}>
         {/* Front Side */}
         <motion.div 
           variants={{ front: { rotateY: 0 }, back: { rotateY: 180 } }} 
           transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col items-center justify-center gap-6 text-center" 
+          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-6 text-center" 
           style={{ backfaceVisibility: "hidden", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
         >
-          <div className="w-16 h-16 flex items-center justify-center exc-img">
-            <img src={iconSrc} alt={title} className="w-12 h-12 object-contain" />
+          <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center exc-img">
+            <img src={iconSrc} alt={title} className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
           </div>
-          <div className="text-white font-medium leading-tight" style={{ fontSize: '28px', color: '#F2C016' }}>{title}</div>
+          <div className="text-white font-medium leading-tight text-base sm:text-lg md:text-xl" style={{ color: '#F2C016' }}>{title}</div>
         </motion.div>
         
         {/* Back Side */}
         <motion.div 
           variants={{ front: { rotateY: -180 }, back: { rotateY: 0 } }} 
           transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-8 flex items-center justify-center text-center bg-neutral-900" 
+          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 md:p-8 flex items-center justify-center text-center bg-neutral-900" 
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
         >
-          <p className="text-lg text-white/80 leading-relaxed">{desc}</p>
+          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed">{desc}</p>
         </motion.div>
       </motion.div>
     </div>
@@ -258,7 +277,7 @@ interface SectionProps {
 function Section({ eyebrow, title, children, subdued = false, id }: SectionProps) {
   return (
     <section id={id} className={`${subdued ? "bg-white/[0.02]" : ""} border-t border-white/10`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-14">
         <div className="mb-8">
           {eyebrow && <div className="text-[11px] uppercase tracking-[0.22em] text-white/50">{eyebrow}</div>}
           {title && (
@@ -371,16 +390,16 @@ function HomeFocused() {
       />
 
       <section className="border-t execute border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="mb-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+          <div className="mb-8 sm:mb-12 md:mb-16">
             <h2
-              className="font-semibold text-white leading-tight"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '60px' }}
+              className="font-semibold text-white leading-tight text-[35px] sm:text-4xl md:text-5xl lg:text-6xl"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
-              Execution That Matches<br />Your Process
+              Execution That Matches<br className="hidden sm:block" />Your Process
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <ExecutionFlipCard 
              
               iconSrc="/multi-venue-visibility.png" 
@@ -406,11 +425,11 @@ function HomeFocused() {
 
       {/* Founders Section */}
       <section className="bg-white/[0.02] border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-14">
           <div className="mb-8">
             <h2
-              className="font-semibold text-white pt-6 pb-6"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '60px' }}
+              className="font-semibold text-white pt-6 pb-6 text-[35px] sm:text-4xl md:text-5xl lg:text-6xl"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               Meet our founders
             </h2>
@@ -442,16 +461,16 @@ function HomeFocused() {
 
       {/* Values Section */}
       <section className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12 md:py-14">
           <div className="mb-8">
             <h2
-              className="font-semibold text-white pt-6 pb-6"
-              style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '60px' }}
+              className="font-semibold text-white pt-6 pb-6 text-[35px] sm:text-4xl md:text-5xl lg:text-6xl"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               Our Values
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <ValueFlipCard imageSrc="/client-first.png" title="Client-First" desc="We measure success by desk outcomes and long-term trust." />
             <ValueFlipCard imageSrc="/Security.png" title="Security" desc="Encrypted Keys, permissions, and audit trails." />
             <ValueFlipCard imageSrc="/reliability.png" title="Reliability" desc="Dependable systems for 24/7 markets." />

@@ -115,9 +115,9 @@ function Hero({ title, subtitle }: { title: React.ReactNode; subtitle: string })
   );
 }
 
-function Section({ eyebrow, title, children, subdued = false, titleClassName, titleStyle }: { eyebrow?: string; title?: React.ReactNode; children: React.ReactNode; subdued?: boolean; titleClassName?: string; titleStyle?: React.CSSProperties }) {
+function Section({ eyebrow, title, children, subdued = false, titleClassName, titleStyle, className }: { eyebrow?: string; title?: React.ReactNode; children: React.ReactNode; subdued?: boolean; titleClassName?: string; titleStyle?: React.CSSProperties; className?: string }) {
   return (
-    <section className={`${subdued ? "bg-white/[0.02]" : ""}`} style={{ fontFamily: "Montserrat, sans-serif" }}>
+    <section className={`${subdued ? "bg-white/[0.02]" : ""} ${className || ""}`} style={{ fontFamily: "Montserrat, sans-serif" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="mb-8">
           {eyebrow && (
@@ -149,10 +149,10 @@ function Pill({ icon: Icon, title, text }: { icon: React.ElementType | null; tit
       >
         {/* Front */}
         <div className="absolute inset-0 flex flex-col items-center justify-center [backface-visibility:hidden]">
-          <div className="w-16 h-16 flex items-center justify-center mb-4 exc-img">
-            {Icon ? <Icon size={48} color={BRAND} /> : null}
+          <div className="w-[30px] h-[30px] flex items-center justify-center mb-4 exc-img">
+            {Icon ? <Icon size={30} color={BRAND} /> : null}
           </div>
-          <div className="text-center leading-tight" style={{ fontSize: '28px', color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
+          <div className="text-center leading-tight text-lg sm:text-xl md:text-2xl" style={{ color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
             {title}
           </div>
         </div>
@@ -195,7 +195,7 @@ function WhatDesksGainCard({ iconSrc, title, text }: { iconSrc: string; title: s
           <div className="w-16 h-16 flex items-center justify-center mb-4 exc-img">
             <img src={iconSrc} alt={title} className="w-12 h-12 object-contain" />
           </div>
-          <div className="text-center leading-tight" style={{ fontSize: '28px', color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
+          <div className="text-center leading-tight text-lg sm:text-xl md:text-2xl" style={{ color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
             {title}
           </div>
         </div>
@@ -360,7 +360,7 @@ function EngagementTabs() {
             <div className="w-16 h-16 flex items-center justify-center exc-img">
               <img src={active.icon} alt="" className="w-12 h-12 object-contain" />
             </div>
-            <div className="leading-tight" style={{ fontSize: '28px', color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>{active.title}</div>
+            <div className="leading-tight text-lg sm:text-xl md:text-2xl" style={{ color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>{active.title}</div>
             <div className="text-white/70 text-sm leading-relaxed" style={{ whiteSpace: "pre-line" }}>
               {active.text}
             </div>
@@ -404,7 +404,7 @@ export default function ProductPage() {
             <Pill icon={Shield} title="Security" text="Encrypted key management, IP allow‑listing, audit trails, and permissions." />
           </div>
         </Section>
-        <Section title="What Desks Gain" titleClassName="text-white font-semibold mt-2" titleStyle={{ fontSize: '48px' }}>
+        <Section title="What Desks Gain" titleClassName="text-white font-semibold mt-2 text-[35px] sm:text-4xl md:text-5xl lg:text-[48px]" titleStyle={{}} className="execute">
           <div className="grid md:grid-cols-3 gap-5">
             <WhatDesksGainCard
               iconSrc="/better-fill.png"
@@ -423,7 +423,7 @@ export default function ProductPage() {
             />
           </div>
         </Section>
-        <Section title="Venues • Data • Custody • OMS/PMS" titleClassName="text-white font-semibold mt-2" titleStyle={{ fontSize: '48px' }}>
+        <Section title="Venues • Data • Custody • OMS/PMS" titleClassName="text-white font-semibold mt-2 text-[35px] sm:text-4xl md:text-5xl lg:text-[48px]" titleStyle={{}}>
           <VenuesSection />
         </Section>
       </main>

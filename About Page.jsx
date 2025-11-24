@@ -39,15 +39,6 @@ function HeroBackground() {
           <motion.path key={i} d={p.keyframes[0]} animate={{ d: p.keyframes }} transition={{ duration: 10 + i * 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }} stroke={p.stroke} strokeWidth={p.width} fill="none" />
         ))}
       </svg>
-      {/* TradingViewWidget tickers overlayed like homepage */}
-      <div className="pointer-events-none">
-        <div className="absolute left-0 right-0 w-full" style={{ top: "4%" }}>
-          <TradingViewCryptoTicker />
-        </div>
-        <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-           <TradingViewWidget />
-        </div>
-      </div>
     </div>
   );
 }
@@ -90,30 +81,31 @@ function Section({ eyebrow, title, children, subdued=false }) {
 }
 function Pill({ icon: Icon, title, text }) {
   return (
-    <motion.div 
-      initial="rest"
-      whileHover="hover"
-      animate="rest"
-      transition={{ 
-        type: "spring",
-        stiffness: 300,
-        damping: 10
-      }}
-      variants={{
-        rest: { scale: 1 },
-        hover: { scale: 1.02 }
-      }}
-      className="relative rounded-2xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.08] transition-all duration-300 group"
-    >
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"/>
-      <div className="relative z-10">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
-          <div className="text-white font-medium">{title}</div>
+    <div className="group [perspective:1000px]" style={{ fontFamily: "Montserrat, sans-serif" }}>
+      <div
+        className="relative rounded-3xl border border-white/10 p-6 h-48 md:h-52 ring-1 ring-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.45)] transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-within:[transform:rotateY(180deg)]"
+        style={{
+          background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat",
+        }}
+        tabIndex={0}
+      >
+        {/* Front */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center [backface-visibility:hidden]">
+          <div className="w-16 h-16 flex items-center justify-center mb-4 exc-img">
+            {Icon ? <Icon size={48} color={BRAND} /> : null}
+          </div>
+          <div className="text-center leading-tight" style={{ fontSize: '20px', color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
+            {title}
+          </div>
         </div>
-        <div className="text-sm text-white/70 leading-relaxed group-hover:text-white/90 transition-colors duration-300">{text}</div>
+        {/* Back */}
+        <div className="absolute inset-0 flex items-center justify-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+          <div className="text-sm text-white/70 leading-relaxed text-center px-3">
+            {text}
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 function PlaceholderShot({ label = "Timeline / milestones" }) {
@@ -121,9 +113,6 @@ function PlaceholderShot({ label = "Timeline / milestones" }) {
 }
 
 /* ===== About page (focused) ===== */
-
-import TradingViewWidget from "./src/components/TradingViewWidget";
-import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
 
 export default function AboutFocused() {
   return (

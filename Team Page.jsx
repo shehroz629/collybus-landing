@@ -40,15 +40,6 @@ function HeroBackground() {
           <motion.path key={i} d={p.keyframes[0]} animate={{ d: p.keyframes }} transition={{ duration: 10 + i * 3, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }} stroke={p.stroke} strokeWidth={p.width} fill="none" />
         ))}
       </svg>
-      {/* TradingViewWidget tickers overlayed like homepage */}
-      <div className="pointer-events-none">
-        <div className="absolute left-0 right-0 w-full" style={{ top: "4%" }}>
-          <TradingViewCryptoTicker />
-        </div>
-        <div className="absolute left-0 right-0 w-full" style={{ bottom: 0 }}>
-           <TradingViewWidget />
-        </div>
-      </div>
     </div>
   );
 }
@@ -92,9 +83,6 @@ function Section({ eyebrow, title, children, id }) {
 
 /* ===== Team page (focused) ===== */
 
-import TradingViewWidget from "./src/components/TradingViewWidget";
-import TradingViewCryptoTicker from "./src/components/TradingViewCryptoTicker";
-
 export default function TeamFocused() {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -108,8 +96,8 @@ export default function TeamFocused() {
   }, []);
 
   const founders = [
-    { name: "Peter Jacobson", role: "Co-Founder & CEO", body: "Peter Jacobson is a seasoned professional in the foreign exchange (FX) industry, bringing over 30 years of trading expertise across global financial hubs including London, Tokyo, Singapore, and Sydney. With a sharp eye for market structure and a passion for innovation in electronic execution, Peter continues to be a thought leader in the space." },
-    { name: "Greg O'Sullivan", role: "Co-Founder & CRO", body: "Greg is a seasoned financial markets executive with over 20 years of experience in institutional sales, business development, and strategic leadership across Asia-Pacific. He is known for his strategic vision, strong client relationships, and deep expertise in institutional finance and electronic trading technologies. At COLLYBUS, he brings this experience to bear in shaping the future of digital asset trading." },
+    { name: "Peter Jacobson", role: "Co-Founder & Co-CEO", body: "Peter Jacobson is a seasoned professional in the foreign exchange (FX) industry, bringing over 30 years of trading expertise across global financial hubs including London, Tokyo, Singapore, and Sydney. With a sharp eye for market structure and a passion for innovation in electronic execution, Peter continues to be a thought leader in the space." },
+    { name: "Greg O'Sullivan", role: "Co-Founder & Co-CEO", body: "Greg is a seasoned financial markets executive with over 20 years of experience in institutional sales, business development, and strategic leadership across Asia-Pacific. He is known for his strategic vision, strong client relationships, and deep expertise in institutional finance and electronic trading technologies. At COLLYBUS, he brings this experience to bear in shaping the future of digital asset trading." },
     { name: "Jonathan Wharton", role: "Co-Founder & CCO", body: "Jonathan brings over 20 years of expertise from Rhicon Currency Management in London and Singapore, where he oversaw Operations, Risk, and Compliance. He has extensive experience with the FCA, MAS, SEC and NFA. His work with regulators ensures that COLLYBUS operates within the legal frameworks of every jurisdiction we serve." },
     { name: "James Dalton", role: "Co-Founder & CTO", body: "With over 30 years in banking and markets, including a decade in Technology & Operations, followed by 20 years in Electronic Execution and Trading, James has deep expertise in market microstructure and product innovation." },
   ];

@@ -55,6 +55,7 @@ const screens: ScreenItem[] = [
 export default function ScrollAnimationSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -66,6 +67,13 @@ export default function ScrollAnimationSection() {
       setScrollProgress(latest);
     });
   }, [scrollYProgress]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const APPEAR_PHASE_END = 0.35;
   const SCREEN_APPEAR_PHASE_END = 0.45; // New phase: Screen fades in
@@ -92,6 +100,24 @@ export default function ScrollAnimationSection() {
       const yOffset = (1 - fadeIn) * 100; // Move 100px up as they fade in
       // Zoom effect: scale from 0.6 to 1.0 as it fades in
       const scaleValue = 0.6 + (fadeIn * 0.4);
+      
+      // On mobile, position images one by one in center, not overlapping
+      if (isMobile) {
+        // Only show the current image if it's the one that should be visible
+        // Hide previous images when new ones appear
+        const currentOrder = Math.floor(scrollProgress * screens.length / APPEAR_PHASE_END);
+        const shouldShow = screen.order === currentOrder || fadeIn > 0.9;
+        
+        return {
+          positioning: "absolute" as const,
+          left: "50%",
+          top: "50%",
+          transform: `translate(-50%, -50%) scale(${scaleValue})`,
+          opacity: shouldShow ? fadeIn : 0,
+          zIndex: 15 + screen.order,
+        };
+      }
+      
       const baseTransform = screen.id === "streaming-options" ? "translate(-50%, -50%)" : "translate(0, 0)";
       
       return {
@@ -105,6 +131,18 @@ export default function ScrollAnimationSection() {
 
     // Phase 1.5: Screen Appears (Images stay still)
     if (scrollProgress < SCREEN_APPEAR_PHASE_END) {
+      if (isMobile) {
+        // On mobile, show all images that have appeared, all centered
+        return {
+          positioning: "absolute" as const,
+          left: "50%",
+          top: "50%",
+          transform: `translate(-50%, -50%) scale(1)`,
+          opacity: fadeIn > 0.1 ? 1 : 0,
+          zIndex: 15 + screen.order,
+        };
+      }
+      
       return {
         positioning: "absolute" as const,
         ...screen.initialPosition,
@@ -123,7 +161,14 @@ export default function ScrollAnimationSection() {
        progress = 1; // Fully merged
     }
       
-    const frameTargets: { [key: string]: { x: string; y: string; scale: number; width: string; height: string } } = {
+    // On mobile, all images merge to center (no grid layout)
+    const frameTargets: { [key: string]: { x: string; y: string; scale: number; width: string; height: string } } = isMobile ? {
+      "streaming-perps": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
+      "streaming-spot": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
+      "multiple-instruments": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
+      "charting": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
+      "streaming-options": { x: "0px", y: "0px", scale: 0.5, width: "200px", height: "70px" },
+    } : {
       "streaming-perps": { x: "-175px", y: "-180px", scale: 1, width: "325px", height: "95px" },
       "streaming-spot": { x: "175px", y: "-180px", scale: 1, width: "325px", height: "95px" },
       "multiple-instruments": { x: "-175px", y: "-70px", scale: 1, width: "325px", height: "95px" },
@@ -132,8 +177,8 @@ export default function ScrollAnimationSection() {
     };
 
     const target = frameTargets[screen.id];
-    // Interpolate scale from 1 to target.scale (which is 1)
-    const currentScale = 1; 
+    // Interpolate scale from 1 to target.scale
+    const currentScale = 1 + (target.scale - 1) * progress; 
     
     // We need to interpolate width/height if we want smooth transition, 
     // but for now let's just switch to target dimensions in the merge phase?
@@ -157,7 +202,9 @@ export default function ScrollAnimationSection() {
     };
   };
 
-  const containerShift = scrollProgress < MERGE_PHASE_END ? "0%" :
+  // On mobile, don't shift container - keep everything centered
+  const containerShift = isMobile ? "0%" :
+    scrollProgress < MERGE_PHASE_END ? "0%" :
     scrollProgress < MOVE_PHASE_END ? `${((scrollProgress - MERGE_PHASE_END) / (MOVE_PHASE_END - MERGE_PHASE_END)) * 35}%` : "35%";
 
   // Opacity for the empty frame
@@ -177,36 +224,30 @@ export default function ScrollAnimationSection() {
 
   const textOpacity = scrollProgress > MOVE_PHASE_END ? (scrollProgress - MOVE_PHASE_END) / (TEXT_PHASE_END - MOVE_PHASE_END) : 0;
 
-  return (
-    <div ref={containerRef} className="relative bg-black" style={{ height: "500vh" }}>
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, ${BRAND}15 0%, transparent 70%)`,
-          }}
-        />
+  // On mobile, show simplified version - just GIF and text
+  if (isMobile) {
+    return (
+      <div className="relative bg-black py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-center space-y-12">
+            {/* GIF Animation Screen */}
+            <div className="w-full max-w-[90vw]">
+              <img src="/final-animation.gif" alt="Trading Dashboard" className="w-full h-auto" />
+            </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full relative">
-          {/* Left text */}
-          <motion.div
-            className="absolute left-0 top-0 h-full w-1/2 flex items-center justify-start pl-8 z-40"
-            style={{ opacity: textOpacity }}
-          >
-            <div className="max-w-xl space-y-8">
+            {/* Text Section */}
+            <div className="text-center space-y-6 max-w-xl">
               <h2
-                className="font-bold text-white"
+                className="font-bold text-white text-[35px] sm:text-4xl"
                 style={{
                   fontFamily: "Montserrat, sans-serif",
-                  fontSize: "56px",
                   lineHeight: "1.1",
-                  
                 }}
               >
                 Start Trading with Institutional Precision
               </h2>
               
-              <p className="text-white/90 text-lg leading-relaxed">
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed">
                 In the 24/7 market for Digital Assets, Derivatives, and Forex, leverage Collybus's tools for precision, superior risk control, and operational reliability
               </p>
 
@@ -230,12 +271,71 @@ export default function ScrollAnimationSection() {
                 <span>Get in Touch</span>
               </a>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div ref={containerRef} className="relative bg-black" style={{ height: "500vh" }}>
+      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, ${BRAND}15 0%, transparent 70%)`,
+          }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full relative">
+          {/* Left text - on mobile, show below the screen */}
+          <motion.div
+            className={`absolute ${isMobile ? 'left-4 right-4 top-auto bottom-8' : 'left-4 sm:left-6 lg:left-8 top-0 h-full'} w-full md:w-1/2 flex ${isMobile ? 'items-start' : 'items-center'} justify-start z-40`}
+            style={{ opacity: textOpacity }}
+          >
+            <div className={`max-w-xl space-y-4 sm:space-y-6 md:space-y-8 ${isMobile ? 'text-center' : ''}`}>
+              <h2
+                className="font-bold text-white text-[35px] sm:text-4xl md:text-5xl lg:text-[56px]"
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  lineHeight: "1.1",
+                }}
+              >
+                Start Trading with Institutional Precision
+              </h2>
+              
+              <p className="text-white/90 text-base sm:text-lg leading-relaxed">
+                In the 24/7 market for Digital Assets, Derivatives, and Forex, leverage Collybus's tools for precision, superior risk control, and operational reliability
+              </p>
+
+              <a
+                href="mailto:contact@collybus.co"
+                className="inline-flex items-center space-x-2 bg-[#f2c016] hover:bg-[#d9ad14] text-black font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 text-sm sm:text-base"
+              >
+                <svg 
+                  className="w-4 h-4 sm:w-5 sm:h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
+                  />
+                </svg>
+                <span>Get in Touch</span>
+              </a>
+            </div>
           </motion.div>
 
-          {/* Screens container */}
+          {/* Screens container - positioned within container but allows for animation */}
           <motion.div
             className="absolute inset-0"
-            style={{ x: containerShift }}
+            style={{ 
+              x: isMobile ? "0%" : containerShift,
+            }}
             transition={{ type: "spring", stiffness: 40, damping: 30, mass: 1 }}
           >
             {scrollProgress >= MERGE_PHASE_END ? (
@@ -243,7 +343,8 @@ export default function ScrollAnimationSection() {
               <motion.div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
                 style={{
-                  width: "700px",
+                  width: "min(90vw, 560px)",
+                  maxWidth: "700px",
                 }}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -257,7 +358,8 @@ export default function ScrollAnimationSection() {
                 <motion.div
                   className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
                   style={{
-                    width: "700px",
+                    width: "min(90vw, 560px)",
+                    maxWidth: "700px",
                     opacity: emptyFrameOpacity,
                   }}
                   transition={{ duration: 0.5 }}
@@ -276,7 +378,8 @@ export default function ScrollAnimationSection() {
                         className="absolute"
                         style={{
                           ...state,
-                          width: "450px",
+                          width: isMobile ? "min(70vw, 280px)" : "min(80vw, 360px)",
+                          maxWidth: isMobile ? "280px" : "450px",
                         }}
                         transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
                       >
@@ -285,8 +388,8 @@ export default function ScrollAnimationSection() {
                         </div>
                         
                         {state.opacity > 0.3 && (
-                          <motion.div className="mt-4 text-left" style={{ opacity: state.opacity }}>
-                            <p className="text-white text-[28px] font-medium">
+                          <motion.div className={`mt-2 sm:mt-4 ${isMobile ? 'text-center' : 'text-left'}`} style={{ opacity: state.opacity }}>
+                            <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-medium">
                               <span style={{ color: BRAND }}>{screen.order + 1}. </span>
                               {screen.title}
                             </p>
@@ -295,16 +398,18 @@ export default function ScrollAnimationSection() {
                       </motion.div>
                     );
                   } else {
+                    // On mobile, ensure everything stays centered (no right movement)
                     return (
                       <motion.div
                         key={screen.id}
                         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
                         style={{
-                          x: state.x,
-                          y: state.y,
+                          x: isMobile ? "0px" : state.x,
+                          y: isMobile ? "0px" : state.y,
                           scale: state.scale,
                           opacity: state.opacity,
-                          width: (state as any).width || "450px",
+                          width: isMobile ? "min(70vw, 200px)" : ((state as any).width || "min(80vw, 360px)"),
+                          maxWidth: isMobile ? "200px" : "450px",
                           height: (state as any).height || "auto",
                           zIndex: state.zIndex,
                         }}
