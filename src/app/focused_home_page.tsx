@@ -179,18 +179,25 @@ interface FlipValueCardProps {
   desc: string;
 }
 function FlipValueCard({ icon: Icon, title, desc }: FlipValueCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
   return (
-    <div className="relative [perspective:1000px]">
-      <motion.div initial="front" whileHover="back" className="relative h-24 sm:h-32 md:h-36 z-10" style={{ transformStyle: "preserve-3d" }}>
-        <motion.div variants={{ front: { rotateY: 0 }, back: { rotateY: 180 } }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col items-center justify-center gap-3 text-center" style={{ backfaceVisibility: "hidden" }}>
+    <div className="group [perspective:1000px]">
+      <div
+        className={`relative rounded-2xl border border-white/10 bg-white/5 p-6 h-24 sm:h-32 md:h-36 transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-within:[transform:rotateY(180deg)] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}
+        tabIndex={0}
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        {/* Front */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center [backface-visibility:hidden]">
           <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: hexToRgba(BRAND, 0.15) }}>{Icon ? <Icon size={24} color={BRAND} /> : null}</div>
           <div className="text-white font-medium leading-tight">{title}</div>
-        </motion.div>
-        <motion.div variants={{ front: { rotateY: -180 }, back: { rotateY: 0 } }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 rounded-2xl border border-white/10 bg-white/5 p-6 flex items-center justify-center text-center" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-          <p className="text-sm text-white/70 leading-relaxed text-center">{desc}</p>
-        </motion.div>
-      </motion.div>
-      <motion.div initial={{ opacity: 0.18, scaleX: 1, y: 0 }} whileHover={{ opacity: 0.34, scaleX: 1.15, y: 2 }} transition={{ duration: 0.35, ease: "easeOut" }} className="pointer-events-none absolute inset-x-6 -bottom-2 h-6 rounded-full blur-xl" style={{ background: `radial-gradient(ellipse at center, ${hexToRgba(BRAND, 0.32)} 0%, rgba(0,0,0,0) 70%)` }} />
+        </div>
+        {/* Back */}
+        <div className="absolute inset-0 flex items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+          <p className="text-sm text-white/70 leading-relaxed px-3">{desc}</p>
+        </div>
+      </div>
+      <div className="pointer-events-none absolute inset-x-6 -bottom-2 h-6 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-350" style={{ background: `radial-gradient(ellipse at center, ${hexToRgba(BRAND, 0.32)} 0%, rgba(0,0,0,0) 70%)` }} />
     </div>
   );
 }
@@ -201,32 +208,30 @@ interface ValueFlipCardProps {
   desc: string;
 }
 function ValueFlipCard({ imageSrc, title, desc }: ValueFlipCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
   return (
-    <div className="relative [perspective:1000px] h-48 sm:h-56 md:h-64 w-full">
-      <motion.div initial="front" whileHover="back" className="relative h-full w-full z-10" style={{ transformStyle: "preserve-3d" }}>
+    <div className="group [perspective:1000px] h-48 sm:h-56 md:h-64 w-full">
+      <div
+        className={`relative rounded-3xl border border-white/10 p-8 h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-within:[transform:rotateY(180deg)] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}
+        style={{
+          background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat",
+        }}
+        tabIndex={0}
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
         {/* Front Side */}
-        <motion.div 
-          variants={{ front: { rotateY: 0 }, back: { rotateY: 180 } }} 
-          transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-8 flex flex-col items-center justify-center gap-6 text-center" 
-          style={{ backfaceVisibility: "hidden", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
-        >
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 text-center [backface-visibility:hidden]">
           <div className="w-16 h-16 flex items-center justify-center">
             <img src={imageSrc} alt={title} className="w-12 h-12 object-contain" />
           </div>
           <div className="text-white font-medium leading-tight text-base sm:text-lg md:text-xl" style={{ color: '#F2C016' }}>{title}</div>
-        </motion.div>
+        </div>
         
         {/* Back Side */}
-        <motion.div 
-          variants={{ front: { rotateY: -180 }, back: { rotateY: 0 } }} 
-          transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-8 flex items-center justify-center text-center" 
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
-        >
-          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed">{desc}</p>
-        </motion.div>
-      </motion.div>
+        <div className="absolute inset-0 flex items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed px-3">{desc}</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -237,32 +242,30 @@ interface ExecutionFlipCardProps {
   desc: string;
 }
 function ExecutionFlipCard({ iconSrc, title, desc }: ExecutionFlipCardProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
   return (
-    <div className="relative [perspective:1000px] h-48 sm:h-64 md:h-80 w-full">
-      <motion.div initial="front" whileHover="back" className="relative h-full w-full z-10" style={{ transformStyle: "preserve-3d" }}>
+    <div className="group [perspective:1000px] h-48 sm:h-64 md:h-80 w-full">
+      <div
+        className={`relative rounded-3xl border border-white/10 p-4 sm:p-6 md:p-8 h-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-within:[transform:rotateY(180deg)] ${isFlipped ? '[transform:rotateY(180deg)]' : ''}`}
+        style={{
+          background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat",
+        }}
+        tabIndex={0}
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
         {/* Front Side */}
-        <motion.div 
-          variants={{ front: { rotateY: 0 }, back: { rotateY: 180 } }} 
-          transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-6 text-center" 
-          style={{ backfaceVisibility: "hidden", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
-        >
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 sm:gap-4 md:gap-6 text-center [backface-visibility:hidden]">
           <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex items-center justify-center exc-img">
             <img src={iconSrc} alt={title} className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
           </div>
           <div className="text-white font-medium leading-tight text-base sm:text-lg md:text-xl" style={{ color: '#F2C016' }}>{title}</div>
-        </motion.div>
+        </div>
         
         {/* Back Side */}
-        <motion.div 
-          variants={{ front: { rotateY: -180 }, back: { rotateY: 0 } }} 
-          transition={{ duration: 0.6, ease: "easeInOut" }} 
-          className="absolute inset-0 rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 md:p-8 flex items-center justify-center text-center bg-neutral-900" 
-          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)", background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat" }}
-        >
-          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed">{desc}</p>
-        </motion.div>
-      </motion.div>
+        <div className="absolute inset-0 flex items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
+          <p className="text-sm sm:text-base md:text-lg text-white/80 leading-relaxed px-3">{desc}</p>
+        </div>
+      </div>
     </div>
   );
 }

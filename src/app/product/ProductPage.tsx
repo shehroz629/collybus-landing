@@ -310,20 +310,20 @@ function EngagementTabs() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 w-full">
         {tabs.map((t) => {
           const isActive = tab === t.key;
           return (
             <div key={t.key} className="relative w-full">
               {isActive && (
                 <div
-                  className="absolute -inset-5 rounded-[2rem]"
+                  className="absolute -inset-2 sm:-inset-3 md:-inset-5 rounded-[1.5rem] sm:rounded-[1.75rem] md:rounded-[2rem]"
                   style={{ background: hexToRgba(BRAND, 0.12), filter: "blur(18px)" }}
                 />
               )}
               <button
                 onClick={() => setTab(t.key)}
-                className={`relative w-full px-10 py-5 rounded-3xl border transition-all duration-200 text-lg font-semibold flex items-center justify-center outline-none focus:outline-none focus:ring-0 ${
+                className={`relative w-full px-3 sm:px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-2xl sm:rounded-3xl border transition-all duration-200 text-xs sm:text-sm md:text-lg font-semibold flex items-center justify-center outline-none focus:outline-none focus:ring-0 ${
                   isActive
                     ? "border-2 border-[#F2C016] text-white bg-[#202020]"
                     : "border-white/10 text-white/80 bg-[#1a1a1a] hover:bg-[#202020]"
