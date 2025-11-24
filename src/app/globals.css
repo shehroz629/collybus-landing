@@ -7,3 +7,16 @@
   --color-gray-900: #1d1d1d;
   --color-gray-800: #18171c;
 }
+
+.execute img {
+    width: 30px;
+    height: 30px;
+}
+
+.exc-img {
+    width: 70px;
+    height: 70px;
+    background: #f2c01652;
+    border-radius: 8px;
+}
+

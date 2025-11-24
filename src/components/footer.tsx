@@ -16,59 +16,97 @@ const Footer = () => {
   };
 
   return (
-    <footer className="border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-5 gap-8 text-sm text-white/70">
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <img src="https://collybus.co/images/collybus-logo.svg" alt="Collybus" className="h-6 w-auto opacity-90 transform scale-[1.3] origin-left"/>
+    <footer className="border-t border-white/10 bg-[#1a1a1a]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Main Footer Content */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 text-sm">
+          {/* COLLYBUS Branding */}
+          <div className="md:col-span-1">
+            <img src="/images/collybus-logo.svg" alt="Collybus" className="h-8 w-auto mb-3" />
+            <p className="text-white/50 text-base leading-relaxed">
+              Institutional execution for Digital Assets,
+Derivatives, and Forex.
+            </p>
           </div>
-          <p className="max-w-xs">Institutional execution for Digital Assets, Derivatives, and Forex.</p>
+
+          {/* Products */}
+          <div>
+            <div className="text-white font-medium mb-3">Products</div>
+            <ul className="space-y-2 text-white/60">
+              <li><a className="hover:text-white/90 transition-colors" href="/?section=connex#connex">CONNEX</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/?section=integrations#integrations">Integrations</a></li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <div className="text-white font-medium mb-3">Company</div>
+            <ul className="space-y-2 text-white/60">
+              <li><a className="hover:text-white/90 transition-colors" href="/product">Product</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/about">About</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/team">Team</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/team?section=careers#careers">Careers</a></li>
+            </ul>
+          </div>
+
+          {/* Disclaimers */}
+          <div>
+            <div className="text-white font-medium mb-3">Disclaimers</div>
+            <ul className="space-y-2 text-white/60">
+              <li><a className="hover:text-white/90 transition-colors" href="/privacy-policy">Privacy Policy</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/terms-conditions">Terms & Conditions</a></li>
+              <li><a className="hover:text-white/90 transition-colors" href="/risk-disclosures">Risk Disclosures</a></li>
+            </ul>
+          </div>
+
+          {/* Get in touch */}
+          <div>
+            <div className="text-white font-medium mb-3">Get in touch</div>
+            <ul className="space-y-2 text-white/60">
+              <li>
+                <button 
+                  className="hover:text-white/90 cursor-pointer transition-colors bg-transparent border-0 p-0 text-sm text-left"
+                  onClick={handleBookDemoClick}
+                >
+                  Book a demo
+                </button>
+              </li>
+              <li><a className="hover:text-white/90 transition-colors" href="mailto:contact@collybus.co">contact@collybus.co</a></li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <div className="text-white/90 font-medium mb-2">Product</div>
-          <ul className="space-y-1">
-            <li><a className="hover:text-white/90" href="/?section=connex#connex">CONNEX</a></li>
-            <li><a className="hover:text-white/90" href="/?section=integrations#integrations">Integrations</a></li>
-          </ul>
+
+        {/* Company Registration Info */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-12 mb-8">
+          <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
+            <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
+              Collybus Pte Ltd UEN 202420599E,
+              (held in trust, ACRA, issued by MAS)
+            </div>
+          </div>
+          <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
+            <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
+              Collybus Pty Ltd is registered with AUSTRAC. AAN: 100906184
+            </div>
+          </div>
+          <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
+            <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
+              Collybus Pte Ltd UEN 202420599E
+            </div>
+          </div>
+          <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
+            <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
+              Collybus Pty Ltd ABN 25 658 764 017
+            </div>
+          </div>
         </div>
-        <div>
-          <div className="text-white/90 font-medium mb-2">Company</div>
-          <ul className="space-y-1">
-           
-            <li><a className="hover:text-white/90" href="/product">Product</a></li>
-            <li><a className="hover:text-white/90" href="/about">About</a></li>
-             <li><a className="hover:text-white/90" href="/team">Team</a></li>
-            
-            <li><a className="hover:text-white/90" href="/team?section=careers#careers">Careers</a></li>
-          </ul>
+
+        {/* Copyright */}
+        <div className="border-t border-white/10 pt-6">
+          <p className="text-white/40 text-base text-left">
+            © {new Date().getFullYear()} Collybus. All rights reserved.
+          </p>
         </div>
-        <div>
-          <div className="text-white/90 font-medium mb-2">Disclaimers</div>
-          <ul className="space-y-1">
-            <li><a className="hover:text-white/90" href="/privacy-policy">Privacy Policy</a></li>
-            <li><a className="hover:text-white/90" href="/terms-conditions">Terms & Conditions</a></li>
-            <li><a className="hover:text-white/90" href="/risk-disclosures">Risk Disclosures</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-white/90 font-medium mb-2">Get in touch</div>
-          <ul className="space-y-1">
-            <li>
-              <button 
-                className="hover:text-white/90 cursor-pointer text-white/70 transition-colors bg-transparent border-0 p-0 text-sm"
-                onClick={handleBookDemoClick}
-              >
-                Book a demo
-              </button>
-            </li>
-            <li><a className="hover:text-white/90" href="mailto:contact@collybus.co">contact@collybus.co</a></li>
-          </ul>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 py-6 border-t border-white/10 gap-2">
-        <span className="md:text-left w-full md:w-auto text-center">Collybus Pte Ltd UEN 202420599E</span>
-        <span className="md:text-center w-full md:w-auto text-center">© {new Date().getFullYear()} Collybus. All rights reserved.</span>
-        <span className="md:text-right w-full md:w-auto text-center">Collybus Pty Ltd ABN 25 658 764 017</span>
       </div>
     </footer>
   );

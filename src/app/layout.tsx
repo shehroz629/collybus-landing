@@ -62,8 +62,8 @@ export default function RootLayout({
       </head>
       <body>
         <MixpanelInitializer />
+        <Header />
         <div className="bg-gray-900 text-gray-100 flex flex-col min-h-screen">
-          <Header />
           <main className="flex-grow">{children}</main>
           <Footer />
           <FloatingCTA />
