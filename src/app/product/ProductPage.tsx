@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+// @ts-ignore - createPortal is available in react-dom
+import { createPortal } from "react-dom";
 import { ArrowRight, BarChart3, Shield, LineChart, Layers, Activity, Cpu } from "lucide-react";
+import ContactForm from "@/components/contact-form";
 
 const BRAND = "#F2C016";
 const hexToRgba = (hex: string, a: number) => {
@@ -137,7 +140,7 @@ function Section({ eyebrow, title, children, subdued = false, titleClassName, ti
   );
 }
 
-function Pill({ icon: Icon, title, text }: { icon: React.ElementType | null; title: string; text: string }) {
+function Pill({ icon: Icon, iconSrc, title, text }: { icon?: React.ElementType | null; iconSrc?: string; title: string; text: string }) {
   return (
     <div className="group [perspective:1000px]" style={{ fontFamily: "Montserrat, sans-serif" }}>
       <div
@@ -149,8 +152,12 @@ function Pill({ icon: Icon, title, text }: { icon: React.ElementType | null; tit
       >
         {/* Front */}
         <div className="absolute inset-0 flex flex-col items-center justify-center [backface-visibility:hidden]">
-          <div className="w-[30px] h-[30px] flex items-center justify-center mb-4 exc-img">
-            {Icon ? <Icon size={30} color={BRAND} /> : null}
+          <div className="w-16 h-16 flex items-center justify-center mb-4 exc-img">
+            {iconSrc ? (
+              <img src={iconSrc} alt={title} className="w-12 h-12 object-contain" />
+            ) : Icon ? (
+              <Icon size={30} color={BRAND} />
+            ) : null}
           </div>
           <div className="text-center leading-tight text-lg sm:text-xl md:text-2xl" style={{ color: '#F2C016', fontFamily: 'Montserrat, sans-serif', fontWeight: 500 }}>
             {title}
@@ -241,7 +248,41 @@ function VenueLogoCard({ title, imgSrc, link }: { title: string; imgSrc: string;
   );
 }
 
+function ContactBox({ title, onClick }: { title: string; onClick: () => void }) {
+  return (
+    <motion.div
+      className="block relative group cursor-pointer"
+      style={{ fontFamily: "Montserrat, sans-serif" }}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 10 }}
+      onClick={onClick}
+    >
+      <div
+        className="relative rounded-3xl border border-white/10 p-6 h-40 md:h-44 ring-1 ring-white/5 shadow-[0_20px_40px_rgba(0,0,0,0.45)] transition-all duration-300 group-hover:border-white/20"
+        style={{
+          background: "linear-gradient(180deg, rgba(172, 137, 19, 0.19), rgba(20, 20, 20, 0.34)) no-repeat",
+        }}
+      >
+        <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
+        <div className="relative flex items-center justify-center h-full z-10">
+          <div className="text-center text-white/90 text-sm md:text-base font-medium px-4" style={{ fontFamily: "Montserrat, sans-serif" }}>
+            {title}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 function VenuesSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  
   const venues = [
     { title: "KuCoin", imgSrc: "/kucoin.png", link: "https://www.kucoin.com/" },
     { title: "Binance", imgSrc: "/binance.png", link: "https://www.binance.com/" },
@@ -252,21 +293,75 @@ function VenuesSection() {
     { title: "BitGo", imgSrc: "/bitgo.png", link: "https://www.bitgo.com/" },
   ];
 
-  return (
-    <div className="space-y-5">
-      {/* First row: 4 logos */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-        {venues.slice(0, 4).map((venue) => (
-          <VenueLogoCard key={venue.title} title={venue.title} imgSrc={venue.imgSrc} link={venue.link} />
-        ))}
-      </div>
-      {/* Second row: 3 logos centered */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-        {venues.slice(4).map((venue) => (
-          <VenueLogoCard key={venue.title} title={venue.title} imgSrc={venue.imgSrc} link={venue.link} />
-        ))}
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
+
+  const modalContent = isModalOpen ? (
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-md p-2 sm:p-4"
+      onClick={handleModalClick}
+    >
+      <div 
+        className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl 
+          shadow-2xl max-w-2xl w-full max-h-[90vh] relative animate-fadeInUp 
+          overflow-y-auto scrollbar-thin scrollbar-thumb-[#f2c016] scrollbar-track-transparent
+          hover:scrollbar-thumb-[#d9ad14]"
+        style={{
+          backgroundImage: 'linear-gradient(to bottom right, rgba(255,255,255,0.05), rgba(255,255,255,0))'
+        }}
+      >
+        <button
+          onClick={closeModal}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl font-bold z-50
+            transition-colors duration-200 ease-in-out hover:scale-110 transform"
+          aria-label="Close modal"
+        >
+          &times;
+        </button>
+        <div className="px-3 sm:px-6 py-6 sm:py-8">
+          <ContactForm />
+        </div>
       </div>
     </div>
+  ) : null;
+
+  return (
+    <>
+      <div className="space-y-5">
+        {/* First row: 4 logos */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {venues.slice(0, 4).map((venue) => (
+            <VenueLogoCard key={venue.title} title={venue.title} imgSrc={venue.imgSrc} link={venue.link} />
+          ))}
+        </div>
+        {/* Second row: 3 logos + contact box */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {venues.slice(4).map((venue) => (
+            <VenueLogoCard key={venue.title} title={venue.title} imgSrc={venue.imgSrc} link={venue.link} />
+          ))}
+          <ContactBox 
+            title="And more, get in touch now to integrate with the Collybus Ecosystem" 
+            onClick={openModal}
+          />
+        </div>
+      </div>
+
+      {/* Modal - Rendered via Portal to ensure it's above header */}
+      {isMounted && modalContent && createPortal(modalContent, document.body)}
+    </>
   );
 }
 
@@ -287,22 +382,22 @@ function EngagementTabs() {
   > = {
     core: {
       title: "Core GUI",
-      text: "Institutional desktop. Execution, risk, and funding on one screen.",
+      text: "The COLLYBUS GUI delivers a fast, intuitive, and fully integrated trading experience designed for professional desks. Built with institutional workflows at its core, the platform consolidates market data, execution, and risk oversight into a single, high-performance interface.",
       icon: "/core-gui-icon.png",
-      image: "/Core Gui.png",
+      image: "/Core-GUI.png",
     },
     white: {
-      title: "White-Label",
-      text: "Branded front-end. Themes, SSO, and SLAs under your brand.",
+      title: "White-label",
+      text: "Stream Your Own Liquidity. Capture More Client Flow. Fully Branded. \n\nThe COLLYBUS white-label platform empowers brokers, market makers, and trading venues to stream their own liquidity directly to clients through a premium, fully branded trading interface. Own the full execution experience, deepen client engagement, and capture a greater share of trading flow.\n\nWith multi-venue connectivity, institutional-grade execution tools, and complete brand customisation, the COLLYBUS white-label solution gives you everything needed to scale your liquidity distribution, strengthen client relationships, and compete at the highest institutional level while we manage the infrastructure, upgrades, and integrations.",
       icon: "/white-lable-icon.png",
-      image: "/white-label.png",
+      image: "/White-Label-new.png",
     },
     api: {
       title: "API",
       text:
         "Programmatic access to trading, risk and reporting. REST and WebSocket endpoints for orders, positions, balances, funding and market data, with built-in reporting to integrate cleanly into your systems.",
       icon: "/api-icon.png",
-      image: "/api.png",
+      image: "/API-New.png",
     },
   };
 
@@ -366,11 +461,11 @@ function EngagementTabs() {
             </div>
           </div>
           <div className="relative">
-            <div className="absolute inset-0 rounded-2xl" style={{ background: hexToRgba(BRAND, 0.2), filter: "blur(28px)" }} />
+            <div className="absolute inset-0 rounded-2xl" style={{  filter: "blur(28px)" }} />
             <img
               src={active.image}
               alt={active.title}
-              className="relative rounded-2xl w-full h-56 md:h-64 object-cover border border-white/10"
+              className="relative rounded-2xl w-full h-full md:h-full object-cover"
             />
           </div>
         </motion.div>
@@ -386,7 +481,7 @@ export default function ProductPage() {
         <Hero
           title={
             <>
-              <span style={{ color: BRAND }}>CONNEX</span> — the institutional trading <span style={{ color: BRAND }}>workspace</span>
+              <span style={{ color: BRAND }}>CONNEX:</span> The Next Generation Institutional Trading <span style={{ color: BRAND }}>workspace</span>
             </>
           }
           subtitle="See cross‑venue depth, set normalised sizes, use execution algos/order types (TWAP/VWAP/IOC/FOK), track funding in real time, and manage risk 24/7. APIs for integration and white‑label options."
@@ -394,14 +489,14 @@ export default function ProductPage() {
         <Section title={<><span className="inline">Choose The Engagement</span><span className="block">That Fits</span></>} titleClassName="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white">
           <EngagementTabs />
         </Section>
-        <Section title={<><span className="inline">Everything A Pro Desk</span><span className="block">Expects‑Built For Traders</span></>} titleClassName="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white">
+        <Section title={<><span className="inline">Everything A Pro Desk</span><span className="block">Expects‑Built For Traders</span></>} titleClassName="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white" className="execute">
           <div className="grid md:grid-cols-3 gap-5">
-            <Pill icon={BarChart3} title="Visibility" text="Consolidated book view and price discovery across venues." />
-            <Pill icon={Layers} title="Order Tickets" text="TWAP/VWAP/IOC/FOK, conditional exits, and level‑aware execution patterns." />
-            <Pill icon={LineChart} title="Sizing" text="Normalise contract units so 1 is always 1" />
-            <Pill icon={Cpu} title="APIs" text="Integrate with OMS/PMS, data, and custody solutions; enable white‑label flows." />
-            <Pill icon={Activity} title="Risk" text="PnL, funding, ADL, cash balances, and much more—trade consciously." />
-            <Pill icon={Shield} title="Security" text="Encrypted key management, IP allow‑listing, audit trails, and permissions." />
+            <Pill iconSrc="/visiblity.png" title="Visibility" text="Consolidated book view and price discovery across venues." />
+            <Pill iconSrc="/order-tickets.png" title="Order Tickets" text="TWAP/VWAP/IOC/FOK, conditional exits, and level‑aware execution patterns." />
+            <Pill iconSrc="/sizing.png" title="Sizing" text="Normalise contract units so 1 is always 1" />
+            <Pill iconSrc="/apis.png" title="APIs" text="Integrate with OMS/PMS, data, and custody solutions; enable white‑label flows." />
+            <Pill iconSrc="/risk.png" title="Risk" text="PnL, funding, ADL, cash balances, and much more—trade consciously." />
+            <Pill iconSrc="/security-new.png" title="Security" text="Encrypted key management, IP allow‑listing, audit trails, and permissions." />
           </div>
         </Section>
         <Section title="What Desks Gain" titleClassName="text-white font-semibold mt-2 text-[35px] sm:text-4xl md:text-5xl lg:text-[48px]" titleStyle={{}} className="execute">

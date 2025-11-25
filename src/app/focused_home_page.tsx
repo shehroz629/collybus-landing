@@ -65,11 +65,11 @@ function HeroBackground() {
           className="flex h-full w-[300%]"
           initial={{ x: "0%" }} 
           animate={{ x: "-66.666%" }} 
-          transition={{ repeat: Infinity, ease: "linear", duration: 15, repeatType: "loop" }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 20, repeatType: "loop" }}
         >
-          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.25, mixBlendMode: 'screen' }} />
-          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.25, mixBlendMode: 'screen' }} />
-          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/3 h-full" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
         </motion.div>
       </div>
       
@@ -259,7 +259,7 @@ function ExecutionFlipCard({ iconSrc, title, desc }: ExecutionFlipCardProps) {
             <img src={iconSrc} alt={title} className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
           </div>
           <div className="text-white font-medium leading-tight text-base sm:text-lg md:text-xl" style={{ color: '#F2C016' }}>{title}</div>
-        </div>
+          </div>
         
         {/* Back Side */}
         <div className="absolute inset-0 flex items-center justify-center text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">

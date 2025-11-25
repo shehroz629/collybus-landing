@@ -50,8 +50,8 @@ function Hero({ title, subtitle }) {
     <section className="relative overflow-hidden">
       <HeroBackground />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 relative z-10" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-  <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white pt-8 pb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>{title}</motion.h1>
-        <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="mt-5 text-white/80 max-w-3xl text-lg" style={{ fontFamily: 'Montserrat, sans-serif' }}>{subtitle}</motion.p>
+  <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-semibold tracking-tight text-white pt-8 pb-8" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }}>{title}</motion.h1>
+        <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="mt-5 text-white/80 max-w-3xl text-base sm:text-lg md:text-xl" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.6' }}>{subtitle}</motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.5 }} className="mt-8 flex flex-wrap gap-3">
           <a
             href="/about"
@@ -73,7 +73,7 @@ function Section({ eyebrow, title, children, id }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-8">
           {eyebrow && <div className="text-[11px] uppercase tracking-[0.22em] text-white/50" style={{ fontFamily: 'Montserrat, sans-serif' }}>{eyebrow}</div>}
-          {title && <h2 className="text-2xl sm:text-3xl font-semibold text-white mt-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>{title}</h2>}
+          {title && <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white mt-2" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.2' }}>{title}</h2>}
         </div>
         {children}
       </div>
@@ -112,7 +112,7 @@ export default function TeamFocused() {
         <Section eyebrow="Our Purpose" title="A note from the CEO">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 relative overflow-hidden">
             <div aria-hidden className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl" style={{ background: hexToRgba(BRAND, 0.12) }} />
-            <div className="text-xl md:text-2xl leading-relaxed text-white">“A trading platform is more than just software — it’s the gateway through which traders access the financial markets. Our mission is to make that gateway intuitive and efficient, giving traders the visibility, tools, and confidence to express their ideas and manage risk with ease.”</div>
+            <div className="text-base sm:text-lg md:text-xl leading-relaxed text-white" style={{ lineHeight: '1.6' }}>"A trading platform is more than just software — it's the gateway through which traders access the financial markets. Our mission is to make that gateway intuitive and efficient, giving traders the visibility, tools, and confidence to express their ideas and manage risk with ease."</div>
             <div className="mt-4 text-white/60 text-sm">— Peter Jacobson</div>
           </div>
         </Section>
@@ -185,7 +185,7 @@ export default function TeamFocused() {
                       {/* Responsive adjustments for text container */}
                       <h3 className="text-2xl md:text-3xl font-semibold text-white break-words" style={{ fontFamily: 'Montserrat, sans-serif' }}>{f.name}</h3>
                       <div className="text-white/70 mt-1 text-base md:text-lg break-words" style={{ fontFamily: 'Montserrat, sans-serif' }}>{f.role}</div>
-                      <p className="text-white/70 mt-4 leading-relaxed max-w-prose text-base break-words" style={{ fontFamily: 'Montserrat, sans-serif' }}>{f.body || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus, nunc non fermentum iaculis, metus nibh lacinia metus, non vulputate leo nulla sit amet nunc. Aenean in augue at elit sollicitudin facilisis. Integer mattis, arcu in ultrices vehicula, dui nibh fermentum purus, a tristique velit lorem in mi."}</p>
+                      <p className="text-white/70 mt-4 leading-relaxed max-w-prose text-base sm:text-lg md:text-xl break-words" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.6' }}>{f.body || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In luctus, nunc non fermentum iaculis, metus nibh lacinia metus, non vulputate leo nulla sit amet nunc. Aenean in augue at elit sollicitudin facilisis. Integer mattis, arcu in ultrices vehicula, dui nibh fermentum purus, a tristique velit lorem in mi."}</p>
                       <div className="flex flex-wrap gap-5 mt-6">
                         <a href={`mailto:${email}`} aria-label="Email" className="text-gray-300 hover:text-white text-2xl">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="28" height="28">
@@ -218,8 +218,8 @@ export default function TeamFocused() {
             viewport={{ once: true, amount: 0.05 }}
             className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6"
           >
-            <p className="text-white/70 max-w-2xl">
-              We’re looking for builders who care about execution quality, reliability, and trader experience. If that’s you, come help us raise the standard for digital markets.
+            <p className="text-white/70 max-w-2xl text-base sm:text-lg md:text-xl" style={{ lineHeight: '1.6' }}>
+              We're looking for builders who care about execution quality, reliability, and trader experience. If that's you, come help us raise the standard for digital markets.
             </p>
             <a
               href="mailto:recruitment@collybus.co"

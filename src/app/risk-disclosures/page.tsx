@@ -13,16 +13,47 @@ const RiskDisclosuresPage = () => {
     <div className="bg-black text-gray-200 pt-20 md:pt-24 pb-8 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Gold Banner for Page Title */}
-        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12 rounded-2xl">
-          <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12 rounded-2xl mt-8 md:mt-12">
+          <h1 className="text-black text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-semibold tracking-tight" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }}>
             Risk Disclosures
           </h1>
         </div>
 
-        <div className="prose prose-invert max-w-none text-gray-200 font-thin prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-headings:text-xl prose-headings:text-white prose-strong:font-semibold prose-strong:text-white">
-          <p>
-            <strong>RISK DISCLOSURES</strong>
-          </p>
+        <div className="prose prose-invert max-w-none text-white/80 prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-headings:text-white prose-strong:font-semibold prose-strong:text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+          <style dangerouslySetInnerHTML={{__html: `
+            .prose p {
+              font-size: 1rem;
+              line-height: 1.6;
+            }
+            @media (min-width: 640px) {
+              .prose p {
+                font-size: 1.125rem;
+              }
+            }
+            @media (min-width: 768px) {
+              .prose p {
+                font-size: 1.25rem;
+              }
+            }
+            .prose h2 {
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: white;
+              margin-top: 2rem;
+              margin-bottom: 1rem;
+            }
+            @media (min-width: 640px) {
+              .prose h2 {
+                font-size: 1.5rem;
+              }
+            }
+            @media (min-width: 768px) {
+              .prose h2 {
+                font-size: 1.75rem;
+              }
+            }
+          `}} />
+          <h2>RISK DISCLOSURES</h2>
           <p>
             These Risk Disclosures are supplemental to any platform trading
             agreement, terms of business, or other documentation you may have
@@ -44,9 +75,7 @@ const RiskDisclosuresPage = () => {
             experience, financial resources, risk appetite, and investment
             objectives.
           </p>
-          <p>
-            <strong>General Trading Risks</strong>
-          </p>
+          <h2>General Trading Risks</h2>
           <p>
             Financial markets are subject to market volatility, liquidity
             constraints, leverage, regulatory changes, macroeconomic conditions,
@@ -61,9 +90,7 @@ const RiskDisclosuresPage = () => {
             on this information. We strongly advise you to carefully read and
             understand these Risk Disclosures before using our services.
           </p>
-          <p>
-            <strong>Derivatives Risks</strong>
-          </p>
+          <h2>Derivatives Risks</h2>
           <p>
             Derivatives are financial instruments whose value is derived from an
             underlying asset, such as equities, bonds, commodities, or index
@@ -101,9 +128,7 @@ const RiskDisclosuresPage = () => {
             ability to adjust trading strategies in response to changing market
             conditions.
           </p>
-          <p>
-            <strong>Currency Risks</strong>
-          </p>
+          <h2>Currency Risks</h2>
           <p>
             Investing in financial instruments denominated in a currency other
             than your base currency involves currency risk. Exchange rate
@@ -119,11 +144,7 @@ const RiskDisclosuresPage = () => {
             spreads may widen significantly, increasing the risk that losses
             cannot be controlled.
           </p>
-          <p>
-            <strong>
-              Digital Assets, Cryptocurrency, Perpetual Futures Risks
-            </strong>
-          </p>
+          <h2>Digital Assets, Cryptocurrency, Perpetual Futures Risks</h2>
           <p>
             Trading digital assets and cryptocurrencies, involves significant
             risk due to high volatility and rapidly changing market conditions.

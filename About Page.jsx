@@ -49,8 +49,8 @@ function Hero({ title, subtitle }) {
     <section className="relative overflow-hidden">
       <HeroBackground />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 relative z-10">
-  <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white pt-8 pb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>{title}</motion.h1>
-        <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="mt-5 text-white/80 max-w-3xl text-lg">{subtitle}</motion.p>
+  <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-semibold tracking-tight text-white pt-8 pb-8" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }}>{title}</motion.h1>
+        <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="mt-5 text-white/80 max-w-3xl text-base sm:text-lg md:text-xl" style={{ lineHeight: '1.6' }}>{subtitle}</motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.5 }} className="mt-8 flex flex-wrap gap-3">
           <a
             href="/team"
@@ -72,7 +72,7 @@ function Section({ eyebrow, title, children, subdued=false }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="mb-8">
           {eyebrow && <div className="text-[11px] uppercase tracking-[0.22em] text-white/50">{eyebrow}</div>}
-          {title && <h2 className="text-2xl sm:text-3xl font-semibold text-white mt-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>{title}</h2>}
+          {title && <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-white mt-2" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.2' }}>{title}</h2>}
         </div>
         {children}
       </div>
@@ -104,8 +104,8 @@ function Pill({ icon: Icon, title, text }) {
             {text}
           </div>
         </div>
+        </div>
       </div>
-    </div>
   );
 }
 function PlaceholderShot({ label = "Timeline / milestones" }) {
@@ -122,10 +122,10 @@ export default function AboutFocused() {
         <Section eyebrow="Mission" title="Our purpose">
           <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
             <div className="pointer-events-none absolute -left-px top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-amber-400/60 via-amber-400/20 to-transparent" aria-hidden></div>
-            <p className="text-lg md:text-xl leading-relaxed text-white/80">
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed text-white/80" style={{ lineHeight: '1.6' }}>
               Professionals need institutional grade workflows to operate confidently in financial markets. We focus on execution quality, risk transparency, and operational assurance.
             </p>
-            <p className="mt-4 text-lg md:text-xl leading-relaxed text-white/80">
+            <p className="mt-4 text-base sm:text-lg md:text-xl leading-relaxed text-white/80" style={{ lineHeight: '1.6' }}>
               Our team blends experience from trading, execution technology, and enterprise software. We develop thoughtfully, integrate deeply, and support desks end-to-end.
             </p>
             <div className="mt-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -148,10 +148,10 @@ export default function AboutFocused() {
         <Section eyebrow="Reg & Security" title="Built for institutions">
           <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
             <div className="pointer-events-none absolute -left-px top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-amber-400/60 via-amber-400/20 to-transparent" aria-hidden></div>
-            <p className="text-lg md:text-xl leading-relaxed text-white/80">
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed text-white/80" style={{ lineHeight: '1.6' }}>
               With decades of experience in regulated trading, we prioritise governance and security.
             </p>
-            <p className="mt-4 text-lg md:text-xl leading-relaxed text-white/80">
+            <p className="mt-4 text-base sm:text-lg md:text-xl leading-relaxed text-white/80" style={{ lineHeight: '1.6' }}>
               Institutional-grade, our robust technology maintains a strong regulatory posture supported by comprehensive AML measures and advanced safeguards.
             </p>
             <div className="mt-6 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />

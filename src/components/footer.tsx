@@ -19,7 +19,7 @@ const Footer = () => {
     <footer className="border-t border-white/10 bg-[#1a1a1a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 text-sm pb-10">
           {/* COLLYBUS Branding */}
           <div className="md:col-span-1">
             <img src="/images/collybus-logo.svg" alt="Collybus" className="h-8 w-auto mb-3" />
@@ -77,7 +77,7 @@ Derivatives, and Forex.
         </div>
 
         {/* Company Registration Info */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-12 mb-8">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 mb-8">
           <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
             <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
               Collybus Pte Ltd UEN 202420599E,
@@ -94,17 +94,21 @@ Derivatives, and Forex.
               Collybus Pte Ltd UEN 202420599E
             </div>
           </div>
-          <div className="rounded-lg p-[1px]" style={{ background: 'linear-gradient(180deg, #4A4A4A 0%, #4A4A4A 50%, #4A4A4A 100%)' }}>
-            <div className="bg-[#1a1a1a] rounded-lg p-4 text-white/40 text-sm flex items-center h-full">
-              Collybus Pty Ltd ABN 25 658 764 017
-            </div>
-          </div>
-        </div>
+        </div> */}
 
         {/* Copyright */}
-        <div className="border-t border-white/10 pt-6">
-          <p className="text-white/40 text-base text-left">
+        <div className="border-t border-white/10 pt-6 last-foot">
+          {/* <p className="text-white/40  text-left">
             © {new Date().getFullYear()} Collybus. All rights reserved.
+          </p> */}
+          <p className="text-white/40 text-left">
+          Collybus Pte Ltd UEN 202420599E, (held in trust, ACRA, issued by MAS)
+          </p>
+          <p className="text-white/40 text-left">
+          Collybus Pty Ltd is registered with AUSTRAC. AAN: 100906184
+          </p>
+          <p className="text-white/40 text-left">
+          Collybus Pte Ltd UEN 202420599E
           </p>
         </div>
       </div>

@@ -20,3 +20,12 @@
     border-radius: 8px;
 }
 
+.last-foot {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+}
+
+.last-foot p {
+  font-size: 12px;
+}
