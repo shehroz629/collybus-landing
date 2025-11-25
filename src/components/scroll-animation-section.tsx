@@ -117,7 +117,7 @@ export default function ScrollAnimationSection() {
 
     // Add padding from edges (80px horizontal, 40px vertical)
     const horizontalPadding = 80;
-    const verticalPadding = 90;
+    const verticalPadding = 150;
     const effectiveWidth = viewportW - (horizontalPadding * 2);
     const effectiveHeight = viewportH - (verticalPadding * 2);
 
