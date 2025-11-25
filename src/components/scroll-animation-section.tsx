@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll } from "framer-motion";
-import style from "styled-jsx/style";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const BRAND = "#F2C016";
+
+// Linear Interpolation (Lerp)
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
 
 interface ScreenItem {
   id: string;
@@ -62,169 +66,128 @@ export default function ScrollAnimationSection() {
     offset: ["start start", "end end"],
   });
 
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   useEffect(() => {
-    return scrollYProgress.on("change", (latest) => {
+    return smoothProgress.on("change", (latest: number) => {
       setScrollProgress(latest);
     });
-  }, [scrollYProgress]);
+  }, [smoothProgress]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const APPEAR_PHASE_END = 0.35;
-  const SCREEN_APPEAR_PHASE_END = 0.45; // New phase: Screen fades in
-  const MERGE_PHASE_END = 0.75; // Slower merge for better effect
-  const MOVE_PHASE_END = 0.9;
-  const TEXT_PHASE_END = 1.0;
+  // Animation phases
+  const APPEAR_END = 0.35;
+  const STAY_END = 0.45;
+  const MERGE_END = 0.75;
+  const FINAL_START = 0.9;
+  const FINAL_END = 1.0;
 
-  const getFadeInProgress = (order: number) => {
-    const fadeStart = (order / screens.length) * APPEAR_PHASE_END;
-    const fadeDuration = APPEAR_PHASE_END / screens.length * 0.4;
-    
-    if (scrollProgress < fadeStart) return 0;
-    if (scrollProgress < fadeStart + fadeDuration) {
-      return (scrollProgress - fadeStart) / fadeDuration;
+  // Convert initial positions (% or px) to pixels
+  const toPixel = (value: string, axisSize: number) => {
+    if (value.endsWith("%")) {
+      return (parseFloat(value) / 100) * axisSize;
     }
-    return 1;
+    return parseFloat(value);
   };
 
+  // Screen PNG fade fixed here
+  const screenOpacity =
+    scrollProgress < APPEAR_END
+      ? 0
+      : scrollProgress < STAY_END
+      ? (scrollProgress - APPEAR_END) / (STAY_END - APPEAR_END)
+      : scrollProgress < MERGE_END
+      ? 1
+      : 1 - (scrollProgress - MERGE_END) / (FINAL_START - MERGE_END);
+
+  // Calculate per-screen state
   const getScreenState = (screen: ScreenItem) => {
-    const fadeIn = getFadeInProgress(screen.order);
+    const fadeStart = (screen.order / screens.length) * APPEAR_END;
+    const fadeEnd = fadeStart + (APPEAR_END / screens.length) * 0.4;
 
-    // Phase 1: Zoom in with fade at initial positions
-    if (scrollProgress < APPEAR_PHASE_END) {
-      const yOffset = (1 - fadeIn) * 100; // Move 100px up as they fade in
-      // Zoom effect: scale from 0.6 to 1.0 as it fades in
-      const scaleValue = 0.6 + (fadeIn * 0.4);
-      
-      // On mobile, position images one by one in center, not overlapping
-      if (isMobile) {
-        // Only show the current image if it's the one that should be visible
-        // Hide previous images when new ones appear
-        const currentOrder = Math.floor(scrollProgress * screens.length / APPEAR_PHASE_END);
-        const shouldShow = screen.order === currentOrder || fadeIn > 0.9;
-        
-        return {
-          positioning: "absolute" as const,
-          left: "50%",
-          top: "50%",
-          transform: `translate(-50%, -50%) scale(${scaleValue})`,
-          opacity: shouldShow ? fadeIn : 0,
-          zIndex: 15 + screen.order,
-        };
-      }
-      
-      const baseTransform = screen.id === "streaming-options" ? "translate(-50%, -50%)" : "translate(0, 0)";
-      
-      return {
-        positioning: "absolute" as const,
-        ...screen.initialPosition,
-        transform: `${baseTransform} translate(0, ${yOffset}px) scale(${scaleValue})`,
-        opacity: fadeIn,
-        zIndex: 15,
-      };
-    }
+    const fade =
+      scrollProgress < fadeStart
+        ? 0
+        : scrollProgress < fadeEnd
+        ? (scrollProgress - fadeStart) / (fadeEnd - fadeStart)
+        : 1;
 
-    // Phase 1.5: Screen Appears (Images stay still)
-    if (scrollProgress < SCREEN_APPEAR_PHASE_END) {
-      if (isMobile) {
-        // On mobile, show all images that have appeared, all centered
-        return {
-          positioning: "absolute" as const,
-          left: "50%",
-          top: "50%",
-          transform: `translate(-50%, -50%) scale(1)`,
-          opacity: fadeIn > 0.1 ? 1 : 0,
-          zIndex: 15 + screen.order,
-        };
-      }
-      
-      return {
-        positioning: "absolute" as const,
-        ...screen.initialPosition,
-        transform: `translate(${screen.id === "streaming-options" ? "-50%, -50%" : "0, 0"}) scale(1)`,
-        opacity: 1,
-        zIndex: 15,
-      };
-    }
+    const viewportW = typeof window !== "undefined" ? window.innerWidth : 1920;
+    const viewportH = typeof window !== "undefined" ? window.innerHeight : 1080;
 
-    // Phase 2: Move to grid positions (Stay Visible)
-    // We remove the "Swap" phase. Once they move, they stay there.
-    let progress = 0;
-    if (scrollProgress < MERGE_PHASE_END) {
-       progress = (scrollProgress - SCREEN_APPEAR_PHASE_END) / (MERGE_PHASE_END - SCREEN_APPEAR_PHASE_END);
-    } else {
-       progress = 1; // Fully merged
-    }
-      
-    // On mobile, all images merge to center (no grid layout)
-    const frameTargets: { [key: string]: { x: string; y: string; scale: number; width: string; height: string } } = isMobile ? {
-      "streaming-perps": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
-      "streaming-spot": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
-      "multiple-instruments": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
-      "charting": { x: "0px", y: "0px", scale: 0.4, width: "120px", height: "70px" },
-      "streaming-options": { x: "0px", y: "0px", scale: 0.5, width: "200px", height: "70px" },
-    } : {
-      "streaming-perps": { x: "-175px", y: "-180px", scale: 1, width: "325px", height: "95px" },
-      "streaming-spot": { x: "175px", y: "-180px", scale: 1, width: "325px", height: "95px" },
-      "multiple-instruments": { x: "-175px", y: "-70px", scale: 1, width: "325px", height: "95px" },
-      "charting": { x: "175px", y: "-70px", scale: 1, width: "325px", height: "95px" },
-      "streaming-options": { x: "0px", y: "40px", scale: 1, width: "660px", height: "95px" },
+    // Add padding from edges (80px horizontal, 40px vertical)
+    const horizontalPadding = 80;
+    const verticalPadding = 90;
+    const effectiveWidth = viewportW - (horizontalPadding * 2);
+    const effectiveHeight = viewportH - (verticalPadding * 2);
+
+    const xInitial =
+      screen.initialPosition.left
+        ? horizontalPadding + toPixel(screen.initialPosition.left, effectiveWidth)
+        : viewportW - horizontalPadding - toPixel(screen.initialPosition.right!, effectiveWidth);
+
+    const yInitial =
+      screen.initialPosition.top
+        ? verticalPadding + toPixel(screen.initialPosition.top, effectiveHeight)
+        : viewportH - verticalPadding - toPixel(screen.initialPosition.bottom!, effectiveHeight);
+
+    const targets: Record<string, { x: number; y: number; scale: number }> = {
+      "streaming-perps": { x: -175, y: -180, scale: 1 },
+      "streaming-spot": { x: 175, y: -180, scale: 1 },
+      "multiple-instruments": { x: -175, y: -70, scale: 1 },
+      "charting": { x: 175, y: -70, scale: 1 },
+      "streaming-options": { x: 0, y: 40, scale: 1 },
     };
 
-    const target = frameTargets[screen.id];
-    // Interpolate scale from 1 to target.scale
-    const currentScale = 1 + (target.scale - 1) * progress; 
-    
-    // We need to interpolate width/height if we want smooth transition, 
-    // but for now let's just switch to target dimensions in the merge phase?
-    // Or better, interpolate from initial 350px/auto to target.
-    
-    // Since we don't have numeric interpolation for "px" strings easily here without parsing,
-    // and the previous code didn't handle width/height interpolation, 
-    // let's assume the user is okay with them snapping or we just set them.
-    // Actually, to avoid snap, we can keep them as is until fully merged? 
-    // No, the user wants them to look good.
-    
+    const T = targets[screen.id];
+
+    let mergeT = 0;
+    if (scrollProgress > STAY_END) {
+      mergeT = Math.min((scrollProgress - STAY_END) / (MERGE_END - STAY_END), 1);
+    }
+
+    const x = lerp(xInitial, viewportW / 2 + T.x, mergeT);
+    const y = lerp(yInitial, viewportH / 2 + T.y, mergeT);
+
+    const scale = lerp(0.7, T.scale, fade * (mergeT || 1));
+
     return {
-      positioning: "centered" as const,
-      x: target.x,
-      y: target.y,
-      scale: currentScale,
-      width: target.width,
-      height: target.height,
-      opacity: 1, 
-      zIndex: 20,
+      x,
+      y,
+      scale,
+      fade,
     };
   };
 
-  // On mobile, don't shift container - keep everything centered
-  const containerShift = isMobile ? "0%" :
-    scrollProgress < MERGE_PHASE_END ? "0%" :
-    scrollProgress < MOVE_PHASE_END ? `${((scrollProgress - MERGE_PHASE_END) / (MOVE_PHASE_END - MERGE_PHASE_END)) * 35}%` : "35%";
+  const centerGifOpacity =
+    scrollProgress > MERGE_END ? (scrollProgress - MERGE_END) / (FINAL_START - MERGE_END) : 0;
 
-  // Opacity for the empty frame
-  let emptyFrameOpacity = 0;
+  const finalT =
+    scrollProgress <= FINAL_START
+      ? 0
+      : scrollProgress >= FINAL_END
+      ? 1
+      : (scrollProgress - FINAL_START) / (FINAL_END - FINAL_START);
 
-  if (scrollProgress < APPEAR_PHASE_END) {
-    // Phase 1: Just images appearing. Frame is hidden.
-    emptyFrameOpacity = 0;
-  } else if (scrollProgress < SCREEN_APPEAR_PHASE_END) {
-    // Phase 1.5: Screen fades in BEFORE images start moving
-    const progress = (scrollProgress - APPEAR_PHASE_END) / (SCREEN_APPEAR_PHASE_END - APPEAR_PHASE_END);
-    emptyFrameOpacity = progress;
-  } else {
-    // Frame stays visible
-    emptyFrameOpacity = 1;
-  }
+  const centeredGifVisible = centerGifOpacity * (1 - finalT);
+  const finalLayoutVisible = finalT;
 
-  const textOpacity = scrollProgress > MOVE_PHASE_END ? (scrollProgress - MOVE_PHASE_END) / (TEXT_PHASE_END - MOVE_PHASE_END) : 0;
+  const textTranslateX = `${lerp(-60, 0, finalLayoutVisible)}px`;
+  const textOpacity = finalLayoutVisible;
 
-  // On mobile, show simplified version - just GIF and text
+  const finalGifWidth = isMobile ? "100%" : "min(90%, 560px)";
+
+  // Mobile: Simple layout with just GIF and text
   if (isMobile) {
     return (
       <div className="relative bg-black py-20">
@@ -277,9 +240,12 @@ export default function ScrollAnimationSection() {
     );
   }
 
+  // Desktop: Full scroll animation
   return (
     <div ref={containerRef} className="relative bg-black" style={{ height: "500vh" }}>
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        
+        {/* Background radial */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -287,144 +253,121 @@ export default function ScrollAnimationSection() {
           }}
         />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full h-full relative">
-          {/* Left text - on mobile, show below the screen */}
-          <motion.div
-            className={`absolute ${isMobile ? 'left-4 right-4 top-auto bottom-8' : 'left-4 sm:left-6 lg:left-8 top-0 h-full'} w-full md:w-1/2 flex ${isMobile ? 'items-start' : 'items-center'} justify-start z-40`}
-            style={{ opacity: textOpacity }}
-          >
-            <div className={`max-w-xl space-y-4 sm:space-y-6 md:space-y-8 ${isMobile ? 'text-center' : ''}`}>
-              <h2
-                className="font-bold text-white text-[35px] sm:text-4xl md:text-5xl lg:text-[56px]"
-                style={{
-                  fontFamily: "Montserrat, sans-serif",
-                  lineHeight: "1.1",
-                }}
-              >
-                Start Trading with Institutional Precision
-              </h2>
-              
-              <p className="text-white/90 text-base sm:text-lg leading-relaxed">
-                In the 24/7 market for Digital Assets, Derivatives, and Forex, leverage Collybus's tools for precision, superior risk control, and operational reliability
-              </p>
+        {/* --- FIXED: screen.png now fades OUT --- */}
+        <motion.img
+          src="/screen.png"
+          className="absolute z-10 left-1/2 top-1/2"
+          style={{
+            width: "min(90vw, 560px)",
+            opacity: screenOpacity,
+            transform: "translate(-50%, -50%)",
+          }}
+        />
 
-              <a
-                href="mailto:contact@collybus.co"
-                className="inline-flex items-center space-x-2 bg-[#f2c016] hover:bg-[#d9ad14] text-black font-semibold px-4 sm:px-6 py-2 sm:py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 text-sm sm:text-base"
-              >
-                <svg 
-                  className="w-4 h-4 sm:w-5 sm:h-5" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
-                  />
-                </svg>
-                <span>Get in Touch</span>
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Screens container - positioned within container but allows for animation */}
-          <motion.div
-            className="absolute inset-0"
-            style={{ 
-              x: isMobile ? "0%" : containerShift,
-            }}
-            transition={{ type: "spring", stiffness: 40, damping: 30, mass: 1 }}
-          >
-            {scrollProgress >= MERGE_PHASE_END ? (
-              /* Final GIF - Replaces frame and images once fully merged */
+        {/* --- Individual Screens - positioned relative to viewport --- */}
+        {scrollProgress < MERGE_END &&
+          screens.map((screen) => {
+            const state = getScreenState(screen);
+            return (
               <motion.div
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20"
+                key={screen.id}
+                className="absolute z-20"
                 style={{
-                  width: "min(90vw, 560px)",
-                  maxWidth: "700px",
+                  left: state.x,
+                  top: state.y,
+                  scale: state.scale,
+                  opacity: state.fade,
+                  translateX: "-50%",
+                  translateY: "-50%",
+                  width: "320px",
                 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+                transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
               >
-                <img src="/final-animation.gif" alt="Trading Dashboard" className="w-full h-auto" />
+                <div className="rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-black/30 backdrop-blur-sm">
+                  <img src={screen.image} className="w-full h-auto object-contain" />
+                </div>
               </motion.div>
-            ) : (
-              <>
-                {/* Empty Screen frame (Fades in BEFORE merge) */}
-                <motion.div
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{
-                    width: "min(90vw, 560px)",
-                    maxWidth: "700px",
-                    opacity: emptyFrameOpacity,
-                  }}
-                  transition={{ duration: 0.5 }}
+            );
+          })}
+
+        {/* --- Centered GIF --- */}
+        <motion.div
+          className="absolute z-30 flex items-center justify-center left-1/2 top-1/2"
+          style={{
+            opacity: centeredGifVisible,
+            pointerEvents: centeredGifVisible > 0 ? "auto" : "none",
+            width: finalGifWidth,
+            maxWidth: "700px",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <img src="/final-animation.gif" alt="Trading Dashboard" className="w-full h-auto object-contain" />
+        </motion.div>
+
+        {/* --- FINAL LAYOUT --- */}
+        <div
+          className="absolute z-40 inset-0 flex items-center justify-center pointer-events-none"
+          aria-hidden={finalLayoutVisible === 0}
+        >
+          <div
+            className="max-w-[1280px] w-full mx-auto px-4 pointer-events-auto"
+            style={{
+              opacity: finalLayoutVisible,
+              transition: "opacity 200ms linear",
+              display: finalLayoutVisible === 0 ? "none" : "block",
+            }}
+          >
+            <div
+              className={`w-full flex ${isMobile ? "flex-col gap-8 items-center" : "flex-row items-center"}`}
+              style={{ minHeight: "420px" }}
+            >
+              <div
+                className="flex-1"
+                style={{
+                  transform: `translateX(${textTranslateX})`,
+                  opacity: textOpacity,
+                }}
+              >
+                <h2
+                  className="font-bold text-white text-[35px] sm:text-4xl md:text-5xl lg:text-[56px] leading-tight"
                 >
-                  <img src="/screen.png" alt="Screen frame" className="w-full h-auto" />
-                </motion.div>
+                  Start Trading with <br /> Institutional Precision
+                </h2>
 
-                {/* Individual Images */}
-                {screens.map((screen) => {
-                  const state = getScreenState(screen);
+                <p className="text-white/90 text-base sm:text-lg leading-relaxed mt-6 max-w-xl">
+                  In the 24/7 market for Digital Assets, Derivatives, and Forex,
+                  leverage Collybus's tools for precision, superior risk control, and
+                  operational reliability.
+                </p>
 
-                  if (state.positioning === "absolute") {
-                    return (
-                      <motion.div
-                        key={screen.id}
-                        className="absolute"
-                        style={{
-                          ...state,
-                          width: isMobile ? "min(70vw, 280px)" : "min(80vw, 360px)",
-                          maxWidth: isMobile ? "280px" : "450px",
-                        }}
-                        transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
-                      >
-                        <div className="rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-black/30 backdrop-blur-sm">
-                          <img src={screen.image} alt={screen.title} className="w-full h-auto object-contain" />
-                        </div>
-                        
-                        {state.opacity > 0.3 && (
-                          <motion.div className={`mt-2 sm:mt-4 ${isMobile ? 'text-center' : 'text-left'}`} style={{ opacity: state.opacity }}>
-                            <p className="text-white text-base sm:text-lg md:text-xl lg:text-2xl font-medium">
-                              <span style={{ color: BRAND }}>{screen.order + 1}. </span>
-                              {screen.title}
-                            </p>
-                          </motion.div>
-                        )}
-                      </motion.div>
-                    );
-                  } else {
-                    // On mobile, ensure everything stays centered (no right movement)
-                    return (
-                      <motion.div
-                        key={screen.id}
-                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-                        style={{
-                          x: isMobile ? "0px" : state.x,
-                          y: isMobile ? "0px" : state.y,
-                          scale: state.scale,
-                          opacity: state.opacity,
-                          width: isMobile ? "min(70vw, 200px)" : ((state as any).width || "min(80vw, 360px)"),
-                          maxWidth: isMobile ? "200px" : "450px",
-                          height: (state as any).height || "auto",
-                          zIndex: state.zIndex,
-                        }}
-                        transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
-                      >
-                        <div className="rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-black/30 backdrop-blur-sm w-full h-full">
-                          <img src={screen.image} alt={screen.title} className="w-full h-full object-cover" />
-                        </div>
-                      </motion.div>
-                    );
-                  }
-                })}
-              </>
-            )}
-          </motion.div>
+                <a
+                  href="mailto:contact@collybus.co"
+                  className="inline-flex items-center space-x-2 mt-8 bg-[#f2c016] hover:bg-[#d9ad14] text-black font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                  <span>Get in Touch</span>
+                </a>
+              </div>
+
+              <div className="flex-1 flex justify-center">
+                <div style={{ width: isMobile ? "90%" : "520px", maxWidth: "100%" }}>
+                  <img src="/final-animation.gif" alt="Trading Dashboard" className="w-full h-auto object-contain" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
