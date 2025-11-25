@@ -88,9 +88,9 @@ export default function ScrollAnimationSection() {
   // Animation phases
   const APPEAR_END = 0.35;
   const STAY_END = 0.45;
-  const MERGE_END = 0.95;
-  const FINAL_START = 0.9;
-  const FINAL_END = 1.0;
+  const MERGE_END = 0.65;
+  const FINAL_START = 0.7;
+  const FINAL_END = 0.7;
 
   
 
@@ -119,7 +119,7 @@ export default function ScrollAnimationSection() {
 
     // Add padding from edges (80px horizontal, 40px vertical)
     const horizontalPadding = 80;
-    const verticalPadding = 190;
+    const verticalPadding = 170;
     const effectiveWidth = viewportW - (horizontalPadding * 2);
     const effectiveHeight = viewportH - (verticalPadding * 2);
 
