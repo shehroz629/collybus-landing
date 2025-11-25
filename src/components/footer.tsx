@@ -102,13 +102,13 @@ Derivatives, and Forex.
             © {new Date().getFullYear()} Collybus. All rights reserved.
           </p> */}
           <p className="text-white/40 text-left">
-          Collybus Pte Ltd UEN 202420599E, (held in trust, ACRA, issued by MAS)
+          Collybus Pte Ltd UEN 2024205996
           </p>
           <p className="text-white/40 text-left">
-          Collybus Pty Ltd is registered with AUSTRAC. AAN: 100906184
+          Colybus Pty Ltd (ACN 658 764-017) holds an AFSL 546742 (issued by ASIC) <br /> Collybus Pty is registered with AUSTRAC (AAN:100906184)
           </p>
           <p className="text-white/40 text-left">
-          Collybus Pte Ltd UEN 202420599E
+          {new Date().getFullYear()} Collybus All rights reserved.
           </p>
         </div>
       </div>

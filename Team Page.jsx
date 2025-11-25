@@ -109,7 +109,7 @@ export default function TeamFocused() {
       <main className="bg-black text-white" style={{ position: 'relative', zIndex: 1, fontFamily: 'Montserrat, sans-serif' }}>
         <Hero title={"Meet the team"} subtitle="Decades of experience from trading, fintech, and software—focused on execution quality and customer outcomes" />
 
-        <Section eyebrow="Our Purpose" title="A note from the CEO">
+        <Section eyebrow="Our Purpose" title="A note from the Co-CEO">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-6 md:p-8 relative overflow-hidden">
             <div aria-hidden className="absolute -top-20 -right-20 w-72 h-72 rounded-full blur-3xl" style={{ background: hexToRgba(BRAND, 0.12) }} />
             <div className="text-base sm:text-lg md:text-xl leading-relaxed text-white" style={{ lineHeight: '1.6' }}>"A trading platform is more than just software — it's the gateway through which traders access the financial markets. Our mission is to make that gateway intuitive and efficient, giving traders the visibility, tools, and confidence to express their ideas and manage risk with ease."</div>

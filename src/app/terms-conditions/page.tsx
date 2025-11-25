@@ -13,51 +13,16 @@ const TermsConditionsPage = () => {
     <div className="bg-black text-gray-200 pt-20 md:pt-24 pb-8 md:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Gold Banner for Page Title */}
-        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12 rounded-2xl mt-8 md:mt-12">
-          <h1 className="text-black text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-semibold tracking-tight" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }}>
+        <div className="bg-yellow-400 p-8 md:p-12 text-start mb-8 md:mb-12 rounded-2xl">
+          <h1 className="text-black text-3xl md:text-4xl lg:text-5xl font-normal" style={{ fontFamily: 'Montserrat, sans-serif' }}>
             Terms & Conditions
           </h1>
         </div>
 
-        <div className="prose prose-invert max-w-none text-white/80 prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-headings:text-white prose-strong:font-semibold prose-strong:text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-          <style dangerouslySetInnerHTML={{__html: `
-            .prose p {
-              font-size: 1rem;
-              line-height: 1.6;
-            }
-            @media (min-width: 640px) {
-              .prose p {
-                font-size: 1.125rem;
-              }
-            }
-            @media (min-width: 768px) {
-              .prose p {
-                font-size: 1.25rem;
-              }
-            }
-            .prose h2 {
-              font-size: 1.25rem;
-              font-weight: 600;
-              color: white;
-              margin-top: 2rem;
-              margin-bottom: 1rem;
-            }
-            @media (min-width: 640px) {
-              .prose h2 {
-                font-size: 1.5rem;
-              }
-            }
-            @media (min-width: 768px) {
-              .prose h2 {
-                font-size: 1.75rem;
-              }
-            }
-            .prose ol li strong {
-              display: block;
-              margin-bottom: 0.5rem;
-            }
-          `}} />
-          <h2>TERMS AND CONDITIONS</h2>
+        <div className="prose prose-invert max-w-none text-gray-200 font-thin prose-p:leading-relaxed prose-p:my-4 prose-headings:font-semibold prose-headings:text-xl prose-headings:text-white prose-strong:font-semibold prose-strong:text-white">
+          <p>
+            <strong>TERMS AND CONDITIONS</strong>
+          </p>
           <p>
             Welcome to the website of&nbsp;<strong>Collybus Pte Ltd</strong>
             &nbsp;(“We”, “Us”, or “Our”), a company incorporated in Singapore
@@ -77,7 +42,11 @@ const TermsConditionsPage = () => {
             If you do not meet the eligibility criteria or agree to these Terms,
             you must refrain from using the Website.
           </p>
-          <h2>ELIGIBILITY</h2>
+          <ol className="wp-block-list">
+            <li>
+              <strong>ELIGIBILITY</strong>
+            </li>
+          </ol>
           <p>
             The Website is&nbsp;<strong>not for retail investors</strong>.
             Access is limited to:
@@ -112,7 +81,11 @@ const TermsConditionsPage = () => {
               the reasons, where required under applicable laws.
             </li>
           </ol>
-          <h2>NO FINANCIAL ADVICE OR OFFER</h2>
+          <ol start={2} className="wp-block-list">
+            <li>
+              <strong>NO FINANCIAL ADVICE OR OFFER</strong>
+            </li>
+          </ol>
           <p>
             None of the information provided on this Website constitutes
             investment advice, a recommendation, or an offer or solicitation to
@@ -125,7 +98,11 @@ const TermsConditionsPage = () => {
             Any decision to invest, trade, or engage in any financial activity
             remains solely at your discretion and risk.
           </p>
-          <h2>NO RELIANCE OR INFORMATION</h2>
+          <ol start={3} className="wp-block-list">
+            <li>
+              <strong>NO RELIANCE OR INFORMATION</strong>
+            </li>
+          </ol>
           <p>
             All information on the Website is provided&nbsp;
             <strong>for informational purposes only</strong>. While we strive
@@ -145,7 +122,11 @@ const TermsConditionsPage = () => {
             You should independently verify all information and seek
             professional advice where necessary.
           </p>
-          <h2>WEBSITE USE AND USER OBLIGATION</h2>
+          <ol start={4} className="wp-block-list">
+            <li>
+              <strong>WEBSITE USE AND USER OBLIGATION</strong>
+            </li>
+          </ol>
           <p>You agree:</p>
           <ul className="wp-block-list">
             <li>To use the Website only for lawful and authorized purposes;</li>
@@ -162,7 +143,11 @@ const TermsConditionsPage = () => {
             We reserve the right to suspend or restrict access for violations of
             these Terms.
           </p>
-          <h2>MALWARE</h2>
+          <ol start={5} className="wp-block-list">
+            <li>
+              <strong>MALWARE</strong>
+            </li>
+          </ol>
           <p>
             While we implement industry-standard security protocols, we cannot
             guarantee the Website is free from viruses, malware, or harmful
@@ -177,7 +162,11 @@ const TermsConditionsPage = () => {
             Any attempt to disrupt or compromise our Website's security will
             result in legal action.
           </p>
-          <h2>THIRD PARTY RESOURCES AND DEVICES</h2>
+          <ol start={6} className="wp-block-list">
+            <li>
+              <strong>THIRD PARTY RESOURCES AND DEVICES</strong>
+            </li>
+          </ol>
           <p>
             The Website may include links to third-party websites, resources, or
             require interaction with specific devices and technology.
@@ -257,7 +246,11 @@ const TermsConditionsPage = () => {
               protect your devices and systems.
             </li>
           </ul>
-          <h2>JURISDICTIONAL COMPLIANCE</h2>
+          <ol start={7} className="wp-block-list">
+            <li>
+              <strong>JURISDICTIONAL COMPLIANCE</strong>
+            </li>
+          </ol>
           <p>
             Our services are designed for jurisdictions where we intend to
             operate, namely:
@@ -283,7 +276,11 @@ const TermsConditionsPage = () => {
             You are responsible for ensuring compliance with laws in your
             jurisdiction.
           </p>
-          <h2>INTELLECTUAL PROPERTY</h2>
+          <ol start={8} className="wp-block-list">
+            <li>
+              <strong>INTELLECTUAL PROPERTY</strong>
+            </li>
+          </ol>
           <p>
             All content on the Website, including text, graphics, logos,
             software, images, and other materials (“Content”), is the property
@@ -335,7 +332,11 @@ const TermsConditionsPage = () => {
             action. To report misuse, please contact us
             at&nbsp;support@collybus.co
           </p>
-          <h2>LIMITATION OF LIABILITY</h2>
+          <ol start={9} className="wp-block-list">
+            <li>
+              <strong>LIMITATION OF LIABILITY</strong>
+            </li>
+          </ol>
           <p>To the fullest extent permitted by law:</p>
           <ul className="wp-block-list">
             <li>
@@ -348,7 +349,11 @@ const TermsConditionsPage = () => {
             </li>
             <li>Your sole remedy is to discontinue use of the Website.</li>
           </ul>
-          <h2>PRIVACY POLICY</h2>
+          <ol start={10} className="wp-block-list">
+            <li>
+              <strong>PRIVACY POLICY</strong>
+            </li>
+          </ol>
           <p>
             Your privacy is important to us. Our collection, use, and protection
             of personal data are governed by our&nbsp;
@@ -419,13 +424,21 @@ const TermsConditionsPage = () => {
             If you have any questions about our data practices, please contact
             us at support@collybus.co
           </p>
-          <h2>AMENDMENTS</h2>
+          <ol start={11} className="wp-block-list">
+            <li>
+              <strong>AMENDMENTS</strong>
+            </li>
+          </ol>
           <p>
             We may update these Terms periodically. Updates will take effect
             upon posting to the Website. Continued use constitutes acceptance of
             the revised Terms.
           </p>
-          <h2>APPLICABLE LAW</h2>
+          <ol start={12} className="wp-block-list">
+            <li>
+              <strong>APPLICABLE LAW</strong>
+            </li>
+          </ol>
           <p>
             These Terms are governed by the laws of&nbsp;Singapore, without
             regard to conflicts of law principles. Any disputes will be subject
@@ -435,7 +448,11 @@ const TermsConditionsPage = () => {
             For services offered in Australia or the European Union, additional
             compliance with local laws may apply where necessary.
           </p>
-          <h2>CONTACT</h2>
+          <ol start={13} className="wp-block-list">
+            <li>
+              <strong>CONTACT</strong>
+            </li>
+          </ol>
           <p>
             For questions or clarifications regarding these Terms, please
             contact:
@@ -447,13 +464,17 @@ const TermsConditionsPage = () => {
           </p>
           <p>Singapore 089513</p>
           <p>Email: support@collybus.co</p>
-          <h2>ACKNOWLEDGEMENT</h2>
+          <ol start={14} className="wp-block-list">
+            <li>
+              <strong>ACKNOWLEDGEMENT</strong>
+            </li>
+          </ol>
           <p>By accessing or using the Website, you confirm that you:</p>
           <ol className="wp-block-list">
             <li>
               Meet the eligibility criteria as an{" "}
-              <strong>Accredited Investor</strong> or{" "}
-              <strong>Institutional Investor as defined under Clause 1</strong>;
+              <strong>Accredited Investor or</strong> {" "}
+              <strong>Institutional Investor as defined under Clause 1;</strong>
             </li>
             <li>
               Understand the risks and responsibilities associated with using
