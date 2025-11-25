@@ -390,7 +390,7 @@ function EngagementTabs() {
       title: "White-label",
       text: "Stream Your Own Liquidity. Capture More Client Flow. Fully Branded. \n\nThe COLLYBUS white-label platform empowers brokers, market makers, and trading venues to stream their own liquidity directly to clients through a premium, fully branded trading interface. Own the full execution experience, deepen client engagement, and capture a greater share of trading flow.\n\nWith multi-venue connectivity, institutional-grade execution tools, and complete brand customisation, the COLLYBUS white-label solution gives you everything needed to scale your liquidity distribution, strengthen client relationships, and compete at the highest institutional level while we manage the infrastructure, upgrades, and integrations.",
       icon: "/white-lable-icon.png",
-      image: "/White-Label-new.png",
+      image: "/White-Label-your-brand.png",
     },
     api: {
       title: "API",
