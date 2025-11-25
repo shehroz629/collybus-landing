@@ -88,9 +88,11 @@ export default function ScrollAnimationSection() {
   // Animation phases
   const APPEAR_END = 0.35;
   const STAY_END = 0.45;
-  const MERGE_END = 0.75;
+  const MERGE_END = 0.95;
   const FINAL_START = 0.9;
   const FINAL_END = 1.0;
+
+  
 
   // Convert initial positions (% or px) to pixels
   const toPixel = (value: string, axisSize: number) => {
@@ -117,7 +119,7 @@ export default function ScrollAnimationSection() {
 
     // Add padding from edges (80px horizontal, 40px vertical)
     const horizontalPadding = 80;
-    const verticalPadding = 150;
+    const verticalPadding = 190;
     const effectiveWidth = viewportW - (horizontalPadding * 2);
     const effectiveHeight = viewportH - (verticalPadding * 2);
 
@@ -176,14 +178,17 @@ export default function ScrollAnimationSection() {
   const textOpacity = finalLayoutVisible;
 
   // Screen PNG - hide immediately when text or monitors become visible
-  // Hide when finalLayoutVisible > 0 (text/monitors visible) or when GIF is visible
-  const screenOpacity = (finalLayoutVisible > 0 || centeredGifVisible > 0 || scrollProgress >= FINAL_START)
-    ? 0 // Hide immediately when text/monitors/GIF become visible
-    : scrollProgress < APPEAR_END
-    ? 0
-    : scrollProgress < STAY_END
-    ? (scrollProgress - APPEAR_END) / (STAY_END - APPEAR_END)
-    : 1; // Visible only between STAY_END and when text/monitors appear
+  // Hide screen.png immediately when final layout (text/GIF) starts appearing
+const screenOpacity = finalLayoutVisible > 0
+? 0
+: scrollProgress < APPEAR_END
+? 0
+: scrollProgress < STAY_END
+? (scrollProgress - APPEAR_END) / (STAY_END - APPEAR_END)
+: 1;
+
+
+
 
   const finalGifWidth = isMobile ? "100%" : "min(90%, 560px)";
 
@@ -262,53 +267,56 @@ export default function ScrollAnimationSection() {
               width: "min(90vw, 560px)",
               opacity: screenOpacity,
               transform: "translate(-50%, -50%)",
+              
             }}
-            transition={{ duration: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           />
         )}
 
         {/* --- Individual Screens - positioned relative to viewport --- */}
         {scrollProgress < MERGE_END &&
-          screens.map((screen) => {
-            const state = getScreenState(screen);
-            return (
-              <motion.div
-                key={screen.id}
-                className="absolute z-20 flex flex-col items-center"
-                style={{
-                  left: state.x,
-                  top: state.y,
-                  scale: state.scale,
-                  opacity: state.fade,
-                  translateX: "-50%",
-                  translateY: "-50%",
-                  width: "320px",
-                }}
-                transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
-              >
-                <div className="rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-black/30 backdrop-blur-sm">
-                  <img src={screen.image} className="w-full h-auto object-contain" />
-                </div>
-                {/* Heading below screen - hide before merge starts */}
-                {state.fade > 0.3 && scrollProgress < STAY_END && (
-                  <motion.div 
-                    className="mt-4 text-center"
-                    style={{ 
-                      opacity: scrollProgress < STAY_END 
-                        ? Math.max(0, state.fade * (1 - (scrollProgress - (APPEAR_END + 0.05)) / (STAY_END - APPEAR_END - 0.05)))
-                        : 0,
-                      transition: "opacity 0.3s ease-out"
-                    }}
-                  >
-                    <p className="text-white text-lg md:text-xl font-medium">
-                      <span style={{ color: BRAND }}>{screen.order + 1}. </span>
-                      {screen.title}
-                    </p>
-                  </motion.div>
-                )}
-              </motion.div>
-            );
-          })}
+  screens.map((screen) => {
+    const state = getScreenState(screen);
+    return (
+      <motion.div
+        key={screen.id}
+        className="absolute z-20 flex flex-col items-center"
+        style={{
+          left: state.x,
+          top: state.y,
+          scale: state.scale,
+          opacity: state.fade * (finalLayoutVisible > 0 ? 0 : 1), // <-- UPDATED
+          translateX: "-50%",
+          translateY: "-50%",
+          width: "320px",
+        }}
+        transition={{ type: "spring", stiffness: 30, damping: 25, mass: 0.8 }}
+      >
+        <div className="rounded-xl overflow-hidden shadow-2xl border border-white/20 bg-black/30 backdrop-blur-sm">
+          <img src={screen.image} className="w-full h-auto object-contain" />
+        </div>
+
+        {/* Heading below screen */}
+        {state.fade > 0.3 && scrollProgress < STAY_END && (
+          <motion.div 
+            className="mt-4 text-center"
+            style={{ 
+              opacity: scrollProgress < STAY_END 
+                ? Math.max(0, state.fade * (1 - (scrollProgress - (APPEAR_END + 0.05)) / (STAY_END - APPEAR_END - 0.05)))
+                : 0,
+              transition: "opacity 0.3s ease-out"
+            }}
+          >
+            <p className="text-white text-lg md:text-xl font-medium">
+              <span style={{ color: BRAND }}>{screen.order + 1}. </span>
+              {screen.title}
+            </p>
+          </motion.div>
+        )}
+      </motion.div>
+    );
+  })}
+
 
         {/* --- Centered GIF --- */}
         <motion.div
