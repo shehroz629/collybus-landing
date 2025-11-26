@@ -197,10 +197,18 @@ export default function ScrollAnimationSection() {
 
   // Seal phase: brief unify effect then snap to single screen
   const sealStart = 0.62;
-  const sealEnd = 0.74;
+  const sealEnd = 0.85;
   const sealT = Math.max(0, Math.min(1, (mergeT - sealStart) / (sealEnd - sealStart)));
-  const showUnified = mergeT >= sealEnd;
-  const showTilesInMask = maskVisible && !showUnified;
+  
+  // Dissolve animation: screens fade out before merged-screen appears (much slower)
+  const dissolveStart = 0.60; // Start dissolving screens
+  const dissolveEnd = 0.78;   // Complete dissolve, merged-screen starts appearing
+  const dissolveT = Math.max(0, Math.min(1, (mergeT - dissolveStart) / (dissolveEnd - dissolveStart)));
+  const screensDissolveOpacity = mergeT < dissolveStart ? 1 : lerp(1, 0, dissolveT);
+  
+  const showUnified = mergeT >= dissolveEnd;
+  const mergedScreenOpacity = mergeT < dissolveEnd ? 0 : lerp(0, 1, (mergeT - dissolveEnd) / (sealEnd - dissolveEnd));
+  const showTilesInMask = maskVisible && !showUnified && screensDissolveOpacity > 0;
 
   // Text motion
   const textOpacity = finalT;
@@ -236,21 +244,46 @@ export default function ScrollAnimationSection() {
   // Mobile layout
   if (isMobile) {
     return (
-      <section className="bg-black border-t border-white/10">
+      <section className="bg-black ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="space-y-6">
-            {screens.map((screen) => (
-              <div key={screen.id} className="rounded-xl overflow-hidden border border-white/10 bg-black/30">
-                <img src={screen.image} alt={screen.title} className="w-full h-auto object-contain" />
-                <p className="text-white/80 text-center py-3">
-                  <span style={{ color: BRAND }}>{screen.order + 1}.</span> {screen.title}
-                </p>
-              </div>
-            ))}
-            {/* Removed final animation GIF for mobile fallback */}
-            {/* <div className="rounded-xl overflow-hidden border border-white/10 bg-black/30">
+          <div className="space-y-8">
+            {/* Final animation GIF */}
+            <div className="rounded-xl overflow-hidden ">
               <img src="/final-animation.gif" alt="Workflow animation" className="w-full h-auto object-contain" />
-            </div> */}
+            </div>
+
+            {/* Text section */}
+            <div className="space-y-6">
+              <h2 className="font-bold text-white text-4xl leading-tight">
+                Start Trading with <br /> Institutional Precision
+              </h2>
+
+              <p className="text-white/90 text-base leading-relaxed">
+                In the 24/7 market for Digital Assets, Derivatives, and Forex,
+                leverage Collybus's tools for precision, superior risk control,
+                and operational reliability.
+              </p>
+
+              <a
+                href="mailto:contact@collybus.co"
+                className="inline-flex items-center space-x-2 mt-8 bg-[#F2C016] hover:bg-[#d9ad14] text-black font-semibold px-6 py-3 rounded-full shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+                <span>Get in Touch</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -347,7 +380,6 @@ export default function ScrollAnimationSection() {
               overflow: "hidden",
               borderRadius: "16px",
               pointerEvents: "none",
-              boxShadow: "inset 0 0 30px rgba(0,0,0,0.35)",
               willChange: "transform, opacity",
               opacity: maskVisible ? 1 : 0,
             }}
@@ -363,7 +395,7 @@ export default function ScrollAnimationSection() {
             />
 
             {/* Unified single screen image */}
-            {showUnified && (
+            {mergeT >= dissolveEnd && (
                <motion.img
                  src="/merged-screen.png"
                  className="absolute"
@@ -373,14 +405,15 @@ export default function ScrollAnimationSection() {
                    width: '100%',
                    height: '100%',
                    transform: 'none',
+                   opacity: mergedScreenOpacity,
                      objectFit: 'contain',
                      objectPosition: 'center',
                      backfaceVisibility: 'hidden',
                      imageRendering: 'auto',
                      pointerEvents: 'none',
-                     willChange: 'transform',
+                     willChange: 'transform, opacity',
                    }}
-                   transition={{ duration: 0.18, ease: 'easeOut' }}
+                   transition={{ duration: 1.2, ease: 'easeInOut' }}
                />
              )}
 
@@ -398,10 +431,11 @@ export default function ScrollAnimationSection() {
                      x: state.relX - state.tileHalfW,
                      y: state.relY - state.tileHalfH,
                      scale: state.scale,
-                     opacity: state.fade,
+                     opacity: state.fade * screensDissolveOpacity,
                      width: "280px",
                      willChange: "transform, opacity",
                    }}
+                   transition={{ duration: 1.2, ease: 'easeInOut' }}
                  >
                    <div className="rounded-lg overflow-hidden border border-white/15 bg-black/30 backdrop-blur-sm">
                      <img src={screen.image} className="w-full h-auto object-contain" />
