@@ -128,17 +128,13 @@ export default function ScrollAnimationSection() {
     const TILE_HALF_W = TILE_W / 2;
     const TILE_HALF_H = 80; // approximate
 
-    // Per-image horizontal offsets per previous request
-    const LEFT_GAP_PX = 590;  // left column exact position
-    const RIGHT_GAP_PX = 360; // right column exact position
-    const OPTIONS_X_PX = -70; // 5th image offset
-
+    // Initial positions from start
     const initialOffsets: Record<string, { x: number; y: number }> = {
-      "streaming-perps": { x: -LEFT_GAP_PX, y: -110 },
-      "streaming-spot": { x: +RIGHT_GAP_PX, y: -110 },
-      "multiple-instruments": { x: -LEFT_GAP_PX, y: 50 },
-      "charting": { x: +RIGHT_GAP_PX, y: 50 },
-      "streaming-options": { x: OPTIONS_X_PX, y: 20 },
+      "streaming-perps": { x: -530, y: -190 },
+      "streaming-spot": { x: 380, y: -190 },
+      "multiple-instruments": { x: -530, y: 10 },
+      "charting": { x: 390, y: 0 },
+      "streaming-options": { x: -70, y: -20 },
     };
 
     const init = initialOffsets[screen.id];
@@ -226,7 +222,7 @@ export default function ScrollAnimationSection() {
   // Dynamic LCD mask sizing relative to content container width (aligns with header container)
   const rect = contentRef.current?.getBoundingClientRect();
   const containerW = rect?.width ?? (typeof window !== "undefined" ? window.innerWidth : 1920);
-  const baseScreenWidth = Math.min(containerW * 0.9, 560);
+  const baseScreenWidth = Math.min(containerW * 0.9, 700);
   const maskWidthPx = Math.round(baseScreenWidth * 0.80);
   const maskHeightPx = Math.round(baseScreenWidth * 0.48);
   const maskTranslateYPercent = -50; // centered within bezel
@@ -304,7 +300,7 @@ export default function ScrollAnimationSection() {
                  y: state.relY - state.tileHalfH,
                  scale: state.scale * scaleBoost,
                  opacity: state.fade,
-                 width: "280px",
+                 width: "320px",
                  willChange: "transform, opacity",
                }}
              >
@@ -332,7 +328,7 @@ export default function ScrollAnimationSection() {
               src="/screen.png"
               className="absolute z-10 left-1/2 top-1/2"
               style={{
-                width: "min(90vw, 560px)",
+                width: "min(90vw, 700px)",
                 opacity: screenOpacity,
                 transform: "translate(-50%, -50%)",
                 willChange: "transform, opacity",
