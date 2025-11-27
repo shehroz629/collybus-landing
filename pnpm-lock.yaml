@@ -23,6 +23,9 @@ importers:
       framer-motion:
         specifier: ^12.23.16
         version: 12.23.16(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
+      gsap:
+        specifier: ^3.13.0
+        version: 3.13.0
       lucide-react:
         specifier: ^0.544.0
         version: 0.544.0(react@19.1.1)
@@ -45,6 +48,9 @@ importers:
       '@types/country-list':
         specifier: ^2.1.4
         version: 2.1.4
+      '@types/gsap':
+        specifier: ^3.0.0
+        version: 3.0.0
       '@types/mixpanel-browser':
         specifier: ^2.60.0
         version: 2.66.0
@@ -380,6 +386,10 @@ packages:
   '@types/css-font-loading-module@0.0.7':
     resolution: {integrity: sha512-nl09VhutdjINdWyXxHWN/w9zlNCfr60JUqJbd24YXUuCwgeL0TpFSdElCwb6cxfB6ybE19Gjj4g0jsgkXxKv1Q==}
 
+  '@types/gsap@3.0.0':
+    resolution: {integrity: sha512-BbWLi4WRHGze4C8NV7U7yRevuBFiPkPZZyGa0rryanvh/9HPUFXTNBXsGQxJZJq7Ix7j4RXMYodP3s+OsqCErg==}
+    deprecated: This is a stub types definition. gsap provides its own type definitions, so you do not need this installed.
+
   '@types/mixpanel-browser@2.66.0':
     resolution: {integrity: sha512-07zYZZ9ZVHc7R4ktM+3a2clZvKkj+EJcYZ/FevTs011Fr9tdp59lVgAskMf6ZQUp3lOHLqi7K3f+9QtmEsqh1w==}
     deprecated: This is a stub types definition. mixpanel-browser provides its own type definitions, so you do not need this installed.
@@ -481,6 +491,9 @@ packages:
 
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
+
+  gsap@3.13.0:
+    resolution: {integrity: sha512-QL7MJ2WMjm1PHWsoFrAQH/J8wUeqZvMtHO58qdekHpCfhvhSL4gSiz6vJf5EeMP0LOn3ZCprL2ki/gjED8ghVw==}
 
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -978,6 +991,10 @@ snapshots:
 
   '@types/css-font-loading-module@0.0.7': {}
 
+  '@types/gsap@3.0.0':
+    dependencies:
+      gsap: 3.13.0
+
   '@types/mixpanel-browser@2.66.0':
     dependencies:
       mixpanel-browser: 2.67.0
@@ -1070,6 +1087,8 @@ snapshots:
       react-dom: 19.1.1(react@19.1.1)
 
   graceful-fs@4.2.11: {}
+
+  gsap@3.13.0: {}
 
   hoist-non-react-statics@3.3.2:
     dependencies:
