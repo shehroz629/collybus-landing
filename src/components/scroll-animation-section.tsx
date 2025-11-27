@@ -21,8 +21,19 @@ export default function TradingScreens() {
   useEffect(() => {
     // Don't run animations on mobile
     if (isMobile) return;
-    // Set initial state for image-blocks
-    gsap.set(".image-block", { opacity: 0, y: 20 });
+
+    // Wait for DOM to be ready
+    const initAnimations = () => {
+      // Check if elements exist
+      const wrapper = document.querySelector(".wrapper");
+      if (!wrapper) {
+        // Retry after a short delay if elements aren't ready
+        setTimeout(initAnimations, 100);
+        return;
+      }
+
+      // Set initial state for image-blocks
+      gsap.set(".image-block", { opacity: 0, y: 20 });
 
     // =============================
     // 1. Fade-in Animation for image-blocks (one by one) - on scroll
@@ -118,6 +129,35 @@ export default function TradingScreens() {
         },
       });
     });
+
+      // Refresh ScrollTrigger after all animations are set up
+      ScrollTrigger.refresh();
+    };
+
+    // Initialize on mount and after a small delay to ensure DOM is ready
+    let cleanup: (() => void) | undefined;
+    let timeoutId: NodeJS.Timeout | undefined;
+    
+    const handleLoad = () => {
+      timeoutId = setTimeout(initAnimations, 100);
+    };
+    
+    if (typeof window !== "undefined") {
+      if (document.readyState === "complete") {
+        // Small delay to ensure DOM is fully rendered
+        timeoutId = setTimeout(initAnimations, 100);
+      } else {
+        window.addEventListener("load", handleLoad);
+        cleanup = () => window.removeEventListener("load", handleLoad);
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      if (cleanup) cleanup();
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, [isMobile]);
 
   // Mobile layout - only show GIF and text
