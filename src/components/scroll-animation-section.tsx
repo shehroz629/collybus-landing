@@ -61,9 +61,10 @@ export default function TradingScreens() {
     // =============================
     const fadeTl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".image-block",
+        trigger: ".wrapper",
         start: "top center",
         end: "bottom center",
+        scrub: false,
         
       },
       defaults: { ease: "power2.out" }
@@ -83,7 +84,7 @@ export default function TradingScreens() {
       gsap.to(box, {
         scrollTrigger: {
           trigger: ".wrapper",
-          start: "top top-=40",
+          start: "top top-=100",
           end: "bottom-=200 bottom",
           scrub: true,
         },
