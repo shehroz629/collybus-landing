@@ -40,10 +40,10 @@ export default function TradingScreens() {
     // =============================
     const imageBlockTl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".wrapper",
-        start: "top center", // Start when wrapper reaches center of viewport
-        end: "top center",
-        toggleActions: "play none none none",
+        trigger: ".image-block",
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
       },
       defaults: { ease: "power2.out" }
     });
@@ -59,7 +59,15 @@ export default function TradingScreens() {
     // =============================
     // 2. Fade-in Animation for boxes
     // =============================
-    const fadeTl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    const fadeTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".image-block",
+        start: "top center",
+        end: "bottom center",
+        
+      },
+      defaults: { ease: "power2.out" }
+    });
 
     fadeTl
       .to(".box-1", { opacity: 1, scale: 1, duration: 0.8 })

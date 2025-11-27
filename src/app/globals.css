@@ -55,8 +55,8 @@ body {
 }
 
 .box-1, .box-2, .box-3, .box-4, .box-6 {
-  opacity: 0;
-  transform: scale(0.5);
+  opacity: 1;
+  transform: scale(1);
 }
 
 .image-block {
