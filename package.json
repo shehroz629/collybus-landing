@@ -16,6 +16,7 @@
     "country-list": "^2.3.0",
     "emailjs-com": "^3.2.0",
     "framer-motion": "^12.23.16",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.544.0",
     "mixpanel-browser": "^2.64.0",
     "next": "^15.3.2",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@types/country-list": "^2.1.4",
+    "@types/gsap": "^3.0.0",
     "@types/mixpanel-browser": "^2.60.0",
     "@types/node": "22.15.18",
     "@types/react": "^19.1.4",

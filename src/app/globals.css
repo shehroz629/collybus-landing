@@ -19,7 +19,9 @@
     background: #f2c01652;
     border-radius: 8px;
 }
-
+.hero-section {
+ height: 100vh;
+}
 .last-foot {
   display: flex;
   gap: 40px;
@@ -29,4 +31,76 @@
 .last-foot p {
   font-size: 12px;
   text-align: center;
+}
+
+body {
+  background: #0d0d0d;
+  color: #fff;
+}
+
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.wrapper {
+  position: relative;
+  max-width: 1440px;
+  margin: auto;
+}
+
+.monitor {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.box-1, .box-2, .box-3, .box-4, .box-6 {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.image-block {
+  display: flex;
+  flex-direction: column; /* vertical stack */
+  align-items: center;    /* center align images and titles */
+  margin-bottom: 50px;    /* spacing between images */
+}
+
+.image-title {
+  margin-top: 10px;       /* thoda gap image ke neeche */
+  font-size: 18px;
+  color: #fff;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.final-text {
+  position: absolute;
+  top: 100%;
+  left: 50px;
+  width: 40%;
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.contact-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: #F2C016;
+  padding: 12px 24px;
+  color: black;
+  border-radius: 999px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.contact-btn:hover {
+  background: #d9ad14;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 70vh;
+  }
 }
