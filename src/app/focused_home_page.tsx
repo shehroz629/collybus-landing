@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import FoundersSection from "../components/founders-section";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
+import gsap from "gsap";
 import TradingViewWidget from "../components/TradingViewWidget";
 import TradingViewCryptoTicker from "../components/TradingViewCryptoTicker";
 import { ArrowRight, BarChart3, Shield, Zap, LineChart, Users, BookOpen, Layers, Cpu, Activity, Handshake, Target, Compass, Mail } from "lucide-react";
@@ -30,19 +31,86 @@ const hexToRgba = (hex: string, a: number) => {
       ];
 /* ===== HERO SECTION START ===== */
  /* ===== Hero Background (tickers + glow) ===== */ 
-function HeroBackground() { const [isMobile, setIsMobile] = useState(false); useEffect(() => { const checkMobile = () => setIsMobile(window.innerWidth < 768); checkMobile(); window.addEventListener('resize', checkMobile); return () => window.removeEventListener('resize', checkMobile); }, []); const glow1 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.2)}, ${hexToRgba(BRAND,0)} 60%)`; const glow2 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.12)}, ${hexToRgba(BRAND,0)} 60%)`; return ( <div className="absolute inset-0 pointer-events-none overflow-hidden"> {/* soft aurora glows */} 
-<motion.div className="absolute -top-1/3 -left-1/4 w-[60vw] h-[60vw] rounded-full blur-3xl opacity-40" style={{ background: glow1 }} animate={{ rotate: 360 }} transition={{ duration: 80, repeat: Infinity, ease: "linear" }}/> 
-{/* Left side yellow shade image */} 
-<div className="absolute top-0 left-0 w-[800px] h-[800px] pointer-events-none" style={{ backgroundImage: 'url(/uploaded_image_1.png)', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'top left', opacity: 0.6  }} /> 
-{/* World Map Background - Animated - Full width with gradient fade */}
- <div className="absolute top-0 bottom-0 left-0 w-full pointer-events-none overflow-hidden"> <motion.div className="flex h-full" style={{ width: '200%' }} animate={{ x: ["0%", "-100%"] }} transition={{ repeat: Infinity, ease: "linear", duration: 50, repeatType: "loop" }} > 
-<div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map-new.png)', backgroundSize: 'contain', backgroundPosition: 'left center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen', scale: 1.15 }} />
-   <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map-new.png)', backgroundSize: 'contain', backgroundPosition: 'left center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen', scale: 1.15 }} />
-    </motion.div> {/* Gradient overlay to fade right side */}
-     <div className="absolute inset-0 pointer-events-none" style={{ background: isMobile ? 'none' : 'linear-gradient(to right, transparent 0%, transparent 40%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 70%, black 100%)' }} /> 
-     </div> 
-     {/* Tickers removed as per request */} 
-     <div className="pointer-events-none"> </div> </div> ); } interface HeroProps { title: React.ReactNode; subtitle: string; text: string; ctaPrimary?: React.ReactNode; ctaSecondary?: React.ReactNode; } function Hero({ title, subtitle, text }: HeroProps) { return ( <section className="relative overflow-hidden hero-section flex items-center justify-center z-0"> <HeroBackground />
+function HeroBackground() { 
+  const [isMobile, setIsMobile] = useState(false);
+  const mapMarqueeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { 
+    const checkMobile = () => setIsMobile(window.innerWidth < 768); 
+    checkMobile(); 
+    window.addEventListener('resize', checkMobile); 
+    return () => window.removeEventListener('resize', checkMobile); 
+  }, []);
+
+  // GSAP marquee animation for map
+  useEffect(() => {
+    if (!mapMarqueeRef.current) return;
+
+    const mapMarquee = mapMarqueeRef.current;
+    
+    // Wait for layout to calculate proper widths
+    const initAnimation = () => {
+      // Get the first child to calculate one copy's actual width
+      const firstChild = mapMarquee.firstElementChild as HTMLElement;
+      if (!firstChild || firstChild.offsetWidth === 0) {
+        setTimeout(initAnimation, 50);
+        return;
+      }
+
+      // Use the actual width of one copy element for seamless loop
+      const oneCopyWidth = firstChild.offsetWidth;
+      
+      // Calculate initial offset to start map at 35-40% of screen
+      // Get viewport width
+      const viewportWidth = window.innerWidth;
+      const initialOffset = -(viewportWidth * 0.35); // Start at 35% from left
+
+      // Set initial position to show map starting from 35% of screen
+      gsap.set(mapMarquee, { x: initialOffset });
+
+      // Create the infinite marquee animation
+      // Moves from initialOffset to initialOffset - oneCopyWidth for seamless loop
+      const animation = gsap.to(mapMarquee, {
+        x: initialOffset - oneCopyWidth,
+        duration: 30,
+        ease: "none",
+        repeat: -1,
+      });
+
+      return animation;
+    };
+
+    const animation = initAnimation();
+
+    // Cleanup on unmount
+    return () => {
+      if (animation) animation.kill();
+    };
+  }, []);
+
+  const glow1 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.2)}, ${hexToRgba(BRAND,0)} 60%)`; 
+  const glow2 = `radial-gradient(circle at 50% 50%, ${hexToRgba(BRAND,0.12)}, ${hexToRgba(BRAND,0)} 60%)`; 
+  
+  return ( 
+    <div className="absolute inset-0 pointer-events-none overflow-hidden"> 
+      {/* soft aurora glows */} 
+      <motion.div className="absolute -top-1/3 -left-1/4 w-[60vw] h-[60vw] rounded-full blur-3xl opacity-40" style={{ background: glow1 }} animate={{ rotate: 360 }} transition={{ duration: 80, repeat: Infinity, ease: "linear" }}/> 
+      {/* Left side yellow shade image */} 
+      <div className="absolute top-0 left-0 w-[800px] h-[800px] pointer-events-none" style={{ backgroundImage: 'url(/uploaded_image_1.png)', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'top left', opacity: 0.6  }} /> 
+      {/* World Map Background - Animated - Full width with gradient fade */}
+      <div className="absolute top-0 bottom-0 left-0 w-full pointer-events-none overflow-hidden"> 
+        <div ref={mapMarqueeRef} className="flex h-full" style={{ width: '200%' }}> 
+          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'left center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map.png)', backgroundSize: 'cover', backgroundPosition: 'left center', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+        </div> 
+        {/* Gradient overlay to fade right side */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: isMobile ? 'none' : 'linear-gradient(to right, transparent 0%, transparent 40%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 70%, black 100%)' }} /> 
+      </div> 
+      {/* Tickers removed as per request */} 
+      <div className="pointer-events-none"> </div> 
+    </div> 
+  ); 
+} interface HeroProps { title: React.ReactNode; subtitle: string; text: string; ctaPrimary?: React.ReactNode; ctaSecondary?: React.ReactNode; } function Hero({ title, subtitle, text }: HeroProps) { return ( <section className="relative overflow-hidden hero-section flex items-center justify-center z-0"> <HeroBackground />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 md:pt-32 pb-16 sm:pb-20 md:pb-24 relative z-10 w-full flex flex-col items-center text-center"> <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="font-semibold tracking-tight text-white mb-6 text-[35px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4rem]" style={{ fontFamily: 'Montserrat, sans-serif', lineHeight: '1.1' }} > <span style={{ color: BRAND }}>COLLYBUS:</span> The Institutional<br className="hidden sm:block" /> Trading Workspace </motion.h1> <motion.h2 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="font-medium mb-8 text-xl sm:text-2xl md:text-3xl lg:text-4xl" style={{ lineHeight: '1.2', color: '#FFFFFF99' }} > {subtitle} </motion.h2> <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="text-white/80 max-w-4xl mx-auto text-base sm:text-lg md:text-xl" style={{ lineHeight: '1.6' }} > 
 {text} </motion.p> </div> </section> ); } /* ===== HERO SECTION END ===== */
 
@@ -392,10 +460,10 @@ function HomeFocused() {
             </h2>
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-            <ValueFlipCard imageSrc="/client-first.png" title="Client-First" desc="We measure success by desk outcomes and long-term trust." />
-            <ValueFlipCard imageSrc="/Security.png" title="Security" desc="Encrypted Keys, permissions, and audit trails." />
+            <ValueFlipCard imageSrc="/client-first.png" title="Client-First" desc="Success is built through customer satisfaction and long term trust relationships." />
+            <ValueFlipCard imageSrc="/Security.png" title="Security" desc="Controlled and Encrypted protection of your Accounts and Data." />
             <ValueFlipCard imageSrc="/reliability.png" title="Reliability" desc="Dependable systems for 24/7 markets." />
-            <ValueFlipCard imageSrc="/transparency.png" title="Transparency" desc="Plain language, visible risk, and explainable behaviour." />
+            <ValueFlipCard imageSrc="/transparency.png" title="Transparency" desc="Clear and Explainable Components and Logic." />
             <ValueFlipCard imageSrc="/discipline.png" title="Discipline" desc="Process-driven execution beats crowd heat." />
             <ValueFlipCard imageSrc="/development.png" title="Development" desc="We work with customers to improve every release." />
           </div>

@@ -118,7 +118,7 @@ export default function AboutFocused() {
   return (
     <div className="min-h-screen bg-black pt-16 md:pt-20">
       <main className="bg-black text-white" style={{ position: 'relative', zIndex: 1 }}>
-        <Hero title={"Bringing FX discipline to digital assets"} subtitle="Collybus has built an institutional-grade tooling for digital assets and derivatives trading—precision, risk control, and reliability in a 24/7 market." />
+        <Hero title={"Bringing Institutional discipline to Digital Assets"} subtitle="Collybus has built an institutional-grade tooling for digital assets and derivatives trading—precision, risk control, and reliability in a 24/7 market." />
         <Section eyebrow="Mission" title="Our purpose">
           <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-10">
             <div className="pointer-events-none absolute -left-px top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-amber-400/60 via-amber-400/20 to-transparent" aria-hidden></div>

@@ -59,52 +59,112 @@ export default function TradingScreens() {
     // =============================
     // 2. Fade-in Animation for boxes
     // =============================
-    const fadeTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".wrapper",
-        start: "top center",
-        end: "bottom center",
-        scrub: false,
-        
-      },
-      defaults: { ease: "power2.out" }
-    });
+    // const fadeTl = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: ".wrapper",
+    //     start: "top center",
+    //     end: "bottom center",
+    //     scrub: false,
+    //   },
+    //   defaults: { ease: "power2.out" }
+    // });
+    
+    // fadeTl
+    //     .to(".box-1", { opacity: 1, scale: 0.9, duration: 0.8, x: 0 })
+    //     .to(".box-2", { opacity: 1, scale: 0.9, duration: 0.8, x: 0 }, "+=0.3")
+    //     .to(".box-3", { opacity: 1, scale: 0.9, duration: 0.8, x: 0 }, "+=0.3")
+    //     .to(".box-4", { opacity: 1, scale: 0.9, duration: 0.8, x: 0 }, "+=0.3")
+    //     .to(".box-6", { opacity: 1, scale: 0.9, duration: 0.8, x: 0 }, "+=0.3");
 
-    fadeTl
-      .to(".box-1", { opacity: 1, scale: 1, duration: 0.8 })
-      .to(".box-2", { opacity: 1, scale: 1, duration: 0.8 }, "-=0.3")
-      .to(".box-3", { opacity: 1, scale: 1, duration: 0.8 }, "-=0.3")
-      .to(".box-4", { opacity: 1, scale: 1, duration: 0.8 }, "-=0.3")
-      .to(".box-6", { opacity: 1, scale: 1, duration: 0.8 }, "-=0.3");
+
+
+   // Boxes and corresponding titles
+const boxes = [".box-1", ".box-2", ".box-3", ".box-4", ".box-6"];
+const titles = [".title-1", ".title-2", ".title-3", ".title-4", ".title-5"];
+
+// 1️⃣ Fade-in boxes individually on scroll
+boxes.forEach((box) => {
+  gsap.fromTo(
+    box,
+    { opacity: 0, scale: 0.7, y: 50 },
+    {
+      opacity: 1,
+      scale: 0.9,
+      y: 0,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: box,
+        start: "top 90%",  // start a bit earlier
+        end: "top 40%",    // end a bit later
+        scrub: 1.2,        // shorter scrub for noticeable zoom
+      }
+    }
+  );
+});
+
+// 2️⃣ Fade-out titles perfectly synced with their boxes
+boxes.forEach((box, i) => {
+  gsap.to(titles[i], {
+    opacity: 0,
+    y: -20,
+    x: 30,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".wrapper",       // same as box movement
+      start: "top top-=100",     // match box move start
+      end: "bottom-=200 bottom", // match box move end
+      scrub: 2.5,                // same scrub as box movement
+    }
+  });
+});
+
+        
 
     // =============================
     // 2. Scroll-trigger movement
     // =============================
-    gsap.utils.toArray<Element>(".box-1, .box-2, .box-3, .box-4, .box-6").forEach((box) => {
-      gsap.to(box, {
-        scrollTrigger: {
-          trigger: ".wrapper",
-          start: "top top-=100",
-          end: "bottom-=200 bottom",
-          scrub: true,
-        },
-        y: () => {
-          if (box.classList.contains("box-1") || box.classList.contains("box-2")) return 718;
-          if (box.classList.contains("box-3") || box.classList.contains("box-4")) return 620;
-          if (box.classList.contains("box-6")) return 522;
-          return 0;
-        },
-        x: () => {
-          if (box.classList.contains("box-1") || box.classList.contains("box-3")) return 54;
-          if (box.classList.contains("box-2") || box.classList.contains("box-4")) return -54;
-          if (box.classList.contains("box-6")) return 261;
-          return 0;
-        },
-        width: box.classList.contains("box-6") ? "919px" : "465px",
-        height: () => (box.classList.contains("box-4") ? "180px" : "auto"),
-        ease: "none",
-      });
+    const mergeTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".wrapper",
+        start: "top top-=100",
+        end: "bottom-=200 bottom",
+        scrub: 2.5,
+      }
     });
+    
+    // All boxes animate together smoothly
+    mergeTl.to(".box-1", {
+      x: 84,
+      y: 706,
+      width: "465px",
+      ease: "none"
+    })
+    .to(".box-2", {
+      x: -84,
+      y: 706,
+      width: "465px",
+      ease: "none"
+    }, 0)
+    .to(".box-3", {
+      x: 84,
+      y: 590,
+      width: "465px",
+      ease: "none"
+    }, 0)
+    .to(".box-4", {
+      x: -84,
+      y: 590,
+      width: "465px",
+      height: "180px",
+      ease: "none"
+    }, 0)
+    .to(".box-6", {
+      x: 263,
+      y: 504,
+      width: "913px",
+      ease: "none"
+    }, 0);
+    
 
     // =============================
     // 3. Final monitor scale + text
@@ -122,22 +182,7 @@ export default function TradingScreens() {
       .to(".wrapper", { x: "25%", y: "45%", scale: 0.7, duration: 2, ease: "power2.inOut" })
       .to(".final-text", { opacity: 1, x: 0, duration: 1.5, ease: "power2.out" }, "-=0.5");
 
-    // =============================
-    // 4. Hide titles on scroll
-    // =============================
-    gsap.utils.toArray<Element>(".image-title").forEach((title) => {
-      gsap.to(title, {
-        y: -20,
-        opacity: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".wrapper",
-          start: "top top+=50",
-          end: "top top+=0",
-          scrub: true,
-        },
-      });
-    });
+        
 
       // Refresh ScrollTrigger after all animations are set up
       ScrollTrigger.refresh();
@@ -258,7 +303,7 @@ export default function TradingScreens() {
           </div>
 
           {/* Monitor */}
-          <div className="monitor" style={{ maxWidth: 955, margin: "0 auto" }}>
+          <div className="monitor" style={{ maxWidth: 852, margin: "0 auto" }}>
             <img src="/screen.png" alt="Monitor Base" />
           </div>
         </div>
@@ -310,7 +355,7 @@ export default function TradingScreens() {
       <style>{`
         body { overflow-x: hidden; background: #0d0d0d; color: #fff; }
         .image-block { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
-        .image-title { margin-top: 10px; font-size: 18px; color: #fff; }
+        .image-title { margin-top: 10px; font-size: 18px; color: #fff; margin-left: 40px; opacity: 1; transform: translate(0,0); }
         .box-1, .box-2, .box-3, .box-4, .box-6 { opacity: 0; transform: scale(0.5); }
       `}</style>
     </div>

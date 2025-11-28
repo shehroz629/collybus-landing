@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 import "../styles/tradingview.css";
 
 const symbols = [
@@ -15,9 +18,37 @@ const symbols = [
 ];
 
 export default function CustomBottomTicker() {
+  const marqueeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!marqueeRef.current) return;
+
+    const marquee = marqueeRef.current;
+    
+    // Calculate the width of one set of symbols (half the total width since content is duplicated)
+    const marqueeWidth = marquee.scrollWidth / 2;
+
+    // Set initial position to start from the left (negative half width)
+    gsap.set(marquee, { x: -marqueeWidth });
+
+    // Create the infinite marquee animation
+    // Moves from -marqueeWidth to 0, then loops seamlessly
+    const animation = gsap.to(marquee, {
+      x: 0,
+      duration: 40,
+      ease: "none",
+      repeat: -1,
+    });
+
+    // Cleanup on unmount
+    return () => {
+      animation.kill();
+    };
+  }, []);
+
   return (
     <div className="custom-ticker-container">
-      <div className="custom-ticker-marquee">
+      <div ref={marqueeRef} className="custom-ticker-marquee">
         {[...symbols, ...symbols].map((s, i) => (
           <span key={i} className="custom-ticker-item">
             <img

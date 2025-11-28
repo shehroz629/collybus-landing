@@ -52,7 +52,7 @@ img[alt="Kraken"] {
 .custom-ticker-marquee {
   display: flex;
   white-space: nowrap;
-  animation: ticker-left-right 40s linear infinite;
+  /* Animation is now handled by GSAP */
 }
 .custom-ticker-item {
   display: inline-flex;
@@ -75,7 +75,4 @@ img[alt="Kraken"] {
 .custom-ticker-change.down {
   color: #ff3b3b;
 }
-@keyframes ticker-left-right {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(0%); }
-}
+/* Keyframes animation removed - now using GSAP marquee animation */
