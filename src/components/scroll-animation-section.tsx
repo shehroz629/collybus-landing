@@ -53,7 +53,7 @@ export default function TradingScreens() {
         opacity: 1, 
         y: 0, 
         duration: 0.8,
-        stagger: 0.5 // One by one with 0.5s delay between each
+        stagger: 0.8 // One by one with 0.5s delay between each
       });
 
     // =============================
@@ -135,32 +135,32 @@ boxes.forEach((box, i) => {
     // All boxes animate together smoothly
     mergeTl.to(".box-1", {
       x: 84,
-      y: 706,
+      y: 676,
       width: "465px",
       ease: "none"
     })
     .to(".box-2", {
       x: -84,
-      y: 706,
+      y: 676,
       width: "465px",
       ease: "none"
     }, 0)
     .to(".box-3", {
       x: 84,
-      y: 590,
+      y: 572,
       width: "465px",
       ease: "none"
     }, 0)
     .to(".box-4", {
       x: -84,
-      y: 590,
+      y: 572,
       width: "465px",
       height: "180px",
       ease: "none"
     }, 0)
     .to(".box-6", {
       x: 263,
-      y: 504,
+      y: 494,
       width: "913px",
       ease: "none"
     }, 0);
@@ -355,7 +355,7 @@ boxes.forEach((box, i) => {
       <style>{`
         body { overflow-x: hidden; background: #0d0d0d; color: #fff; }
         .image-block { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
-        .image-title { margin-top: 10px; font-size: 18px; color: #fff; margin-left: 40px; opacity: 1; transform: translate(0,0); }
+        .image-title { margin-top: 0px; font-size: 18px; color: #fff; margin-left: 40px; opacity: 1; transform: translate(0,0); }
         .box-1, .box-2, .box-3, .box-4, .box-6 { opacity: 0; transform: scale(0.5); }
       `}</style>
     </div>
