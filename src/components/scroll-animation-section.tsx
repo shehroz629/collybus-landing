@@ -134,33 +134,33 @@ boxes.forEach((box, i) => {
     
     // All boxes animate together smoothly
     mergeTl.to(".box-1", {
-      x: 84,
-      y: 676,
+      x: 80,
+      y: 675,
       width: "465px",
       ease: "none"
     })
     .to(".box-2", {
-      x: -84,
-      y: 676,
+      x: -80,
+      y: 675,
       width: "465px",
       ease: "none"
     }, 0)
     .to(".box-3", {
-      x: 84,
-      y: 572,
+      x: 80,
+      y: 569,
       width: "465px",
       ease: "none"
     }, 0)
     .to(".box-4", {
-      x: -84,
-      y: 572,
+      x: -80,
+      y: 569,
       width: "465px",
       height: "180px",
       ease: "none"
     }, 0)
     .to(".box-6", {
-      x: 263,
-      y: 494,
+      x: 264,
+      y: 489,
       width: "913px",
       ease: "none"
     }, 0);

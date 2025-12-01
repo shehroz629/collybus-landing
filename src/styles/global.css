@@ -41,7 +41,13 @@ button, input, select, textarea {
   background: #444;
   border-radius: 4px;
 }
+.main-head {
+  border-bottom: 1px solid #ffffff00;
+}
 
+.main-head.border-b {
+  border-bottom: 1px solid #ffffff1f;
+}
 /* Utility classes */
 .hide-scrollbar {
   scrollbar-width: none;
