@@ -462,7 +462,7 @@ function HomeFocused() {
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <ValueFlipCard imageSrc="/client-first.png" title="Client-First" desc="Success is built through customer satisfaction and long term trust relationships." />
             <ValueFlipCard imageSrc="/Security.png" title="Security" desc="Controlled and Encrypted protection of your Accounts and Data." />
-            <ValueFlipCard imageSrc="/reliability.png" title="Reliability" desc="Dependable systems for 24/7 markets." />
+            <ValueFlipCard imageSrc="/reliability.png" title="Reliability" desc="Dependable systems for 24/7 markets, delivering concise trading and decision support tools that perform in all market conditions." />
             <ValueFlipCard imageSrc="/transparency.png" title="Transparency" desc="Clear and Explainable Components and Logic." />
             <ValueFlipCard imageSrc="/discipline.png" title="Discipline" desc="Process-driven execution beats crowd heat." />
             <ValueFlipCard imageSrc="/development.png" title="Development" desc="We work with customers to improve every release." />

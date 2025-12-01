@@ -86,17 +86,17 @@ const titles = [".title-1", ".title-2", ".title-3", ".title-4", ".title-5"];
 boxes.forEach((box) => {
   gsap.fromTo(
     box,
-    { opacity: 0, scale: 0.7, y: 50 },
+    { opacity: 0, scale: 0.7 },
     {
       opacity: 1,
       scale: 0.9,
-      y: 0,
+
       ease: "power1.out",
       scrollTrigger: {
         trigger: box,
         start: "top 90%",  // start a bit earlier
         end: "top 40%",    // end a bit later
-        scrub: 1.2,        // shorter scrub for noticeable zoom
+        scrub: true,        // shorter scrub for noticeable zoom
       }
     }
   );
@@ -113,7 +113,7 @@ boxes.forEach((box, i) => {
       trigger: ".wrapper",       // same as box movement
       start: "top top-=100",     // match box move start
       end: "bottom-=200 bottom", // match box move end
-      scrub: 2.5,                // same scrub as box movement
+      scrub: true,           // same scrub as box movement
     }
   });
 });
@@ -128,7 +128,7 @@ boxes.forEach((box, i) => {
         trigger: ".wrapper",
         start: "top top-=100",
         end: "bottom-=200 bottom",
-        scrub: 2.5,
+        scrub: true,
       }
     });
     
@@ -343,7 +343,7 @@ boxes.forEach((box, i) => {
               textDecoration: "none",
             }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path  stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
            <span>Get in Touch</span> 
           </a>
         </div>
