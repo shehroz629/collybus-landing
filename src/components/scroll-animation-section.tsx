@@ -227,7 +227,7 @@ boxes.forEach((box, i) => {
 
             {/* Text section */}
             <div className="space-y-6">
-              <h2 className="font-bold text-white text-4xl leading-tight">
+              <h2 className="font-bold text-white text-[35px] sm:text-4xl md:text-5xl lg:text-6xl leading-tight">
                 Start Trading with <br /> Institutional Precision
               </h2>
 
@@ -304,7 +304,7 @@ boxes.forEach((box, i) => {
 
           {/* Monitor */}
           <div className="monitor" style={{ maxWidth: 852, margin: "0 auto" }}>
-            <img src="/screen.png" alt="Monitor Base" />
+            <img src="/screen-new.png" alt="Monitor Base" />
           </div>
         </div>
 

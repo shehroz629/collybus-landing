@@ -169,7 +169,7 @@ export default function ProductFocused() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>Core GUI</div>
-                <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <div className="text-white/70 sm:text-lg mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                   Institutional desktop. Execution, risk, and funding on one screen. Institutional desktop. Execution, risk, and funding on one screen. Institutional desktop. Execution, risk, and funding on one screen.
                 </div>
               </div>
@@ -187,7 +187,7 @@ export default function ProductFocused() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>API</div>
-                <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <div className="text-white/70 sm:text-lg mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                   Programmatic access. REST/WebSocket with reporting built in. Programmatic access. REST/WebSocket with reporting built in. Programmatic access. REST/WebSocket with reporting built in.
                 </div>
               </div>
@@ -205,7 +205,7 @@ export default function ProductFocused() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#F2C016]/0 via-[#F2C016]/10 to-[#F2C016]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none" />
               <div className="relative z-10">
                 <div className="text-white font-semibold mb-1 text-xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>White-label</div>
-                <div className="text-white/70 text-sm mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                <div className="text-white/70 sm:text-lg mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                   Branded front-end. Themes, SSO, and SLAs under your brand.  Branded front-end. Themes, SSO, and SLAs under your brand.  Branded front-end. Themes, SSO, and SLAs under your brand.
                 </div>
               </div>
