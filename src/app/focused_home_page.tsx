@@ -115,8 +115,8 @@ function HeroBackground() {
 {/* World Map Background - Animated - Full width with gradient fade */}
       <div className="absolute top-0 bottom-0 left-0 w-full pointer-events-none overflow-hidden"> 
         <div ref={mapMarqueeRef} className="flex h-full" style={{ width: '200%' }}> 
-          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/collybus-map-1.png)', backgroundSize: 'contain', backgroundPosition: 'top left', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
-          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/collybus-map-1.png)', backgroundSize: 'contain', backgroundPosition: 'top left', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map-2.png)', backgroundSize: 'contain', backgroundPosition: 'top left', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
+          <div className="w-1/2 h-full flex-shrink-0" style={{ backgroundImage: 'url(/map-2.png)', backgroundSize: 'contain', backgroundPosition: 'top left', backgroundRepeat: 'no-repeat', opacity: 0.25, mixBlendMode: 'screen' }} />
         </div> 
         {/* Gradient overlay to fade right side */}
      <div className="absolute inset-0 pointer-events-none" style={{ background: (isMounted && isMobile) ? 'none' : 'linear-gradient(to right, transparent 0%, transparent 40%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 70%, black 100%)' }} /> 
