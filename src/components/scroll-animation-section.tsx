@@ -116,6 +116,15 @@ mm.add(
     small: "(max-width: 1023px)",
   },
   (ctx) => {
+    const conditions = ctx.conditions as {
+      mainDesktop?: boolean;
+      largeDesktop?: boolean;
+      desktop1366?: boolean;
+      desktop1280?: boolean;
+      tablet1024?: boolean;
+      small?: boolean;
+    };
+    
     let {
       mainDesktop,
       largeDesktop,
@@ -123,7 +132,7 @@ mm.add(
       desktop1280,
       tablet1024,
       small,
-    } = ctx.conditions;
+    } = conditions;
 
     // Default values (1440 — large desktop)
     let boxValues = {
