@@ -477,76 +477,12 @@ function HomeFocused() {
       />
 
       {/* Scroll Animation Section */}
-      {/* <section className="">
+      <section className="">
         <ScrollAnimationSection />
-      </section> */}
+      </section>
 
       {/* Final Text and Animation Section */}
-      <section className="">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Column - Final Text */}
-            <motion.div 
-              className="order-2 lg:order-1"
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <h2 className="font-bold text-white text-[35px] sm:text-[48px] md:text-[56px] leading-tight mb-6" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                Start Trading with <br /> Institutional Precision
-              </h2>
-              <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-8"> 
-                In the 24/7 market for Digital Assets, Derivatives, and Forex, leverage Collybus's tools for precision,
-                superior risk control, and operational reliability.
-              </p>
-              <a
-                href="mailto:contact@collybus.co"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  background: "#F2C016",
-                  color: "black",
-                  padding: "12px 30px",
-                  borderRadius: 40,
-                  fontWeight: "600",
-                  textDecoration: "none",
-                  transition: "all 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#d9ad14";
-                  e.currentTarget.style.transform = "scale(1.05)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#F2C016";
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <span>Get in Touch</span>
-              </a>
-            </motion.div>
-
-            {/* Right Column - Final Animation GIF */}
-            <motion.div 
-              className="order-1 lg:order-2 rounded-xl overflow-hidden"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            >
-              <img 
-                src="/final-animation.gif" 
-                alt="Workflow animation" 
-                className="w-full h-auto object-contain rounded-xl"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      
 
       <section className=" execute">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
